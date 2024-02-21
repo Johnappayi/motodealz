@@ -20,6 +20,18 @@ class MImages {
   static const String muvIcon = "assets/icons/MUV.svg";
   static const String pickupIcon = "assets/icons/pick up.svg";
   
+  // -- Navigation Bar Icons
+  static const String homeIcon = "assets/icons/home filled.svg";
+  static const String chatIcon = "assets/icons/chat filled.svg";
+  static const String searchIcon = "assets/icons/search filled.svg";
+  static const String profileIcon = "assets/icons/userprofile filled.svg";
+  static const String addPostIcon = "assets/icons/addPost.svg";
+
+  static const String homeUnfilledIcon = "assets/icons/home not filled.svg";
+  static const String chatUnfilledIcon = "assets/icons/chat (not filled).svg";
+  static const String searchUnfilledIcon = "assets/icons/search not filled.svg";
+  static const String profileUnfilledIcon = "assets/icons/user profile not filled.svg";
+
   // -- Brand Icons
   // static const String nikeLogo = "assets/icons/brands/nike.png";
   // static const String adidasLogo = "assets/icons/brands/adidas-logo.png";

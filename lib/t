@@ -1,0 +1,102 @@
+// Model
+class CounterModel {
+  int _counter = 0;
+
+  int get counter => _counter;
+
+  void incrementCounter() {
+    _counter++;
+  }
+}
+
+// View
+import 'package:flutter/material.dart';
+
+class CounterView extends StatelessWidget {
+  final int counter;
+  final VoidCallback onPressed;
+
+  CounterView({required this.counter, required this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('MVC Example'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'Counter Value:',
+            ),
+            Text(
+              '$counter',
+              style: Theme.of(context).textTheme.headline4,
+            ),
+            ElevatedButton(
+              onPressed: onPressed,
+              child: Text('Increment'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// Controller
+import 'package:flutter/material.dart';
+import 'counter_model.dart';
+import 'counter_view.dart';
+
+class CounterController extends StatefulWidget {
+  @override
+  _CounterControllerState createState() => _CounterControllerState();
+}
+
+class _CounterControllerState extends State<CounterController> {
+  late CounterModel _model;
+
+  @override
+  void initState() {
+    super.initState();
+    _model = CounterModel();
+  }
+
+  void _incrementCounter() {
+    setState(() {
+      _model.incrementCounter();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return CounterView(
+      counter: _model.counter,
+      onPressed: _incrementCounter,
+    );
+  }
+}
+
+// Main
+import 'package:flutter/material.dart';
+import 'counter_controller.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: CounterController(),
+    );
+  }
+}

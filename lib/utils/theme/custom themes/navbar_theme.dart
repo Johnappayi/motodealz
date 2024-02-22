@@ -15,7 +15,7 @@ class MNavigationBarTheme {
   );
   static final darkNavigationBarTheme = NavigationBarThemeData(
     height: 80,
-    backgroundColor: MColors.dark,
+    backgroundColor: MColors.black,
     labelTextStyle: MaterialStatePropertyAll(MFonts.fontCB3.copyWith(color: MColors.secondary)),
     indicatorColor: Colors.transparent,
     overlayColor: const MaterialStatePropertyAll( Colors.transparent),

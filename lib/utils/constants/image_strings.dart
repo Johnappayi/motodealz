@@ -1,12 +1,13 @@
-
 /* -- App Image Strings -- */
 
 /// This class contains all the App Images in String formats.
 class MImages {
-
+  MImages._();
   // -- App Logos
   static const String darkAppLogo = "assets/logos/splash_logo_d.png";
   static const String lightAppLogo = "assets/logos/splash_logo.png";
+  static const String appBarLogoD = "assets/logos/brand_logo.png";
+  static const String appBarLogoL = "assets/logos/brandLogoL.png";
 
   // -- Social Logos
   static const String google = "assets/icons/google icon.svg";
@@ -19,7 +20,7 @@ class MImages {
   static const String hatchbackIcon = "assets/icons/hatchback.svg";
   static const String muvIcon = "assets/icons/MUV.svg";
   static const String pickupIcon = "assets/icons/pick up.svg";
-  
+
   // -- Navigation Bar Icons
   static const String homeIcon = "assets/icons/home filled.svg";
   static const String chatIcon = "assets/icons/chat filled.svg";
@@ -30,7 +31,22 @@ class MImages {
   static const String homeUnfilledIcon = "assets/icons/home not filled.svg";
   static const String chatUnfilledIcon = "assets/icons/chat (not filled).svg";
   static const String searchUnfilledIcon = "assets/icons/search not filled.svg";
-  static const String profileUnfilledIcon = "assets/icons/user profile not filled.svg";
+  static const String profileUnfilledIcon =
+      "assets/icons/user profile not filled.svg";
+
+  static const String burgerIcon = "assets/icons/menu.svg";
+
+  // -- Other Icons
+  static const String locationIcon = "assets/icons/location.svg";
+  static const String premiumIcon = "assets/icons/premuimCar.png";
+  
+  // -- Sample Car Images
+  static const String sampleCar1 = "assets/images/car1.png";
+  static const String sampleCar2 = "assets/images/car2.png";
+  static const String sampleCar3 = "assets/images/car3.png";
+  static const String sampleCar4 = "assets/images/car4.png";
+  static const String sampleCar5 = "assets/images/car5.png";
+
 
   // -- Brand Icons
   // static const String nikeLogo = "assets/icons/brands/nike.png";
@@ -136,9 +152,6 @@ class MImages {
 //   static const String productImage76 = "assets/images/products/slipper-product-3.png";
 //   static const String productImage77= "assets/images/products/slipper-product.png";
 
-
-
-
 //   // -- Product Reviews
 //   static const String userProfileImage1 = "assets/images/reviews/review_profile_image_1.jpg";
 //   static const String userProfileImage2 = "assets/images/reviews/review_profile_image_2.jpeg";
@@ -157,7 +170,6 @@ class MImages {
 //   static const String banner7 = "assets/images/banners/banner_7.jpg";
 //   static const String banner8 = "assets/images/banners/banner_8.jpg";
 
-
 //   //Profile
 //   static const String user = "assets/images/content/user.png";
 
@@ -173,4 +185,3 @@ class MImages {
 //   static const String successfulPaymentIcon = "assets/icons/payment_methods/successful_payment_icon.png";
 //
 }
-

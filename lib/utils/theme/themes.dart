@@ -35,7 +35,7 @@ class MAppTheme {
     fontFamily: 'lato',
     brightness: Brightness.dark,
     primaryColor: Colors.blue,
-    scaffoldBackgroundColor: Colors.black,
+    scaffoldBackgroundColor: MColors.darkerGrey,
     textTheme: MTextTheme.darkTextTheme,
     elevatedButtonTheme: MElevatedBtnTheme.darkElevatedButtonTheme,
     chipTheme: MChipTheme.darkChipTheme,

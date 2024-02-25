@@ -3,7 +3,8 @@
 /// This class contains all the App Images in String formats.
 class MImages {
   MImages._();
-  // -- App Logos
+
+  // -- App Logo
   static const String darkAppLogo = "assets/logos/splash_logo_d.png";
   static const String lightAppLogo = "assets/logos/splash_logo.png";
   static const String appBarLogoD = "assets/logos/brand_logo.png";
@@ -34,12 +35,16 @@ class MImages {
   static const String profileUnfilledIcon =
       "assets/icons/user profile not filled.svg";
 
+  // -- App Bar Icons
   static const String burgerIcon = "assets/icons/menu.svg";
+  static const String backIcon = "assets/icons/arrow-left.svg";
+  static const String closeIcon = "assets/icons/close-btn.svg";
 
   // -- Other Icons
   static const String locationIcon = "assets/icons/location.svg";
   static const String premiumIcon = "assets/icons/premuimCar.png";
-  
+  static const String ownershipIcon = "assets/icons/personalcard.svg";
+
   // -- Sample Car Images
   static const String sampleCar1 = "assets/images/car1.png";
   static const String sampleCar2 = "assets/images/car2.png";
@@ -47,6 +52,10 @@ class MImages {
   static const String sampleCar4 = "assets/images/car4.png";
   static const String sampleCar5 = "assets/images/car5.png";
 
+  // -- Verfocation Illustration Images
+  static const String verifyImg1 = "assets/images/kyc step1 basic info.svg";
+  static const String verifyImg2 = "assets/images/kyc step2 selfie.svg";
+  static const String verifyImg3 = "assets/images/kyc step3 id card.svg";
 
   // -- Brand Icons
   // static const String nikeLogo = "assets/icons/brands/nike.png";

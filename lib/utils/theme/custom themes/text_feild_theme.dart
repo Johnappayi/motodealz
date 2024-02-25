@@ -6,17 +6,19 @@ class MTextFormFieldTheme {
   MTextFormFieldTheme._();
 
   static InputDecorationTheme lightInputDecorationTheme = InputDecorationTheme(
+    filled: true,
+    fillColor: MColors.card,
     errorMaxLines: 3,
     prefixIconColor: MColors.darkGrey,
     suffixIconColor: MColors.darkGrey,
     // constraints: const BoxConstraints.expand(height: MSizes.inputFieldHeight),
-    labelStyle: const TextStyle().copyWith(fontSize: MSizes.fontSizeMd, color: MColors.black),
-    hintStyle: const TextStyle().copyWith(fontSize: MSizes.fontSizeSm, color: MColors.black),
+    labelStyle: const TextStyle().copyWith(fontSize: MSizes.fontSizeMd, color: MColors.black.withOpacity(0.7)),
+    hintStyle: const TextStyle().copyWith(fontSize: MSizes.fontSizeSm, color: MColors.primary.withOpacity(0.7)),
     errorStyle: const TextStyle().copyWith(fontStyle: FontStyle.normal),
     floatingLabelStyle: const TextStyle().copyWith(color: MColors.black.withOpacity(0.8)),
     border: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(MSizes.inputFieldRadius),
-      borderSide: const BorderSide(width: 1, color: MColors.lightGrey),
+      borderSide:  BorderSide(width: 1, color: MColors.primary.withOpacity(0.7)),
     ),
     enabledBorder: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(MSizes.inputFieldRadius),
@@ -37,20 +39,22 @@ class MTextFormFieldTheme {
   );
 
   static InputDecorationTheme darkInputDecorationTheme = InputDecorationTheme(
-    errorMaxLines: 2,
+    filled: true,
+    fillColor: MColors.cardDark,
+    errorMaxLines: 3,
     prefixIconColor: MColors.darkGrey,
     suffixIconColor: MColors.darkGrey,
-    // constraints: const BoxConstraints.expand(height: MSizes.inputFieldHeight),
-    labelStyle: const TextStyle().copyWith(fontSize: MSizes.fontSizeMd, color: MColors.white),
-    hintStyle: const TextStyle().copyWith(fontSize: MSizes.fontSizeSm, color: MColors.white),
+    constraints: const BoxConstraints.expand(height: MSizes.inputFieldHeight),
+    labelStyle: const TextStyle().copyWith(fontSize: MSizes.fontSizeMd, color: MColors.secondary.withOpacity(0.7)),
+    hintStyle: const TextStyle().copyWith(fontSize: MSizes.fontSizeSm, color: MColors.secondary.withOpacity(0.7)),
     floatingLabelStyle: const TextStyle().copyWith(color: MColors.white.withOpacity(0.8)),
     border: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(MSizes.inputFieldRadius),
-      borderSide: const BorderSide(width: 1, color: MColors.darkGrey),
+      borderSide:  BorderSide(width: 1, color: MColors.secondary.withOpacity(0.7)),
     ),
     enabledBorder: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(MSizes.inputFieldRadius),
-      borderSide: const BorderSide(width: 1, color: MColors.darkGrey),
+      borderSide:  BorderSide(width: 1, color: MColors.secondary.withOpacity(0.7)),
     ),
     focusedBorder: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(MSizes.inputFieldRadius),

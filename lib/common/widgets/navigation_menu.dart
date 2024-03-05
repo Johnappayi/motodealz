@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:motodealz/common/styles/svg_styles.dart';
 import 'package:motodealz/features/shop/screens/homepage.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
@@ -15,30 +16,68 @@ class NavigationMenu extends StatelessWidget {
     final darkMode = MHelperFunctions.isDarkMode(context);
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton(foregroundColor: darkMode ? MColors.primary : MColors.card,backgroundColor: darkMode ? MColors.secondary : MColors.primary,onPressed:() => const HomeScreen(),child: const Icon(Icons.add)),
+      floatingActionButton: FloatingActionButton(
+          foregroundColor: darkMode ? MColors.primary : MColors.card,
+          backgroundColor: darkMode ? MColors.secondary : MColors.primary,
+          onPressed: () => const HomeScreen(),
+          child: const Icon(Icons.add)),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: Obx(
         () => NavigationBar(
           elevation: 0,
           selectedIndex: controller.selectedIndex.value,
-          onDestinationSelected: (index) => controller.selectedIndex.value = index,
-          destinations:[
-            NavigationDestination(icon: SvgPicture.asset(MImages.homeUnfilledIcon,colorFilter: darkMode ? const ColorFilter.mode(MColors.secondary, BlendMode.srcIn) : const ColorFilter.mode(MColors.primary, BlendMode.srcIn)),selectedIcon: SvgPicture.asset(MImages.homeIcon,colorFilter: darkMode ? const ColorFilter.mode(MColors.secondary, BlendMode.srcIn) : const ColorFilter.mode(MColors.primary, BlendMode.srcIn)), label: 'Home'),
-            NavigationDestination(icon: SvgPicture.asset(MImages.chatUnfilledIcon,colorFilter: darkMode ? const ColorFilter.mode(MColors.secondary, BlendMode.srcIn) : const ColorFilter.mode(MColors.primary, BlendMode.srcIn)),selectedIcon: SvgPicture.asset(MImages.chatIcon,colorFilter: darkMode ? const ColorFilter.mode(MColors.secondary, BlendMode.srcIn) : const ColorFilter.mode(MColors.primary, BlendMode.srcIn)), label: 'Chat'),
+          onDestinationSelected: (index) =>
+              controller.selectedIndex.value = index,
+          destinations: [
+            NavigationDestination(
+                icon: SvgPicture.asset(MImages.homeUnfilledIcon,
+                    colorFilter: MSvgStyle.svgStyle3(darkMode)),
+                selectedIcon: SvgPicture.asset(MImages.homeIcon,
+                    colorFilter: MSvgStyle.svgStyle3(darkMode)),
+                label: 'Home'),
+            NavigationDestination(
+                icon: SvgPicture.asset(MImages.chatUnfilledIcon,
+                    colorFilter: MSvgStyle.svgStyle3(darkMode)),
+                selectedIcon: SvgPicture.asset(MImages.chatIcon,
+                    colorFilter: MSvgStyle.svgStyle3(darkMode)),
+                label: 'Chat'),
             // const SizedBox(width: 20),
-            const NavigationDestination(icon: SizedBox.shrink(), label: 'Sell',enabled: false ),
-            NavigationDestination(icon: SvgPicture.asset(MImages.searchUnfilledIcon,colorFilter: darkMode ? const ColorFilter.mode(MColors.secondary, BlendMode.srcIn) : const ColorFilter.mode(MColors.primary, BlendMode.srcIn)),selectedIcon: SvgPicture.asset(MImages.searchIcon,colorFilter: darkMode ? const ColorFilter.mode(MColors.secondary, BlendMode.srcIn) : const ColorFilter.mode(MColors.primary, BlendMode.srcIn)), label: 'Search'),
-            NavigationDestination(icon: SvgPicture.asset(MImages.profileUnfilledIcon,colorFilter: darkMode ? const ColorFilter.mode(MColors.secondary, BlendMode.srcIn) : const ColorFilter.mode(MColors.primary, BlendMode.srcIn)),selectedIcon: SvgPicture.asset(MImages.profileIcon,colorFilter: darkMode ? const ColorFilter.mode(MColors.secondary, BlendMode.srcIn) : const ColorFilter.mode(MColors.primary, BlendMode.srcIn)), label: 'Profile'),
+            const NavigationDestination(
+                icon: SizedBox.shrink(), label: 'Sell', enabled: false),
+            NavigationDestination(
+                icon: SvgPicture.asset(MImages.searchUnfilledIcon,
+                    colorFilter: MSvgStyle.svgStyle3(darkMode)),
+                selectedIcon: SvgPicture.asset(MImages.searchIcon,
+                    colorFilter: MSvgStyle.svgStyle3(darkMode)),
+                label: 'Search'),
+            NavigationDestination(
+                icon: SvgPicture.asset(MImages.profileUnfilledIcon,
+                    colorFilter: MSvgStyle.svgStyle3(darkMode)),
+                selectedIcon: SvgPicture.asset(MImages.profileIcon,
+                    colorFilter: MSvgStyle.svgStyle3(darkMode)),
+                label: 'Profile'),
           ],
         ),
       ),
-      body: Obx(() => controller.screen[controller.selectedIndex.value]) ,
+      body: Obx(() => controller.screen[controller.selectedIndex.value]),
     );
   }
 }
 
-class NavigationController extends GetxController{
- final Rx<int> selectedIndex=0.obs;
+class NavigationController extends GetxController {
+  final Rx<int> selectedIndex = 0.obs;
 
- final screen = [ const HomeScreen(),Container(color: Colors.orange,),const SizedBox(),Container(color: Colors.green,),Container(color: Colors.purple,)];
+  final screen = [
+    const HomeScreen(),
+    Container(
+      color: Colors.orange,
+    ),
+    const SizedBox(),
+    Container(
+      color: Colors.green,
+    ),
+    Container(
+      color: Colors.purple,
+    )
+  ];
 }

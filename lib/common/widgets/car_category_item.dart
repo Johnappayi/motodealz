@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:motodealz/utils/constants/colors.dart';
+import 'package:motodealz/common/styles/svg_styles.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 
 class CarCategoryItem extends StatelessWidget {
@@ -20,9 +20,7 @@ class CarCategoryItem extends StatelessWidget {
     return Row(
       children: [
         SvgPicture.asset(icon,
-            colorFilter: darkMode
-                ? const ColorFilter.mode(MColors.white, BlendMode.srcIn)
-                : const ColorFilter.mode(MColors.black, BlendMode.srcIn)),
+            colorFilter: MSvgStyle.svgStyle(darkMode)),
         const SizedBox(width: 12),
         Text(
           type,

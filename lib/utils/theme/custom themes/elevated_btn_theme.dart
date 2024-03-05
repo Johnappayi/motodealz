@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:motodealz/utils/constants/colors.dart';
+import 'package:motodealz/utils/constants/sizes.dart';
 
 class MElevatedBtnTheme {
   MElevatedBtnTheme._();//To avoid creating instances
@@ -14,7 +15,7 @@ class MElevatedBtnTheme {
       side: const BorderSide(color: MColors.primary),
       padding: const EdgeInsets.symmetric(vertical: 10),
       textStyle: const TextStyle(fontSize: 20, color: Colors.white ,fontWeight: FontWeight.w600 ,fontFamily: 'lato' ),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(MSizes.nm)),
     )
   );
 
@@ -28,7 +29,7 @@ class MElevatedBtnTheme {
       side: const BorderSide(color: MColors.secondary,),
       padding: const EdgeInsets.symmetric(vertical: 10),
       textStyle: const TextStyle(fontSize: 20, color: MColors.black ,fontWeight: FontWeight.w600 ,fontFamily: 'lato' ),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(MSizes.nm)),
     )
   );
 }

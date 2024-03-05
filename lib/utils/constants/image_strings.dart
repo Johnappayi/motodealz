@@ -47,7 +47,6 @@ class MImages {
   static const String passwordIcon = "assets/icons/key.svg";
   static const String eyeIcon = "assets/icons/eye-slash.svg";
   static const String mailIcon = "assets/icons/sms.svg";
-  static const String searchBarIcon = "assets/icons/searchbar.svg";
 
   // -- Sample Car Images
   static const String sampleCar1 = "assets/images/car1.png";

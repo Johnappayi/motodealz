@@ -38,12 +38,12 @@ class InputFieldWithIcon extends StatelessWidget {
   const InputFieldWithIcon({
     super.key,
     required this.hintText,
+    required this.label,
     required this.prefixIcon,
-    this.label,
     this.suffixIcon,
   });
   final String hintText;
-  final String? label;
+  final String label;
   final String? suffixIcon;
   final String prefixIcon;
 
@@ -54,7 +54,7 @@ class InputFieldWithIcon extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          label!,
+          label,
           style: MFonts.fontCH4,
         ),
         const SizedBox(

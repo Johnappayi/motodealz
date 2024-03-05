@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:motodealz/common/widgets/navigation_menu.dart';
-// import 'package:motodealz/common/widgets/navigation_menu.dart';
-// import 'package:motodealz/features/chat/screens/inbox.dart';
 import 'package:motodealz/utils/theme/themes.dart';
 
 class MyApp extends StatelessWidget {

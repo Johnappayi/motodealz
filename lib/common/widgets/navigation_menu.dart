@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motodealz/common/styles/svg_styles.dart';
-import 'package:motodealz/features/search/screens/search_screen.dart';
 import 'package:motodealz/features/shop/screens/homepage.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
@@ -70,7 +69,9 @@ class NavigationController extends GetxController {
 
   final screen = [
     const HomeScreen(),
-    const SearchScreen(),
+    Container(
+      color: Colors.orange,
+    ),
     const SizedBox(),
     Container(
       color: Colors.green,

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:motodealz/common/styles/spacing_styles.dart';
+import 'package:motodealz/common/widgets/buttons.dart';
+import 'package:motodealz/common/widgets/input_field.dart';
 import 'package:motodealz/utils/constants/colors.dart';
-//import 'package:motodealz/utils/constants/image_strings.dart';
+import 'package:motodealz/utils/constants/fonts.dart';
+import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
 import 'package:motodealz/utils/constants/text_strings.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
@@ -19,45 +22,58 @@ class LoginScreen extends StatelessWidget {
           padding: MSpacingStyle.paddingWithAppBarHeight,
           child: Column(
             children: [
-              /// Title, Subtitle
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const Padding(padding: MSpacingStyle.paddingWithAppBarHeight),
-                  Text(MTexts.loginTitle,
-                      style: Theme.of(context).textTheme.headlineMedium),
-                  const SizedBox(
-                    height: MSizes.sm,
-                  ),
-                  Text(MTexts.loginSubTitle,
-                      style: Theme.of(context).textTheme.bodyMedium),
-                ],
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: MSizes.lg),
+                child: Column(
+                  children: [
+                    Padding(padding: MSpacingStyle.paddingWithAppBarHeight),
+                    Text("WELCOME BACK", style: MFonts.fontAH1),
+                    SizedBox(
+                      height: MSizes.md,
+                    ),
+                    Text(
+                      "Get back and find out whats new!",
+                      textAlign: TextAlign.center,
+                      style: MFonts.fontCB1,
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(
+                height: MSizes.md,
               ),
 
               /// Form
               Form(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: MSizes.spaceBtwSections),
+                  padding: const EdgeInsets.only(top: MSizes.spaceBtwSections),
                   child: Column(
                     children: [
                       /// Username
-                      TextFormField(
-                        decoration: const InputDecoration(
-                            prefixIcon: Icon(Icons.account_circle),
-                            labelText: MTexts.usernamePlaceholder),
+                      const InputFieldWithIcon(
+                        label: "Username",
+                        hintText: "Enter Username",
+                        prefixIcon: MImages.profileIcon,
                       ),
+
                       const SizedBox(height: MSizes.spaceBtwInputFields),
 
                       /// Password
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.lock),
-                          labelText: MTexts.passwordPlaceholder,
-                          suffixIcon: Icon(Icons.visibility),
-                        ),
+                      const InputFieldWithIcon(
+                        hintText: "Enter password",
+                        label: 'Password',
+                        prefixIcon: MImages.passwordIcon,
+                        suffixIcon: MImages.eyeIcon,
                       ),
-                      const SizedBox(height: MSizes.spaceBtwInputFields / 2),
+
+                      const SizedBox(height: MSizes.spaceBtwInputFields),
+
+                      const LargeButtonNS(
+                        child: Text("Login"),
+                      ),
+
+                      const SizedBox(height: MSizes.sm),
 
                       ///Remember Me & Forgot Password
                       Row(
@@ -77,21 +93,11 @@ class LoginScreen extends StatelessWidget {
                               child: const Text(MTexts.forgetPassword)),
                         ],
                       ),
-                      const SizedBox(height: MSizes.spaceBtwSections),
-
-                      ///Login Button
-                      SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                              onPressed: () {},
-                              child: const Text(MTexts.signIn))),
-                      const SizedBox(height: MSizes.spaceBtwItems),
                     ],
                   ),
                 ),
               ),
 
-              ///Divider
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -116,16 +122,27 @@ class LoginScreen extends StatelessWidget {
                 ],
               ),
 
-              ///Footer
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     Container(
-              //       decoration: BoxDecoration(border: Border.all(color: MColors.lightGrey), borderRadius: BorderRadius.circular(100)),
-              //       child: IconButton(onPressed: (){}, icon: const Image( width: MSizes.iconMd, height: MSizes.iconMd,  image: AssetImage(MImages.google) )),
-              //     )
-              //   ],
-              // )
+              const SizedBox(height: MSizes.spaceBtwSections),
+
+              const LargeSecButtonWithIcon(
+                icon: MImages.google,
+                child: Text(
+                  "Continue with google",
+                  style: MFonts.fontCB1,
+                ),
+              ),
+
+              const SizedBox(height: MSizes.nm),
+
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                const Text(
+                  "Don’t have an account? ",
+                  style: MFonts.fontCB1,
+                ),
+                TextButton(
+                    onPressed: () {},
+                    child: const Text("Create Account")),
+              ])
             ],
           ),
         ),

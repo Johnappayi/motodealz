@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:motodealz/common/widgets/button_container.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
-import 'package:motodealz/common/widgets/input_field.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
-import 'package:motodealz/utils/constants/text_strings.dart';
 
-class UserVerificationScreen2 extends StatelessWidget {
-  const UserVerificationScreen2({super.key});
+class UserVerificationUploadScreen extends StatelessWidget {
+  const UserVerificationUploadScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,47 +34,27 @@ class UserVerificationScreen2 extends StatelessWidget {
                 height: MSizes.spaceBtwSections,
               ),
               Text(
-                "Basic Info",
+                "We are almost there",
                 style: MFonts.fontBH1,
               ),
               SizedBox(
                 height: MSizes.spaceBtwSections,
               ),
-              Form(
-                child: Column(
-                  children: [
-                    InputField(
-                      label: MTexts.firstName,
-                      hintText: "Enter first name",
-                    ),
-                    SizedBox(
-                      height: MSizes.spaceBtwInputFields,
-                    ),
-                    InputField(
-                      label: MTexts.lastName,
-                      hintText: "Enter last name",
-                    ),
-                    SizedBox(
-                      height: MSizes.spaceBtwInputFields,
-                    ),
-                    InputField(
-                      label: "Residential Address",
-                      hintText: "Enter permanent address",
-                    ),
-                    SizedBox(
-                      height: MSizes.spaceBtwInputFields,
-                    ),
-                    InputField(
-                      label: "Postal Code",
-                      hintText: "Enter postal code",
-                    ),
-                  ],
-                ),
-              ),
               SizedBox(
                 height: MSizes.spaceBtwSections,
               ),
-              LargeButton(child: Text("Continue"))
+              Column(
+                crossAxisAlignment:CrossAxisAlignment.start,
+                children: [
+                  Text("Choose a method to submit your ID", style: MFonts.fontCH4,),
+                  SizedBox(height: MSizes.spaceBtwSections,),
+                  LargeButton(child: Text("Take a picture")),
+                  SizedBox(
+                    height: MSizes.spaceBtwItems,
+                  ),
+                  LargeSecButton(child: Text("Upload")),
+                ],
+              )
             ],
           ),
         )),

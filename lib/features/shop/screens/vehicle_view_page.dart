@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:motodealz/common/styles/svg_styles.dart';
 import 'package:motodealz/common/widgets/button_container.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/common/widgets/draggable_sheet.dart';
@@ -38,10 +39,9 @@ class VehicleVeiwScreen extends StatelessWidget {
             const Padding(
               padding: EdgeInsets.all(MSizes.lg),
               child: Positioned(
-                top: 0,
-                left: 0,
-                child: ButtonContainer(child: MImages.backIcon)
-              ),
+                  top: 0,
+                  left: 0,
+                  child: ButtonContainer(child: MImages.backIcon)),
             ),
             Positioned(
               bottom: 0,
@@ -126,11 +126,7 @@ class VehicleDetailsUI extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SvgPicture.asset(MImages.ownershipIcon,
-                      colorFilter: darkMode
-                          ? const ColorFilter.mode(
-                              MColors.white, BlendMode.srcIn)
-                          : const ColorFilter.mode(
-                              MColors.black, BlendMode.srcIn)),
+                      colorFilter: MSvgStyle.svgStyle(darkMode)),
                   const SizedBox(width: MSizes.sm),
                   const Text(
                     "1st Owner",
@@ -147,11 +143,7 @@ class VehicleDetailsUI extends StatelessWidget {
                   ),
                   const SizedBox(width: MSizes.sm),
                   SvgPicture.asset(MImages.locationIcon,
-                      colorFilter: darkMode
-                          ? const ColorFilter.mode(
-                              MColors.white, BlendMode.srcIn)
-                          : const ColorFilter.mode(
-                              MColors.black, BlendMode.srcIn))
+                      colorFilter: MSvgStyle.svgStyle(darkMode))
                 ],
               ),
             ],
@@ -190,10 +182,17 @@ class VehicleDetailsUI extends StatelessWidget {
             child: const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Toyota Innova for sale",style: MFonts.fontCB2b,),
-                SizedBox(height: MSizes.sm,),
                 Text(
-                    "March 2010 Innova Auto, Single Owner, MH 01 Reg, 48k kms, Silver/Beige, Flawless, 4 New Tires, Unused Spare, 2 Keys, 5Yr Finance Available.",style: MFonts.fontCB2,)
+                  "Toyota Innova for sale",
+                  style: MFonts.fontCB2b,
+                ),
+                SizedBox(
+                  height: MSizes.sm,
+                ),
+                Text(
+                  "March 2010 Innova Auto, Single Owner, MH 01 Reg, 48k kms, Silver/Beige, Flawless, 4 New Tires, Unused Spare, 2 Keys, 5Yr Finance Available.",
+                  style: MFonts.fontCB2,
+                )
               ],
             ),
           ),

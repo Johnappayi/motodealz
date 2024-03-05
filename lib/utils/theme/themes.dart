@@ -7,6 +7,7 @@ import 'package:motodealz/utils/theme/custom%20themes/chip_theme.dart';
 import 'package:motodealz/utils/theme/custom%20themes/elevated_btn_theme.dart';
 import 'package:motodealz/utils/theme/custom%20themes/navbar_theme.dart';
 import 'package:motodealz/utils/theme/custom%20themes/outlined_btn_theme.dart';
+import 'package:motodealz/utils/theme/custom%20themes/text_btn_theme.dart';
 import 'package:motodealz/utils/theme/custom%20themes/text_feild_theme.dart';
 import 'package:motodealz/utils/theme/custom%20themes/text_theme.dart';
 
@@ -28,6 +29,7 @@ class MAppTheme {
     outlinedButtonTheme: MOutlinedButtonTheme.lightOutlinedButtonTheme,
     inputDecorationTheme: MTextFormFieldTheme.lightInputDecorationTheme,
     navigationBarTheme: MNavigationBarTheme.lightNavigationBarTheme,
+    textButtonTheme: MTextBtnTheme.lightTextButtonTheme,
   );
 
   static ThemeData darkTheme = ThemeData(
@@ -45,5 +47,6 @@ class MAppTheme {
     outlinedButtonTheme: MOutlinedButtonTheme.darkOutlinedButtonTheme,
     inputDecorationTheme: MTextFormFieldTheme.darkInputDecorationTheme,
     navigationBarTheme: MNavigationBarTheme.darkNavigationBarTheme,
+    textButtonTheme: MTextBtnTheme.darkTextButtonTheme,
   );
 }

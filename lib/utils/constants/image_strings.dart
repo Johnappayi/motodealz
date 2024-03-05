@@ -44,6 +44,9 @@ class MImages {
   static const String locationIcon = "assets/icons/location.svg";
   static const String premiumIcon = "assets/icons/premuimCar.png";
   static const String ownershipIcon = "assets/icons/personalcard.svg";
+  static const String passwordIcon = "assets/icons/key.svg";
+  static const String eyeIcon = "assets/icons/eye-slash.svg";
+  static const String mailIcon = "assets/icons/sms.svg";
 
   // -- Sample Car Images
   static const String sampleCar1 = "assets/images/car1.png";

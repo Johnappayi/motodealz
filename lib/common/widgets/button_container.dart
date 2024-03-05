@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:motodealz/common/styles/svg_styles.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
@@ -27,10 +28,7 @@ class ButtonContainer extends StatelessWidget {
       height: 35,
       child: SvgPicture.asset(
         child,
-        colorFilter: darkMode
-            ? const ColorFilter.mode(MColors.white, BlendMode.srcIn)
-            : const ColorFilter.mode(MColors.black, BlendMode.srcIn),
-      ),
+        colorFilter: MSvgStyle.svgStyle(darkMode)),
     );
   }
 }

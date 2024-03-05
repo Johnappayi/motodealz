@@ -7,27 +7,35 @@ import '../../constants/sizes.dart';
 class MOutlinedButtonTheme {
   MOutlinedButtonTheme._(); //To avoid creating instances
 
-
   /* -- Light Theme -- */
-  static final lightOutlinedButtonTheme  = OutlinedButtonThemeData(
+  static final lightOutlinedButtonTheme = OutlinedButtonThemeData(
     style: OutlinedButton.styleFrom(
       elevation: 0,
-      foregroundColor: MColors.dark,
-      side: const BorderSide(color: MColors.borderPrimary),
-      textStyle: const TextStyle(fontSize: 16, color: MColors.black, fontWeight: FontWeight.w600),
-      padding: const EdgeInsets.symmetric(vertical: MSizes.buttonHeight, horizontal: 20),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(MSizes.buttonRadius)),
+      backgroundColor: MColors.surface,
+      foregroundColor: MColors.primary,
+      side: const BorderSide(color: MColors.primary2Light),
+      textStyle: const TextStyle(
+          fontSize: 20, color: MColors.primary, fontWeight: FontWeight.w600),
+      padding: const EdgeInsets.symmetric(
+          vertical: MSizes.buttonHeight, horizontal: 20),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(MSizes.nm)),
     ),
   );
 
   /* -- Dark Theme -- */
   static final darkOutlinedButtonTheme = OutlinedButtonThemeData(
     style: OutlinedButton.styleFrom(
-      foregroundColor: MColors.light,
-      side: const BorderSide(color: MColors.borderPrimary),
-      textStyle: const TextStyle(fontSize: 16, color: MColors.textWhite, fontWeight: FontWeight.w600),
-      padding: const EdgeInsets.symmetric(vertical: MSizes.buttonHeight, horizontal: 20),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(MSizes.buttonRadius)),
+      elevation: 0,
+      backgroundColor: MColors.surfaceDark,
+      foregroundColor: MColors.secondary,
+      side: const BorderSide(color: MColors.white),
+      textStyle: const TextStyle(
+          fontSize: 20, color: MColors.white, fontWeight: FontWeight.w600),
+      padding: const EdgeInsets.symmetric(
+          vertical: MSizes.buttonHeight, horizontal: 20),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(MSizes.nm)),
     ),
   );
 }

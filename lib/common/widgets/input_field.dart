@@ -33,19 +33,19 @@ class InputField extends StatelessWidget {
     );
   }
 }
-
 class InputFieldWithIcon extends StatelessWidget {
   const InputFieldWithIcon({
-    super.key,
+    Key? key,
     required this.hintText,
-    required this.label,
     required this.prefixIcon,
     this.suffixIcon,
-  });
+    this.label, 
+  }) : super(key: key);
+
   final String hintText;
-  final String label;
-  final String? suffixIcon;
   final String prefixIcon;
+  final String? suffixIcon;
+  final String? label; // Making label nullable
 
   @override
   Widget build(BuildContext context) {
@@ -53,10 +53,11 @@ class InputFieldWithIcon extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          label,
-          style: MFonts.fontCH4,
-        ),
+        if (label != null) // Display label only if it's not null
+          Text(
+            label!, // Safe to use label directly here after null check
+            style: MFonts.fontCH4,
+          ),
         const SizedBox(
           height: MSizes.sm,
         ),

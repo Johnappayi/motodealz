@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
@@ -38,21 +39,28 @@ class ListedAdFrame2 extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(MSizes.cardRadiusLg),
             // ignore: sized_box_for_whitespace
-            child: Container(
-              width: MHelperFunctions.screenWidth(),
-              child: Column(
-                children: [
-                  Image.asset(
-                    MImages.sampleCar1,
-                    fit: BoxFit.fitWidth,
-                  ),
-                  Container(
+            child: Stack(
+              children: [
+                Image.asset(
+                  MImages.sampleCar1,
+                  height: MHelperFunctions.screenHeight() * 0.23,
+                  width: MHelperFunctions.screenWidth(),
+                  fit: BoxFit.cover,
+                ),
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: Container(
+                      height: MHelperFunctions.screenHeight() * 0.1,
                       decoration: BoxDecoration(
                         color: isPremium
-                            ? (darkMode ? MColors.cardDark : MColors.card)
+                            ? (darkMode
+                                ? MColors.cardDark.withOpacity(0.8)
+                                : MColors.card.withOpacity(0.8))
                             : (darkMode
-                                ? MColors.surfaceDark
-                                : MColors.surface),
+                                ? MColors.surfaceDark.withOpacity(0.8)
+                                : MColors.surface.withOpacity(0.8)),
                       ),
                       padding: const EdgeInsets.all(MSizes.md),
                       child: Column(
@@ -60,21 +68,7 @@ class ListedAdFrame2 extends StatelessWidget {
                           Row(children: [
                             Text(
                               carName,
-                              style: MFonts.fontCB2,
-                            ),
-                            const Spacer(),
-                            Text(
-                              year,
-                              style: MFonts.fontCB4,
-                            ),
-                          ]),
-                          const SizedBox(
-                            height: MSizes.sm,
-                          ),
-                          Row(children: [
-                            Text(
-                              price,
-                              style: MFonts.fontCB2b,
+                              style: MFonts.fontCB1b,
                             ),
                             const Spacer(),
                             Text(
@@ -82,10 +76,24 @@ class ListedAdFrame2 extends StatelessWidget {
                               style: MFonts.fontCB4,
                             ),
                           ]),
+                          const SizedBox(
+                            height: MSizes.xs,
+                          ),
+                          Row(children: [
+                            Text(
+                              year,
+                              style: MFonts.fontCB4,
+                            ),
+                            const Spacer(),
+                            Text(
+                              price,
+                              style: MFonts.fontCB1b,
+                            ),
+                          ]),
                         ],
-                      ))
-                ],
-              ),
+                      )),
+                ),
+              ],
             ),
           ),
           if (isPremium)

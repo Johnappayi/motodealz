@@ -62,7 +62,7 @@ class MImages {
   static const String verifyImg3 = "assets/images/kyc step3 id card.svg";
 
   // -- Brand Icons
-  // static const String nikeLogo = "assets/icons/brands/nike.png";
+  static const String bmwLogo = "assets/logos/popular_brand/BMW 6.png";
   // static const String adidasLogo = "assets/icons/brands/adidas-logo.png";
   // static const String appleLogo = "assets/icons/brands/apple-logo.png";
   // static const String jordanLogo = "assets/icons/brands/jordan-logo.png";

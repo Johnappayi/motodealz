@@ -43,7 +43,7 @@ class ListedAdFrame2 extends StatelessWidget {
               children: [
                 Image.asset(
                   MImages.sampleCar1,
-                  height: MHelperFunctions.screenHeight() * 0.23,
+                  height: MHelperFunctions.screenHeight() * 0.22,
                   width: MHelperFunctions.screenWidth(),
                   fit: BoxFit.cover,
                 ),
@@ -52,7 +52,7 @@ class ListedAdFrame2 extends StatelessWidget {
                   left: 0,
                   right: 0,
                   child: Container(
-                      height: MHelperFunctions.screenHeight() * 0.1,
+                      height: MHelperFunctions.screenHeight() * 0.08,
                       decoration: BoxDecoration(
                         color: isPremium
                             ? (darkMode
@@ -62,8 +62,9 @@ class ListedAdFrame2 extends StatelessWidget {
                                 ? MColors.surfaceDark.withOpacity(0.8)
                                 : MColors.surface.withOpacity(0.8)),
                       ),
-                      padding: const EdgeInsets.all(MSizes.md),
+                      padding: const EdgeInsets.symmetric(horizontal:  MSizes.md, vertical: MSizes.sm),
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Row(children: [
                             Text(
@@ -76,9 +77,7 @@ class ListedAdFrame2 extends StatelessWidget {
                               style: MFonts.fontCB4,
                             ),
                           ]),
-                          const SizedBox(
-                            height: MSizes.xs,
-                          ),
+                          
                           Row(children: [
                             Text(
                               year,

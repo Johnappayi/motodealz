@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:motodealz/common/widgets/app_bar.dart';
 import 'package:motodealz/common/widgets/car_category_item.dart';
 import 'package:motodealz/common/widgets/input_field.dart';
 import 'package:motodealz/common/widgets/listed_ad_frame2.dart';
+import 'package:motodealz/common/widgets/popular_brand_container.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
@@ -109,13 +111,38 @@ class SearchScreen extends StatelessWidget {
                           ],
                         ),
                         const SizedBox(
-                          height: MSizes.sm,
+                          height: MSizes.defaultSpace,
                         ),
-
-                        //popular Brand goes here
-
+                        const Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Popular Brands",
+                              style: MFonts.fontBH1,
+                            ),
+                            SizedBox(
+                              height: MSizes.md,
+                            ),
+                            SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                children: [
+                                  PopularBrandContainer(icon: MImages.bmwLogo),
+                                  SizedBox(width: MSizes.nm,),
+                                  PopularBrandContainer(icon: MImages.bmwLogo),
+                                  SizedBox(width: MSizes.nm,),
+                                  PopularBrandContainer(icon: MImages.bmwLogo),
+                                  SizedBox(width: MSizes.nm,),
+                                  PopularBrandContainer(icon: MImages.bmwLogo),
+                                  SizedBox(width: MSizes.nm,),
+                                  PopularBrandContainer(icon: MImages.bmwLogo),
+                                ],
+                              ),
+                            ), // Example Text Widget 2
+                          ],
+                        ),
                         const SizedBox(
-                          height: MSizes.md,
+                          height: MSizes.defaultSpace,
                         ),
                         const Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -137,7 +164,7 @@ class SearchScreen extends StatelessWidget {
                                   isPremium: true,
                                 ),
                                 SizedBox(
-                                  height: MSizes.nm,
+                                  height: MSizes.lg,
                                 ),
                                 ListedAdFrame2(
                                   carName: 'Corola Altis',
@@ -147,7 +174,7 @@ class SearchScreen extends StatelessWidget {
                                   isPremium: true,
                                 ),
                                 SizedBox(
-                                  height: MSizes.nm,
+                                  height: MSizes.lg,
                                 ),
                                 ListedAdFrame2(
                                   carName: 'Corola Altis',
@@ -157,7 +184,7 @@ class SearchScreen extends StatelessWidget {
                                   isPremium: false,
                                 ),
                                 SizedBox(
-                                  height: MSizes.nm,
+                                  height: MSizes.lg,
                                 ),
                                 ListedAdFrame2(
                                   carName: 'Corola Altis',
@@ -167,7 +194,7 @@ class SearchScreen extends StatelessWidget {
                                   isPremium: false,
                                 ),
                                 SizedBox(
-                                  height: MSizes.nm,
+                                  height: MSizes.lg,
                                 ),
                                 ListedAdFrame2(
                                   carName: 'Corola Altis',
@@ -177,7 +204,7 @@ class SearchScreen extends StatelessWidget {
                                   isPremium: false,
                                 ),
                                 SizedBox(
-                                  height: MSizes.nm,
+                                  height: MSizes.lg,
                                 ),
                                 ListedAdFrame2(
                                   carName: 'Corola Altis',
@@ -202,3 +229,4 @@ class SearchScreen extends StatelessWidget {
     );
   }
 }
+

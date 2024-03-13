@@ -17,95 +17,100 @@ class UserVerificationStartScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-            child: Padding(
-          padding: const EdgeInsets.only(left: MSizes.defaultSpace,right: MSizes.defaultSpace,top: MSizes.nm,bottom:MSizes.defaultSpace),
-          child: Column(
-            children: [
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [ButtonContainer(child: MImages.closeIcon)],
-              ),
-              const Text(
-                "KYC VERIFICATION",
-                style: MFonts.fontAH1,
-              ),
-              const SizedBox(
-                height: MSizes.md,
-              ),
-              const Text(
-                "Verify your identity in 3 Easy steps",
-                style: MFonts.fontCB1,
-              ),
-              const SizedBox(
-                height: MSizes.spaceBtwSections,
-              ),
-              Container(
-                padding: const EdgeInsets.all(MSizes.md),
-                width: MHelperFunctions.screenWidth()*0.85,
-                decoration: BoxDecoration(
-                    border: Border.all(color: MColors.outline, width: 1),
-                    color: darkMode ? MColors.surfaceDark : MColors.surface,
-                    borderRadius: BorderRadius.circular(MSizes.cardRadiusMd)),
-                child: Column(children: [
-                  SvgPicture.asset(MImages.verifyImg1),
-                  const SizedBox(
-                    height: MSizes.nm,
-                  ),
-                  Text(
-                    "Step 1 : Basic Info",
-                    style: MFonts.fontBH1.copyWith(color: MColors.lightGrey),
-                  )
-                ]),
-              ),
-              const SizedBox(
-                height: MSizes.nm,
-              ),
-              Container(
-                padding: const EdgeInsets.all(MSizes.md),
-                width: MHelperFunctions.screenWidth()*0.85,
-                decoration: BoxDecoration(
-                    border: Border.all(color: MColors.outline, width: 1),
-                    color: darkMode ? MColors.surfaceDark : MColors.surface,
-                    borderRadius: BorderRadius.circular(MSizes.cardRadiusMd)),
-                child: Column(children: [
-                  SvgPicture.asset(MImages.verifyImg2),
-                  const SizedBox(
-                    height: MSizes.nm,
-                  ),
-                  Text(
-                    "Step 2 : Take Selfie",
-                    style: MFonts.fontBH1.copyWith(color: MColors.lightGrey),
-                  )
-                ]),
-              ),
-              const SizedBox(
-                height: MSizes.nm,
-              ),
-              Container(
-                padding: const EdgeInsets.all(MSizes.md),
-                width: MHelperFunctions.screenWidth()*0.85,
-                decoration: BoxDecoration(
-                    border: Border.all(color: MColors.outline, width: 1),
-                    color: darkMode ? MColors.surfaceDark : MColors.surface,
-                    borderRadius: BorderRadius.circular(MSizes.cardRadiusMd)),
-                child: Column(children: [
-                  SvgPicture.asset(MImages.verifyImg3),
-                  const SizedBox(
-                    height: MSizes.nm,
-                  ),
-                  Text(
-                    "Step 3 : Submit ID Card",
-                    style: MFonts.fontBH1.copyWith(color: MColors.lightGrey),
-                  )
-                ]),
-              ),
-              const SizedBox(
-                height: MSizes.spaceBtwSections,
-              ),
-              const LargeButton(child: Text("Get started"))
-            ],
+          child: Padding(
+            padding: const EdgeInsets.only(
+                left: MSizes.defaultSpace,
+                right: MSizes.defaultSpace,
+                top: MSizes.nm,
+                bottom: MSizes.defaultSpace),
+            child: Column(
+              children: [
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [ButtonContainer(child: MImages.closeIcon)],
+                ),
+                const Text(
+                  "KYC VERIFICATION",
+                  style: MFonts.fontAH1,
+                ),
+                const SizedBox(
+                  height: MSizes.md,
+                ),
+                const Text(
+                  "Verify your identity in 3 Easy steps",
+                  style: MFonts.fontCB1,
+                ),
+                const SizedBox(
+                  height: MSizes.spaceBtwSections,
+                ),
+                Container(
+                  padding: const EdgeInsets.all(MSizes.md),
+                  width: MHelperFunctions.screenWidth() * 0.85,
+                  decoration: BoxDecoration(
+                      border: Border.all(color: MColors.outline, width: 1),
+                      color: darkMode ? MColors.surfaceDark : MColors.surface,
+                      borderRadius: BorderRadius.circular(MSizes.cardRadiusMd)),
+                  child: Column(children: [
+                    SvgPicture.asset(MImages.verifyImg1),
+                    const SizedBox(
+                      height: MSizes.nm,
+                    ),
+                    Text(
+                      "Step 1 : Basic Info",
+                      style: MFonts.fontBH1.copyWith(color: MColors.lightGrey),
+                    )
+                  ]),
+                ),
+                const SizedBox(
+                  height: MSizes.nm,
+                ),
+                Container(
+                  padding: const EdgeInsets.all(MSizes.md),
+                  width: MHelperFunctions.screenWidth() * 0.85,
+                  decoration: BoxDecoration(
+                      border: Border.all(color: MColors.outline, width: 1),
+                      color: darkMode ? MColors.surfaceDark : MColors.surface,
+                      borderRadius: BorderRadius.circular(MSizes.cardRadiusMd)),
+                  child: Column(children: [
+                    SvgPicture.asset(MImages.verifyImg2),
+                    const SizedBox(
+                      height: MSizes.nm,
+                    ),
+                    Text(
+                      "Step 2 : Take Selfie",
+                      style: MFonts.fontBH1.copyWith(color: MColors.lightGrey),
+                    )
+                  ]),
+                ),
+                const SizedBox(
+                  height: MSizes.nm,
+                ),
+                Container(
+                  padding: const EdgeInsets.all(MSizes.md),
+                  width: MHelperFunctions.screenWidth() * 0.85,
+                  decoration: BoxDecoration(
+                      border: Border.all(color: MColors.outline, width: 1),
+                      color: darkMode ? MColors.surfaceDark : MColors.surface,
+                      borderRadius: BorderRadius.circular(MSizes.cardRadiusMd)),
+                  child: Column(children: [
+                    SvgPicture.asset(MImages.verifyImg3),
+                    const SizedBox(
+                      height: MSizes.nm,
+                    ),
+                    Text(
+                      "Step 3 : Submit ID Card",
+                      style: MFonts.fontBH1.copyWith(color: MColors.lightGrey),
+                    )
+                  ]),
+                ),
+                const SizedBox(
+                  height: MSizes.spaceBtwSections,
+                ),
+                const LargeButton(child: Text("Get started"))
+              ],
+            ),
           ),
-        )),
+        ),
       ),
     );
   }

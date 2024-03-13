@@ -59,6 +59,14 @@ class UserVerificationScreen2 extends StatelessWidget {
                     SizedBox(
                       height: MSizes.spaceBtwInputFields,
                     ),
+                    InputFieldWithIcon(
+                      label: "Date of Birth",
+                      hintText: "DD/MM/YYYY",
+                      suffixIcon: MImages.calenderIcon,
+                    ),
+                    SizedBox(
+                      height: MSizes.spaceBtwInputFields,
+                    ),
                     InputField(
                       label: "Residential Address",
                       hintText: "Enter permanent address",

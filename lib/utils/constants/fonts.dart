@@ -18,4 +18,5 @@ class MFonts {
   static const fontCB2b = TextStyle(fontFamily: 'Lato' , fontWeight: FontWeight.w700 , fontSize: 14) ;
   static const fontCB3 = TextStyle(fontFamily: 'Lato' , fontWeight: FontWeight.w600 , fontSize: 12) ;
   static const fontCB4 = TextStyle(fontFamily: 'Lato' , fontWeight: FontWeight.w400 , fontSize: 10) ;
+
 }

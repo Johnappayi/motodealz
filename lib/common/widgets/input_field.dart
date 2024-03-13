@@ -37,13 +37,13 @@ class InputFieldWithIcon extends StatelessWidget {
   const InputFieldWithIcon({
     Key? key,
     required this.hintText,
-    required this.prefixIcon,
+    this.prefixIcon,
     this.suffixIcon,
     this.label, 
   }) : super(key: key);
 
   final String hintText;
-  final String prefixIcon;
+  final String? prefixIcon;
   final String? suffixIcon;
   final String? label; // Making label nullable
 
@@ -73,13 +73,15 @@ class InputFieldWithIcon extends StatelessWidget {
                     ),
                   )
                 : null,
-            prefixIcon: Padding(
+            prefixIcon: 
+            prefixIcon != null
+                ? Padding(
               padding: const EdgeInsets.all(MSizes.nm),
               child: SvgPicture.asset(
-                prefixIcon,
+                prefixIcon!,
                 colorFilter: MSvgStyle.svgStyle2(darkMode),
               ),
-            ),
+            ): null,
           ),
         ),
       ],

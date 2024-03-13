@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:motodealz/common/styles/text_style.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
+import 'package:motodealz/utils/constants/sizes.dart';
+import 'package:motodealz/utils/helpers/helper_functions.dart';
 
 class InboxScreen extends StatefulWidget {
   const InboxScreen({Key? key}) : super(key: key);
@@ -15,22 +18,24 @@ class _InboxScreenState extends State<InboxScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final bool darkMode = MHelperFunctions.isDarkMode(context);
     return Scaffold(
       backgroundColor: MColors.primaryBackground,
       appBar: AppBar(
-        backgroundColor: MColors.primary,
+        backgroundColor: darkMode ? MColors.primaryBackground : MColors.primary,
         title: Text(
           "Messages",
-          style: MFonts.fontAH1.copyWith(color: Colors.white),
+          style: MFonts.fontAH1
+              .copyWith(color: darkMode ? MColors.primary : MColors.white),
         ),
       ),
       body: SafeArea(
         child: Column(
           children: [
             Container(
-              decoration: const BoxDecoration(
-                color: MColors.primaryBackground,
-                borderRadius: BorderRadius.only(
+              decoration:  BoxDecoration(
+                color: darkMode ? MColors.darkerGrey : MColors.primaryBackground,
+                borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(25),
                   topRight: Radius.circular(25),
                 ),
@@ -47,23 +52,20 @@ class _InboxScreenState extends State<InboxScreen> {
             Expanded(
               child: Container(
                 width: double.infinity,
-                decoration: const BoxDecoration(
-                  color: MColors.primaryBackground,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(25),
-                    topRight: Radius.circular(25),
-                  ),
+                decoration: BoxDecoration(
+                  color: darkMode ? MColors.darkerGrey : MColors.primaryBackground,
                 ),
                 child: ListView.separated(
                   itemBuilder: (context, index) {
                     return ListTile(
-                      title: Text(
+                      title: const Text(
                         'aadhit viji',
-                        style: MFonts.fontCH2.copyWith(color: MColors.black),
+                        style: MFonts.fontCH2,
                       ),
                       subtitle: Text(
                         'Hey there! Is the vehicle still available?',
-                        style: MFonts.fontCB1.copyWith(color: MColors.lightGrey),
+                        style:
+                            MFonts.fontCB1.copyWith(color: darkMode ? MColors.darkGrey : MColors.lightGrey),
                       ),
                       leading: const CircleAvatar(
                         radius: 30,
@@ -92,6 +94,7 @@ class _InboxScreenState extends State<InboxScreen> {
 
   Widget buildTabItem(String title, int index) {
     final bool isSelected = index == _selectedIndex;
+    final bool darkMode = MHelperFunctions.isDarkMode(context);
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -99,12 +102,12 @@ class _InboxScreenState extends State<InboxScreen> {
         });
       },
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 16),
+        padding: const EdgeInsets.symmetric(vertical: MSizes.md),
         decoration: BoxDecoration(
           border: isSelected
-              ? const Border(
+              ? Border(
                   bottom: BorderSide(
-                    color: Colors.white,
+                    color: darkMode ? MColors.secondary : MColors.primary,
                     width: 2,
                   ),
                 )
@@ -112,11 +115,7 @@ class _InboxScreenState extends State<InboxScreen> {
         ),
         child: Text(
           title,
-          style: TextStyle(
-            color: isSelected ? Colors.white : Colors.grey,
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
+          style: MTextStyles.tabHead(isSelected, darkMode),
         ),
       ),
     );

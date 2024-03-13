@@ -4,7 +4,7 @@ import 'package:motodealz/common/styles/svg_styles.dart';
 import 'package:motodealz/common/widgets/app_bar.dart';
 import 'package:motodealz/common/widgets/car_category_item.dart';
 import 'package:motodealz/common/widgets/listed_ad_frame1.dart';
-import 'package:motodealz/features/shop/screens/vehicle_image_veiw_page.dart';
+//import 'package:motodealz/features/shop/screens/vehicle_image_veiw_page.dart';
 import 'package:motodealz/features/shop/screens/vehicle_view_page.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';

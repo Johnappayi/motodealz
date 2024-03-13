@@ -48,6 +48,16 @@ class MImages {
   static const String eyeIcon = "assets/icons/eye-slash.svg";
   static const String mailIcon = "assets/icons/sms.svg";
   static const String searchBarIcon = "assets/icons/searchbar.svg";
+  static const String calenderIcon = "assets/icons/calendar.svg";
+  static const String settingsIcon =
+      "assets/icons/setting icon profile page.svg";
+  static const String cameraIcon =
+      "assets/icons/camera icon upload img page.svg";
+  static const String starIcon = "assets/icons/star icon profile page.svg";
+  static const String arrowRIcon = "assets/icons/arrow-right.svg";
+  static const String paymentIcon = "assets/icons/card icon profile page.svg";
+  static const String changePasswordIcon = "assets/icons/change password.svg";
+  static const String favouriteIcon = "assets/icons/favourite profile page.svg";
 
   // -- Sample Car Images
   static const String sampleCar1 = "assets/images/car1.png";
@@ -55,6 +65,9 @@ class MImages {
   static const String sampleCar3 = "assets/images/car3.png";
   static const String sampleCar4 = "assets/images/car4.png";
   static const String sampleCar5 = "assets/images/car5.png";
+
+  // -- Sample user Images
+  static const String sampleUser1 = "assets/images/userImage.png";
 
   // -- Verfocation Illustration Images
   static const String verifyImg1 = "assets/images/kyc step1 basic info.svg";

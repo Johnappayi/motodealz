@@ -67,6 +67,7 @@ class SearchScreen extends StatelessWidget {
                                         darkMode: darkMode,
                                         icon: MImages.sedanIcon,
                                         type: 'Sedan',
+                                        
                                       ),
                                       CarCategoryItem(
                                         darkMode: darkMode,

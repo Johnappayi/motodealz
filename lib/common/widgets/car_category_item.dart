@@ -5,11 +5,11 @@ import 'package:motodealz/utils/constants/fonts.dart';
 
 class CarCategoryItem extends StatelessWidget {
   const CarCategoryItem({
-    super.key,
+    Key? key,
     required this.darkMode,
     required this.icon,
     required this.type,
-  });
+  }) : super(key: key);
 
   final bool darkMode;
   final String icon;
@@ -19,8 +19,7 @@ class CarCategoryItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        SvgPicture.asset(icon,
-            colorFilter: MSvgStyle.svgStyle(darkMode)),
+        SvgPicture.asset(icon, colorFilter: MSvgStyle.svgStyle(darkMode)),
         const SizedBox(width: 12),
         Text(
           type,

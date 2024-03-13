@@ -13,6 +13,7 @@ class ListedAdFrame1 extends StatelessWidget {
     required this.year,
     required this.mileage,
     required this.isPremium,
+     required this.onPressed,
   });
 
   final String carName;
@@ -20,78 +21,82 @@ class ListedAdFrame1 extends StatelessWidget {
   final String year;
   final String mileage;
   final bool isPremium;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
     final darkMode = MHelperFunctions.isDarkMode(context);
 
-    return Container(
-      decoration: BoxDecoration(boxShadow: [
-        BoxShadow(
-            color: darkMode ? MColors.shadowDark : MColors.shadowLight,
-            blurRadius: 10.0,
-            offset: const Offset(2, 2)),
-      ]),
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(MSizes.cardRadiusLg),
-            // ignore: sized_box_for_whitespace
-            child: Container(
-              width: MHelperFunctions.screenWidth() * 0.42,
-              child: Column(
-                children: [
-                  Image.asset(
-                    MImages.sampleCar1,
-                    fit: BoxFit.cover,
-                  ),
-                  Container(
-                      decoration: BoxDecoration(
-                        color: isPremium
-                            ? (darkMode ? MColors.cardDark : MColors.card)
-                            : (darkMode
-                                ? MColors.surfaceDark
-                                : MColors.surface),
-                      ),
-                      padding: const EdgeInsets.all(MSizes.md),
-                      child: Column(
-                        children: [
-                          Row(children: [
-                            Text(
-                              carName,
-                              style: MFonts.fontCB2,
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        decoration: BoxDecoration(boxShadow: [
+          BoxShadow(
+              color: darkMode ? MColors.shadowDark : MColors.shadowLight,
+              blurRadius: 10.0,
+              offset: const Offset(2, 2)),
+        ]),
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(MSizes.cardRadiusLg),
+              // ignore: sized_box_for_whitespace
+              child: Container(
+                width: MHelperFunctions.screenWidth() * 0.42,
+                child: Column(
+                  children: [
+                    Image.asset(
+                      MImages.sampleCar1,
+                      fit: BoxFit.cover,
+                    ),
+                    Container(
+                        decoration: BoxDecoration(
+                          color: isPremium
+                              ? (darkMode ? MColors.cardDark : MColors.card)
+                              : (darkMode
+                                  ? MColors.surfaceDark
+                                  : MColors.surface),
+                        ),
+                        padding: const EdgeInsets.all(MSizes.md),
+                        child: Column(
+                          children: [
+                            Row(children: [
+                              Text(
+                                carName,
+                                style: MFonts.fontCB2,
+                              ),
+                              const Spacer(),
+                              Text(
+                                year,
+                                style: MFonts.fontCB4,
+                              ),
+                            ]),
+                            const SizedBox(
+                              height: MSizes.sm,
                             ),
-                            const Spacer(),
-                            Text(
-                              year,
-                              style: MFonts.fontCB4,
-                            ),
-                          ]),
-                          const SizedBox(
-                            height: MSizes.sm,
-                          ),
-                          Row(children: [
-                            Text(
-                              price,
-                              style: MFonts.fontCB2b,
-                            ),
-                            const Spacer(),
-                            Text(
-                              mileage,
-                              style: MFonts.fontCB4,
-                            ),
-                          ]),
-                        ],
-                      ))
-                ],
+                            Row(children: [
+                              Text(
+                                price,
+                                style: MFonts.fontCB2b,
+                              ),
+                              const Spacer(),
+                              Text(
+                                mileage,
+                                style: MFonts.fontCB4,
+                              ),
+                            ]),
+                          ],
+                        ))
+                  ],
+                ),
               ),
             ),
-          ),
-          if (isPremium)
-            Positioned(
-                top: -5, left: 1, child: Image.asset(MImages.premiumIcon)),
-        ],
+            if (isPremium)
+              Positioned(
+                  top: -5, left: 1, child: Image.asset(MImages.premiumIcon)),
+          ],
+        ),
       ),
     );
   }

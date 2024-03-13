@@ -4,6 +4,8 @@ import 'package:motodealz/common/styles/svg_styles.dart';
 import 'package:motodealz/common/widgets/app_bar.dart';
 import 'package:motodealz/common/widgets/car_category_item.dart';
 import 'package:motodealz/common/widgets/listed_ad_frame1.dart';
+import 'package:motodealz/features/shop/screens/vehicle_image_veiw_page.dart';
+import 'package:motodealz/features/shop/screens/vehicle_view_page.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
@@ -20,15 +22,14 @@ class HomeScreen extends StatelessWidget {
       child: Column(
         children: [
           const MAppBar(),
-                const SizedBox(
-                  height: MSizes.defaultSpace,
-                ),
+          const SizedBox(
+            height: MSizes.defaultSpace,
+          ),
           Expanded(
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  
                   Padding(
                     padding: const EdgeInsets.all(MSizes.lg),
                     child: Column(
@@ -44,55 +45,55 @@ class HomeScreen extends StatelessWidget {
                             Container(
                               padding: const EdgeInsets.all(MSizes.md),
                               decoration: BoxDecoration(
-                                  color: darkMode ? MColors.cardDark : MColors.card,
-                                  borderRadius:
-                                      BorderRadius.circular(MSizes.cardRadiusMd)),
+                                  color: darkMode
+                                      ? MColors.cardDark
+                                      : MColors.card,
+                                  borderRadius: BorderRadius.circular(
+                                      MSizes.cardRadiusMd)),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       CarCategoryItem(
-                                        darkMode: darkMode,
-                                        icon: MImages.sedanIcon,
-                                        type: 'Sedan',
-                                      ),
+                                          darkMode: darkMode,
+                                          icon: MImages.sedanIcon,
+                                          type: 'Sedan',),
                                       CarCategoryItem(
-                                        darkMode: darkMode,
-                                        icon: MImages.hatchbackIcon,
-                                        type: 'Hatchback',
-                                      )
+                                          darkMode: darkMode,
+                                          icon: MImages.hatchbackIcon,
+                                          type: 'Hatchback',)
                                     ],
                                   ),
                                   const Spacer(),
                                   Column(
                                     children: [
                                       CarCategoryItem(
-                                        darkMode: darkMode,
-                                        icon: MImages.suvIcon,
-                                        type: 'SUV',
-                                      ),
+                                          darkMode: darkMode,
+                                          icon: MImages.suvIcon,
+                                          type: 'SUV',
+                                          ),
                                       CarCategoryItem(
-                                        darkMode: darkMode,
-                                        icon: MImages.muvIcon,
-                                        type: 'MUV',
-                                      )
+                                          darkMode: darkMode,
+                                          icon: MImages.muvIcon,
+                                          type: 'MUV',
+                                          )
                                     ],
                                   ),
                                   const Spacer(),
                                   Column(
                                     children: [
                                       CarCategoryItem(
-                                        darkMode: darkMode,
-                                        icon: MImages.coupeIcon,
-                                        type: 'Coupe',
-                                      ),
+                                          darkMode: darkMode,
+                                          icon: MImages.coupeIcon,
+                                          type: 'Coupe',),
                                       CarCategoryItem(
-                                        darkMode: darkMode,
-                                        icon: MImages.pickupIcon,
-                                        type: 'Pickup',
-                                      )
+                                          darkMode: darkMode,
+                                          icon: MImages.pickupIcon,
+                                          type: 'Pickup',
+                                        )
                                     ],
                                   ),
                                 ],
@@ -103,31 +104,42 @@ class HomeScreen extends StatelessWidget {
                         const SizedBox(
                           height: MSizes.sm,
                         ),
-                        Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                          const Text(
-                            "Choose your location",
-                            style: MFonts.fontCB3,
-                          ),
-                          SvgPicture.asset(MImages.locationIcon,
-                              colorFilter: MSvgStyle.svgStyle(darkMode)),
-                        ]),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              const Text(
+                                "Choose your location",
+                                style: MFonts.fontCB3,
+                              ),
+                              SvgPicture.asset(MImages.locationIcon,
+                                  colorFilter: MSvgStyle.svgStyle(darkMode)),
+                            ]),
                         const SizedBox(
                           height: MSizes.md,
                         ),
-                        const Column(
+                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            const Text(
                               "Top recommendations",
                               style: MFonts.fontBH1,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: MSizes.md,
                             ), // Example Text Widget 1
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 ListedAdFrame1(
+                                  onPressed: () {
+                                            // Navigate to a different page
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const VehicleVeiwScreen()),
+                                            );
+                                          },
                                   carName: 'Corola Altis',
                                   year: '2000',
                                   mileage: '2,50,000km',
@@ -135,6 +147,15 @@ class HomeScreen extends StatelessWidget {
                                   isPremium: true,
                                 ),
                                 ListedAdFrame1(
+                                  onPressed: () {
+                                            // Navigate to a different page
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const VehicleVeiwScreen()),
+                                            );
+                                          },
                                   carName: 'Corola Altis',
                                   year: '2000',
                                   mileage: '2,50,000km',
@@ -143,13 +164,22 @@ class HomeScreen extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: MSizes.sm,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 ListedAdFrame1(
+                                  onPressed: () {
+                                            // Navigate to a different page
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const VehicleVeiwScreen()),
+                                            );
+                                          },
                                   carName: 'Corola Altis',
                                   year: '2000',
                                   mileage: '2,50,000km',
@@ -157,6 +187,15 @@ class HomeScreen extends StatelessWidget {
                                   isPremium: false,
                                 ),
                                 ListedAdFrame1(
+                                  onPressed: () {
+                                            // Navigate to a different page
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const VehicleVeiwScreen()),
+                                            );
+                                          },
                                   carName: 'Corola Altis',
                                   year: '2000',
                                   mileage: '2,50,000km',
@@ -165,13 +204,22 @@ class HomeScreen extends StatelessWidget {
                                 ),
                               ],
                             ), // Example Text Widget 2
-                          SizedBox(
+                            const SizedBox(
                               height: MSizes.sm,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 ListedAdFrame1(
+                                  onPressed: () {
+                                            // Navigate to a different page
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const VehicleVeiwScreen()),
+                                            );
+                                          },
                                   carName: 'Corola Altis',
                                   year: '2000',
                                   mileage: '2,50,000km',
@@ -179,6 +227,15 @@ class HomeScreen extends StatelessWidget {
                                   isPremium: false,
                                 ),
                                 ListedAdFrame1(
+                                  onPressed: () {
+                                            // Navigate to a different page
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const VehicleVeiwScreen()),
+                                            );
+                                          },
                                   carName: 'Corola Altis',
                                   year: '2000',
                                   mileage: '2,50,000km',
@@ -186,7 +243,7 @@ class HomeScreen extends StatelessWidget {
                                   isPremium: false,
                                 ),
                               ],
-                            ), 
+                            ),
                           ],
                         ),
                       ],

@@ -58,6 +58,8 @@ class MImages {
   static const String paymentIcon = "assets/icons/card icon profile page.svg";
   static const String changePasswordIcon = "assets/icons/change password.svg";
   static const String favouriteIcon = "assets/icons/favourite profile page.svg";
+  static const String verifyIcon =
+      "assets/icons/verify now icon profile page.svg";
 
   // -- Sample Car Images
   static const String sampleCar1 = "assets/images/car1.png";

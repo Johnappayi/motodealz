@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motodealz/common/styles/svg_styles.dart';
-import 'package:motodealz/features/search/screens/search_result.dart';
+import 'package:motodealz/features/chat/screens/inbox_screen.dart';
+import 'package:motodealz/features/profile/screen/profile.dart';
 import 'package:motodealz/features/search/screens/search_screen.dart';
 import 'package:motodealz/features/shop/screens/homepage.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
+
 
 class NavigationMenu extends StatelessWidget {
   const NavigationMenu({super.key});
@@ -71,11 +73,9 @@ class NavigationController extends GetxController {
 
   final screen = [
     const HomeScreen(),
-    const SearchResultScreen(),
+    const InboxScreen(),
     const SizedBox(),
     const SearchScreen(),
-    Container(
-      color: Colors.purple,
-    )
+    const ProfileScreen(),
   ];
 }

@@ -24,3 +24,25 @@ class MAppBar extends StatelessWidget {
     );
   }
 }
+
+class MAppBar2 extends StatelessWidget {
+  const MAppBar2({super.key});
+ 
+  @override
+  Widget build(BuildContext context) {
+    final darkMode = MHelperFunctions.isDarkMode(context);
+  
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        IconButton(
+            onPressed: () {}, icon: SvgPicture.asset(MImages.burgerIcon , colorFilter: MSvgStyle.svgStyle(darkMode))),
+        Image.asset(darkMode ? MImages.appBarLogoL : MImages.appBarLogoD),
+        SizedBox(
+          width: MHelperFunctions.screenWidth() * 0.1,
+        ),
+      ],
+    );
+  }
+}
+

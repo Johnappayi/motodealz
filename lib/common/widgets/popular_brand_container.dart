@@ -19,7 +19,7 @@ class PopularBrandContainer extends StatelessWidget {
         height: MHelperFunctions.screenWidth() * 0.2,
         padding: const EdgeInsets.all(MSizes.sm),
         decoration: BoxDecoration(
-            color: darkMode ? MColors.cardDark : MColors.card,
+            color: darkMode ? MColors.surfaceDark : MColors.surface,
             borderRadius: BorderRadius.circular(MSizes.cardRadiusMd)),
         child: Image.asset(icon));
   }

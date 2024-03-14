@@ -60,6 +60,12 @@ class MImages {
   static const String favouriteIcon = "assets/icons/favourite profile page.svg";
   static const String verifyIcon =
       "assets/icons/verify now icon profile page.svg";
+  static const String permissionIcon =
+      "assets/icons/layer(general settings page).svg";
+  static const String reportIcon = "assets/icons/pen.svg";
+  static const String faqIcon = "assets/icons/document.svg";
+  static const String privacyIcon = "assets/icons/privacy policy box.svg";
+  static const String aboutIcon = "assets/icons/info-circle.svg";
 
   // -- Sample Car Images
   static const String sampleCar1 = "assets/images/car1.png";

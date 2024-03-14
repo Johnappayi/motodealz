@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:motodealz/common/widgets/button_container.dart';
+// import 'package:motodealz/common/widgets/button_container.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
@@ -17,7 +17,7 @@ class VehicleImageViewScreen extends StatelessWidget {
             const Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                ButtonContainer(child:MImages.closeIcon,)
+                // ButtonContainer(child:MImages.closeIcon,)
               ],
             ),
             Image.asset(

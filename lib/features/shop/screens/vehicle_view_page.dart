@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:motodealz/common/styles/svg_styles.dart';
-import 'package:motodealz/common/widgets/button_container.dart';
+// import 'package:motodealz/common/widgets/button_container.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/common/widgets/draggable_sheet.dart';
 import 'package:motodealz/utils/constants/colors.dart';
@@ -36,13 +36,14 @@ class VehicleVeiwScreen extends StatelessWidget {
                 ],
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.all(MSizes.lg),
-              child: Positioned(
-                  top: 0,
-                  left: 0,
-                  child: ButtonContainer(child: MImages.backIcon)),
-            ),
+            // const Padding(
+            //   padding: EdgeInsets.all(MSizes.lg),
+            //   child: Positioned(
+            //     top: 0,
+            //     left: 0,
+            //     child: ButtonContainer(child: MImages.backIcon),
+            //   ),
+            // ),
             Positioned(
               bottom: 0,
               child: Container(

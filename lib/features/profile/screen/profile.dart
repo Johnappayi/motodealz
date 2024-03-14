@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:motodealz/common/styles/svg_styles.dart';
-import 'package:motodealz/common/widgets/button_container.dart';
+// import 'package:motodealz/common/widgets/button_container.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/common/widgets/listed_ad_frame3.dart';
 import 'package:motodealz/utils/constants/colors.dart';
@@ -32,7 +32,7 @@ class ProfileScreen extends StatelessWidget {
                   children: [
                     const Row(
                       mainAxisAlignment: MainAxisAlignment.end,
-                      children: [ButtonContainer(child: MImages.settingsIcon)],
+                      // children: [ButtonContainer(child: MImages.settingsIcon)],
                     ),
                     const Text(
                       "YOUR PROFILE",

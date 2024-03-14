@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:motodealz/common/widgets/button_container.dart';
+// import 'package:motodealz/common/widgets/button_container.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/common/widgets/input_field.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
@@ -26,7 +26,7 @@ class UserVerificationScreen2 extends StatelessWidget {
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
-                children: [ButtonContainer(child: MImages.closeIcon)],
+                // children: [ButtonContainer(child: MImages.closeIcon)],
               ),
               Text(
                 "KYC VERIFICATION",

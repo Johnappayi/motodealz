@@ -23,7 +23,7 @@ class ButtonContainer extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(MSizes.sm),
         decoration: BoxDecoration(
-          color: darkMode ? MColors.secondary : MColors.surface,
+          color: darkMode ? MColors.secondary : MColors.card,
           borderRadius: const BorderRadius.all(
             Radius.circular(MSizes.borderRadiusLg),
           ),

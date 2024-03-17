@@ -21,7 +21,7 @@ class MSideBar extends StatelessWidget {
       width: MHelperFunctions.screenWidth() * 0.77, // Adjust the width as needed
       color: darkMode
           ? MColors.cardDark
-          : MColors.card, // Adjust the background color as needed
+          : MColors.surface, // Adjust the background color as needed
       child: Column(
         children: [
           Row(

@@ -37,216 +37,211 @@ class _SearchScreenState extends State<SearchScreen> {
           Column(
             children: [
               MAppBar(onMenuPressed: _toggleSideBar),
+              const Padding(
+                padding: EdgeInsets.only(left: MSizes.lg, right: MSizes.lg, bottom: MSizes.nm),
+                child: SearchField(
+                            prefixIcon: MImages.searchBarIcon,
+                            hintText: 'What are you looking for!',
+                          ),
+              ),   
               Expanded(
                 child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(MSizes.lg),
-                        child: Column(
+                  child: Padding(
+                    padding: const EdgeInsets.all(MSizes.lg),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const SearchField(
-                              prefixIcon: MImages.searchBarIcon,
-                              hintText: 'What are you looking for!',
+                            const Text(
+                              "Select Category",
+                              style: MFonts.fontBH1,
+                            ), // Example Text Widget 1
+                            Container(
+                              padding: const EdgeInsets.all(MSizes.md),
+                              decoration: BoxDecoration(
+                                  color: darkMode
+                                      ? MColors.surfaceDark
+                                      : MColors.surface,
+                                  borderRadius: BorderRadius.circular(
+                                      MSizes.cardRadiusMd)),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      CarCategoryItem(
+                                        darkMode: darkMode,
+                                        icon: MImages.sedanIcon,
+                                        type: 'Sedan',
+                                      ),
+                                      CarCategoryItem(
+                                        darkMode: darkMode,
+                                        icon: MImages.hatchbackIcon,
+                                        type: 'Hatchback',
+                                      )
+                                    ],
+                                  ),
+                                  const Spacer(),
+                                  Column(
+                                    children: [
+                                      CarCategoryItem(
+                                        darkMode: darkMode,
+                                        icon: MImages.suvIcon,
+                                        type: 'SUV',
+                                      ),
+                                      CarCategoryItem(
+                                        darkMode: darkMode,
+                                        icon: MImages.muvIcon,
+                                        type: 'MUV',
+                                      )
+                                    ],
+                                  ),
+                                  const Spacer(),
+                                  Column(
+                                    children: [
+                                      CarCategoryItem(
+                                        darkMode: darkMode,
+                                        icon: MImages.coupeIcon,
+                                        type: 'Coupe',
+                                      ),
+                                      CarCategoryItem(
+                                        darkMode: darkMode,
+                                        icon: MImages.pickupIcon,
+                                        type: 'Pickup',
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ), // Example Text Widget 2
+                          ],
+                        ),
+                        const SizedBox(
+                          height: MSizes.defaultSpace,
+                        ),
+                        const Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Popular Brands",
+                              style: MFonts.fontBH1,
                             ),
-                            const SizedBox(
-                              height: MSizes.defaultSpace,
+                            SizedBox(
+                              height: MSizes.md,
                             ),
+                            SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                children: [
+                                  PopularBrandContainer(
+                                      icon: MImages.bmwLogo),
+                                  SizedBox(
+                                    width: MSizes.nm,
+                                  ),
+                                  PopularBrandContainer(
+                                      icon: MImages.bmwLogo),
+                                  SizedBox(
+                                    width: MSizes.nm,
+                                  ),
+                                  PopularBrandContainer(
+                                      icon: MImages.bmwLogo),
+                                  SizedBox(
+                                    width: MSizes.nm,
+                                  ),
+                                  PopularBrandContainer(
+                                      icon: MImages.bmwLogo),
+                                  SizedBox(
+                                    width: MSizes.nm,
+                                  ),
+                                  PopularBrandContainer(
+                                      icon: MImages.bmwLogo),
+                                ],
+                              ),
+                            ), // Example Text Widget 2
+                          ],
+                        ),
+                        const SizedBox(
+                          height: MSizes.defaultSpace,
+                        ),
+                        const Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Recommended for you ",
+                              style: MFonts.fontBH1,
+                            ),
+                            SizedBox(
+                              height: MSizes.md,
+                            ), // Example Text Widget 1
                             Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text(
-                                  "Select Category",
-                                  style: MFonts.fontBH1,
-                                ), // Example Text Widget 1
-                                Container(
-                                  padding: const EdgeInsets.all(MSizes.md),
-                                  decoration: BoxDecoration(
-                                      color: darkMode
-                                          ? MColors.surfaceDark
-                                          : MColors.surface,
-                                      borderRadius: BorderRadius.circular(
-                                          MSizes.cardRadiusMd)),
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          CarCategoryItem(
-                                            darkMode: darkMode,
-                                            icon: MImages.sedanIcon,
-                                            type: 'Sedan',
-                                          ),
-                                          CarCategoryItem(
-                                            darkMode: darkMode,
-                                            icon: MImages.hatchbackIcon,
-                                            type: 'Hatchback',
-                                          )
-                                        ],
-                                      ),
-                                      const Spacer(),
-                                      Column(
-                                        children: [
-                                          CarCategoryItem(
-                                            darkMode: darkMode,
-                                            icon: MImages.suvIcon,
-                                            type: 'SUV',
-                                          ),
-                                          CarCategoryItem(
-                                            darkMode: darkMode,
-                                            icon: MImages.muvIcon,
-                                            type: 'MUV',
-                                          )
-                                        ],
-                                      ),
-                                      const Spacer(),
-                                      Column(
-                                        children: [
-                                          CarCategoryItem(
-                                            darkMode: darkMode,
-                                            icon: MImages.coupeIcon,
-                                            type: 'Coupe',
-                                          ),
-                                          CarCategoryItem(
-                                            darkMode: darkMode,
-                                            icon: MImages.pickupIcon,
-                                            type: 'Pickup',
-                                          )
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ), // Example Text Widget 2
-                              ],
-                            ),
-                            const SizedBox(
-                              height: MSizes.defaultSpace,
-                            ),
-                            const Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Popular Brands",
-                                  style: MFonts.fontBH1,
+                                ListedAdFrame2(
+                                  carName: 'Corola Altis',
+                                  year: '2000',
+                                  mileage: '2,50,000km',
+                                  price: 'Rs. 4,50,000',
+                                  isPremium: true,
                                 ),
                                 SizedBox(
-                                  height: MSizes.md,
+                                  height: MSizes.lg,
                                 ),
-                                SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  child: Row(
-                                    children: [
-                                      PopularBrandContainer(
-                                          icon: MImages.bmwLogo),
-                                      SizedBox(
-                                        width: MSizes.nm,
-                                      ),
-                                      PopularBrandContainer(
-                                          icon: MImages.bmwLogo),
-                                      SizedBox(
-                                        width: MSizes.nm,
-                                      ),
-                                      PopularBrandContainer(
-                                          icon: MImages.bmwLogo),
-                                      SizedBox(
-                                        width: MSizes.nm,
-                                      ),
-                                      PopularBrandContainer(
-                                          icon: MImages.bmwLogo),
-                                      SizedBox(
-                                        width: MSizes.nm,
-                                      ),
-                                      PopularBrandContainer(
-                                          icon: MImages.bmwLogo),
-                                    ],
-                                  ),
-                                ), // Example Text Widget 2
-                              ],
-                            ),
-                            const SizedBox(
-                              height: MSizes.defaultSpace,
-                            ),
-                            const Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Recommended for you ",
-                                  style: MFonts.fontBH1,
+                                ListedAdFrame2(
+                                  carName: 'Corola Altis',
+                                  year: '2000',
+                                  mileage: '2,50,000km',
+                                  price: 'Rs. 4,50,000',
+                                  isPremium: true,
                                 ),
                                 SizedBox(
-                                  height: MSizes.md,
-                                ), // Example Text Widget 1
-                                Column(
-                                  children: [
-                                    ListedAdFrame2(
-                                      carName: 'Corola Altis',
-                                      year: '2000',
-                                      mileage: '2,50,000km',
-                                      price: 'Rs. 4,50,000',
-                                      isPremium: true,
-                                    ),
-                                    SizedBox(
-                                      height: MSizes.lg,
-                                    ),
-                                    ListedAdFrame2(
-                                      carName: 'Corola Altis',
-                                      year: '2000',
-                                      mileage: '2,50,000km',
-                                      price: 'Rs. 4,50,000',
-                                      isPremium: true,
-                                    ),
-                                    SizedBox(
-                                      height: MSizes.lg,
-                                    ),
-                                    ListedAdFrame2(
-                                      carName: 'Corola Altis',
-                                      year: '2000',
-                                      mileage: '2,50,000km',
-                                      price: 'Rs. 4,50,000',
-                                      isPremium: false,
-                                    ),
-                                    SizedBox(
-                                      height: MSizes.lg,
-                                    ),
-                                    ListedAdFrame2(
-                                      carName: 'Corola Altis',
-                                      year: '2000',
-                                      mileage: '2,50,000km',
-                                      price: 'Rs. 4,50,000',
-                                      isPremium: false,
-                                    ),
-                                    SizedBox(
-                                      height: MSizes.lg,
-                                    ),
-                                    ListedAdFrame2(
-                                      carName: 'Corola Altis',
-                                      year: '2000',
-                                      mileage: '2,50,000km',
-                                      price: 'Rs. 4,50,000',
-                                      isPremium: false,
-                                    ),
-                                    SizedBox(
-                                      height: MSizes.lg,
-                                    ),
-                                    ListedAdFrame2(
-                                      carName: 'Corola Altis',
-                                      year: '2000',
-                                      mileage: '2,50,000km',
-                                      price: 'Rs. 4,50,000',
-                                      isPremium: false,
-                                    ),
-                                  ],
+                                  height: MSizes.lg,
+                                ),
+                                ListedAdFrame2(
+                                  carName: 'Corola Altis',
+                                  year: '2000',
+                                  mileage: '2,50,000km',
+                                  price: 'Rs. 4,50,000',
+                                  isPremium: false,
+                                ),
+                                SizedBox(
+                                  height: MSizes.lg,
+                                ),
+                                ListedAdFrame2(
+                                  carName: 'Corola Altis',
+                                  year: '2000',
+                                  mileage: '2,50,000km',
+                                  price: 'Rs. 4,50,000',
+                                  isPremium: false,
+                                ),
+                                SizedBox(
+                                  height: MSizes.lg,
+                                ),
+                                ListedAdFrame2(
+                                  carName: 'Corola Altis',
+                                  year: '2000',
+                                  mileage: '2,50,000km',
+                                  price: 'Rs. 4,50,000',
+                                  isPremium: false,
+                                ),
+                                SizedBox(
+                                  height: MSizes.lg,
+                                ),
+                                ListedAdFrame2(
+                                  carName: 'Corola Altis',
+                                  year: '2000',
+                                  mileage: '2,50,000km',
+                                  price: 'Rs. 4,50,000',
+                                  isPremium: false,
                                 ),
                               ],
                             ),
                           ],
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),

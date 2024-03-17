@@ -56,12 +56,12 @@ class SearchField extends StatelessWidget {
       children: [
         TextFormField(
           decoration: InputDecoration(
+            hintText: hintText,
             enabledBorder: const OutlineInputBorder().copyWith(
               borderRadius: BorderRadius.circular(MSizes.inputFieldRadius),
               borderSide:
                   BorderSide(width: 0, color: MColors.primary.withOpacity(0)),
             ),
-            hintText: hintText,
             suffixIcon: suffixIcon != null
                 ? Padding(
                     padding: const EdgeInsets.all(MSizes.nm),
@@ -90,7 +90,7 @@ class SearchField extends StatelessWidget {
 class InputFieldWithIcon extends StatelessWidget {
   const InputFieldWithIcon({
     Key? key,
-    required this.hintText,
+    this.hintText,
     this.prefixIcon,
     this.suffixIcon,
     this.label,
@@ -99,7 +99,7 @@ class InputFieldWithIcon extends StatelessWidget {
     this.obscureText,
   }) : super(key: key);
 
-  final String hintText;
+  final String? hintText;
   final String? prefixIcon;
   final String? suffixIcon;
   final String? label; // Making label nullable
@@ -122,11 +122,15 @@ class InputFieldWithIcon extends StatelessWidget {
           height: MSizes.sm,
         ),
         TextFormField(
+          validator: validator,
+          controller: controller,
+          obscureText: obscureText ?? false,
           decoration: InputDecoration(
+            enabled: true,
             hintText: hintText,
             suffixIcon: suffixIcon != null
                 ? Padding(
-                    padding: const EdgeInsets.all(MSizes.nm),
+                    padding: const EdgeInsets.symmetric(vertical: MSizes.nm, horizontal: MSizes.sm),
                     child: SvgPicture.asset(
                       suffixIcon!,
                       colorFilter: MSvgStyle.svgStyle2(darkMode),

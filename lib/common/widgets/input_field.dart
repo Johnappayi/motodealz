@@ -94,12 +94,18 @@ class InputFieldWithIcon extends StatelessWidget {
     this.prefixIcon,
     this.suffixIcon,
     this.label,
+    this.controller,
+    this.validator,
+    this.obscureText,
   }) : super(key: key);
 
   final String hintText;
   final String? prefixIcon;
   final String? suffixIcon;
   final String? label; // Making label nullable
+  final String? Function(String?)? validator;
+  final TextEditingController? controller;
+  final bool? obscureText;
 
   @override
   Widget build(BuildContext context) {

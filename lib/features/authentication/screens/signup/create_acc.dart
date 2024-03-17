@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:motodealz/common/styles/spacing_styles.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/common/widgets/input_field.dart';
+import 'package:motodealz/features/authentication/controllers/signup/signup_controller.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
@@ -9,12 +11,14 @@ import 'package:motodealz/utils/constants/sizes.dart';
 import 'package:motodealz/utils/constants/text_strings.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+class CreateAccountScreen extends StatelessWidget {
+  const CreateAccountScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final dark = MHelperFunctions.isDarkMode(context);
+    final signUpController = Get.put(SignUpController()); // Bind the controller
+
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -27,19 +31,15 @@ class LoginScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     Padding(padding: MSpacingStyle.paddingWithAppBarHeight),
-                    Text("WELCOME BACK", style: MFonts.fontAH1),
+                    Text("Let’s get started", style: MFonts.fontAH1),
                     SizedBox(
                       height: MSizes.md,
                     ),
-                    Text(
-                      "Get back and find out whats new!",
-                      textAlign: TextAlign.center,
-                      style: MFonts.fontCB1,
-                    ),
+                    Text("Create an account to buy or sell your used vehicles", textAlign: TextAlign.center,
+                        style: MFonts.fontCB1),
                   ],
                 ),
               ),
-
               const SizedBox(
                 height: MSizes.md,
               ),
@@ -51,48 +51,41 @@ class LoginScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       /// Username
-                      const InputFieldWithIcon(
+                      InputFieldWithIcon(
                         label: "Username",
                         hintText: "Enter Username",
                         prefixIcon: MImages.profileIcon,
+                        controller: signUpController.username,
+                      ),
+
+                      const SizedBox(height: MSizes.spaceBtwInputFields),
+
+                      InputFieldWithIcon(
+                        label: "Email",
+                        hintText: "Enter Email",
+                        prefixIcon: MImages.mailIcon,
+                        controller: signUpController.email,
                       ),
 
                       const SizedBox(height: MSizes.spaceBtwInputFields),
 
                       /// Password
-                      const InputFieldWithIcon(
+                      InputFieldWithIcon(
                         hintText: "Enter password",
                         label: 'Password',
                         prefixIcon: MImages.passwordIcon,
                         suffixIcon: MImages.eyeIcon,
+                        controller: signUpController.password,
+                        obscureText: signUpController.hidePassword.value,                        
                       ),
 
                       const SizedBox(height: MSizes.spaceBtwInputFields),
 
                       const LargeButtonNS(
-                        child: Text("Login"),
+                        child: Text("Create account"),
                       ),
 
                       const SizedBox(height: MSizes.sm),
-
-                      ///Remember Me & Forgot Password
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          ///Remember Me
-                          Row(
-                            children: [
-                              Checkbox(value: true, onChanged: (value) {}),
-                              const Text(MTexts.rememberMe),
-                            ],
-                          ),
-
-                          ///Forgot Password
-                          TextButton(
-                              onPressed: () {},
-                              child: const Text(MTexts.forgetPassword)),
-                        ],
-                      ),
                     ],
                   ),
                 ),
@@ -136,12 +129,10 @@ class LoginScreen extends StatelessWidget {
 
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 const Text(
-                  "Don’t have an account? ",
+                  "Already have an account?",
                   style: MFonts.fontCB1,
                 ),
-                TextButton(
-                    onPressed: () {},
-                    child: const Text("Create Account")),
+                TextButton(onPressed: () {}, child: const Text("Login")),
               ])
             ],
           ),

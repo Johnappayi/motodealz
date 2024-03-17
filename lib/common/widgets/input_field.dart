@@ -97,6 +97,7 @@ class InputFieldWithIcon extends StatelessWidget {
     this.controller,
     this.validator,
     this.obscureText,
+    this.onSuffixIconPressed,
   }) : super(key: key);
 
   final String? hintText;
@@ -106,10 +107,12 @@ class InputFieldWithIcon extends StatelessWidget {
   final String? Function(String?)? validator;
   final TextEditingController? controller;
   final bool? obscureText;
+  final void Function()? onSuffixIconPressed;
 
   @override
   Widget build(BuildContext context) {
     final bool darkMode = MHelperFunctions.isDarkMode(context);
+    final bool finalObscureText = obscureText ?? false;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -124,16 +127,20 @@ class InputFieldWithIcon extends StatelessWidget {
         TextFormField(
           validator: validator,
           controller: controller,
-          obscureText: obscureText ?? false,
+          obscureText: finalObscureText ,
           decoration: InputDecoration(
             enabled: true,
             hintText: hintText,
             suffixIcon: suffixIcon != null
-                ? Padding(
-                    padding: const EdgeInsets.symmetric(vertical: MSizes.nm, horizontal: MSizes.sm),
-                    child: SvgPicture.asset(
-                      suffixIcon!,
-                      colorFilter: MSvgStyle.svgStyle2(darkMode),
+                ? GestureDetector(
+                    onTap: onSuffixIconPressed,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: MSizes.nm, horizontal: MSizes.sm),
+                      child: SvgPicture.asset(
+                        suffixIcon!,
+                        colorFilter: MSvgStyle.svgStyle2(darkMode),
+                      ),
                     ),
                   )
                 : null,

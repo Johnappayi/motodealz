@@ -47,6 +47,7 @@ class MImages {
   static const String passwordIcon = "assets/icons/key.svg";
   static const String eyeslashIcon = "assets/icons/visibility-off.svg";
   static const String eyeIcon = "assets/icons/eye.svg";
+  static const String eyeClosedIcon = "assets/icons/visibility-off.svg";
   static const String mailIcon = "assets/icons/sms.svg";
   static const String searchBarIcon = "assets/icons/searchbar.svg";
   static const String calenderIcon = "assets/icons/calendar.svg";

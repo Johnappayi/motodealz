@@ -14,7 +14,6 @@ import 'package:motodealz/utils/validators/validation.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
-  
 
   @override
   Widget build(BuildContext context) {
@@ -67,16 +66,25 @@ class LoginScreen extends StatelessWidget {
                       const SizedBox(height: MSizes.spaceBtwInputFields),
 
                       /// Password
-                      InputFieldWithIcon(
+                      Obx(
+                        () => InputFieldWithIcon(
                           hintText: "Enter password",
                           label: "Password",
                           prefixIcon: MImages.passwordIcon,
-                          suffixIcon: MImages.eyeIcon,
+                          suffixIcon: controller.hidePassword.value ? MImages.eyeIcon : MImages.eyeClosedIcon,
                           controller: controller.password,
                           obscureText: controller.hidePassword.value,
                           validator: (value) =>
-                              MValidator.validateEmptyText('Password', value)),
-
+                              MValidator.validateEmptyText('Password', value),
+                          onSuffixIconPressed: () {
+                            // Perform your action here
+                            controller.hidePassword.value =
+                                !controller.hidePassword.value;
+                            print('Suffix icon pressed');
+                            print(controller.hidePassword.value);
+                          },
+                        ),
+                      ),
                       const SizedBox(height: MSizes.spaceBtwInputFields),
 
                       const LargeButtonNS(

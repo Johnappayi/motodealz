@@ -5,8 +5,8 @@ import 'package:motodealz/utils/constants/fonts.dart';
 // import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
 
-class UserVerificationUploadScreen extends StatelessWidget {
-  const UserVerificationUploadScreen({super.key});
+class UserVerificationUploadChoiceScreen extends StatelessWidget {
+  const UserVerificationUploadChoiceScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class UserVerificationUploadScreen extends StatelessWidget {
                 children: [
                   Text("Choose a method to submit your ID", style: MFonts.fontCH4,),
                   SizedBox(height: MSizes.spaceBtwSections,),
-                  LargeButton(child: Text("Take a picture")),
+                  LargeButtonNS(child: Text("Take a picture")),
                   SizedBox(
                     height: MSizes.spaceBtwItems,
                   ),

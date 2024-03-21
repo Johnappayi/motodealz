@@ -97,3 +97,21 @@ class LargeSecButton extends StatelessWidget {
     );
   }
 }
+
+class SmallSecButton extends StatelessWidget {
+  // final VoidCallback onPressed;
+  final Widget child;
+  //   required this.onPressed-add later
+  const SmallSecButton({Key? key, required this.child}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return OutlinedButton(
+      onPressed: () {},
+      style: OutlinedButton.styleFrom(
+        minimumSize: Size(MHelperFunctions.screenWidth() * 0.39, 60.0),
+      ),
+      child: child,
+    );
+  }
+}

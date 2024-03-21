@@ -68,6 +68,10 @@ class MImages {
   static const String faqIcon = "assets/icons/document.svg";
   static const String privacyIcon = "assets/icons/privacy policy box.svg";
   static const String aboutIcon = "assets/icons/info-circle.svg";
+  static const String galeryIcon = "assets/icons/gallery.svg";
+  static const String progressBar1 = "assets/images/progress bar 1.svg";
+  static const String progressBar2 = "assets/images/progress bar 2.svg";
+  static const String progressBar3 = "assets/images/progress bar 3.svg";
 
   // -- Sample Car Images
   static const String sampleCar1 = "assets/images/car1.png";
@@ -79,10 +83,17 @@ class MImages {
   // -- Sample user Images
   static const String sampleUser1 = "assets/images/userImage.png";
 
-  // -- Verfocation Illustration Images
+  // -- Verfication Illustration Images
+  static const String forgotPasswordImg =
+      "assets/images/forgot passwordimg.svg";
   static const String verifyImg1 = "assets/images/kyc step1 basic info.svg";
   static const String verifyImg2 = "assets/images/kyc step2 selfie.svg";
   static const String verifyImg3 = "assets/images/kyc step3 id card.svg";
+  static const String verifyImg4 =
+      "assets/images/waiting man(user verif waiting page).svg";
+  static const String verifyImg5 =
+      "assets/images/jumping girl(user verif waiting page).svg";
+  static const String shadowImg = "assets/images/shadow.svg";
 
   // -- Brand Icons
   static const String bmwLogo = "assets/logos/popular_brand/BMW 6.png";

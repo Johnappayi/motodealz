@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 // import 'package:motodealz/common/widgets/button_container.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/common/widgets/input_field.dart';
+// import 'package:motodealz/common/widgets/select_file.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
-import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
-import 'package:motodealz/utils/constants/text_strings.dart';
 
-class UserVerificationScreen2 extends StatelessWidget {
-  const UserVerificationScreen2({super.key});
+class VehicleListingInfoScreen extends StatelessWidget {
+  const VehicleListingInfoScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,15 +28,8 @@ class UserVerificationScreen2 extends StatelessWidget {
                 // children: [ButtonContainer(child: MImages.closeIcon)],
               ),
               Text(
-                "KYC VERIFICATION",
+                "SELL YOUR CAR",
                 style: MFonts.fontAH1,
-              ),
-              SizedBox(
-                height: MSizes.spaceBtwSections,
-              ),
-              Text(
-                "Basic Info",
-                style: MFonts.fontBH1,
               ),
               SizedBox(
                 height: MSizes.spaceBtwSections,
@@ -46,38 +38,73 @@ class UserVerificationScreen2 extends StatelessWidget {
                 child: Column(
                   children: [
                     InputField(
-                      label: MTexts.firstName,
-                      hintText: "Enter first name",
+                      label: "Brand",
+                      hintText: "Enter brand name",
                     ),
                     SizedBox(
                       height: MSizes.spaceBtwInputFields,
                     ),
                     InputField(
-                      label: MTexts.lastName,
-                      hintText: "Enter last name",
-                    ),
-                    SizedBox(
-                      height: MSizes.spaceBtwInputFields,
-                    ),
-                    InputFieldWithIcon(
-                      label: "Date of Birth",
-                      hintText: "DD/MM/YYYY",
-                      suffixIcon: MImages.calenderIcon,
+                      label: "Model",
+                      hintText: "Enter the model",
                     ),
                     SizedBox(
                       height: MSizes.spaceBtwInputFields,
                     ),
                     InputField(
-                      label: "Residential Address",
-                      hintText: "Enter permanent address",
+                      label: "Year",
+                      hintText: "Enter the make year",
                     ),
                     SizedBox(
                       height: MSizes.spaceBtwInputFields,
                     ),
                     InputField(
-                      label: "Postal Code",
-                      hintText: "Enter postal code",
+                      label: "Color",
+                      hintText: "Enter the color",
                     ),
+                    SizedBox(
+                      height: MSizes.spaceBtwInputFields,
+                    ),
+                    InputField(
+                      label: "KM driven",
+                      hintText: "Enter total KMs driven",
+                    ),
+                    SizedBox(
+                      height: MSizes.spaceBtwInputFields,
+                    ),
+                    InputField(
+                      label: "No. of Owners",
+                      hintText: "Enter no. of owners",
+                    ),
+                    SizedBox(
+                      height: MSizes.spaceBtwInputFields,
+                    ),
+                    InputField(
+                      label: "Ad title",
+                      hintText: "Enter an ad title",
+                    ),
+                    SizedBox(
+                      height: MSizes.spaceBtwInputFields,
+                    ),
+                    InputField(
+                      label: "Description",
+                      hintText: "Describe the details of your vehicle",
+                    ),
+                    SizedBox(
+                      height: MSizes.spaceBtwInputFields,
+                    ),
+                    InputField(
+                      label: "Registeration no.",
+                      hintText: "Enter the licence plate number ",
+                    ),
+                    SizedBox(
+                      height: MSizes.spaceBtwInputFields,
+                    ),
+                    InputField(
+                      label: "VIN Number",
+                      hintText: "Enter the vehicle identification number",
+                    ),
+                    
                   ],
                 ),
               ),

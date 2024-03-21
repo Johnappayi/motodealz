@@ -71,7 +71,9 @@ class LoginScreen extends StatelessWidget {
                           hintText: "Enter password",
                           label: "Password",
                           prefixIcon: MImages.passwordIcon,
-                          suffixIcon: controller.hidePassword.value ? MImages.eyeIcon : MImages.eyeClosedIcon,
+                          suffixIcon: controller.hidePassword.value
+                              ? MImages.eyeIcon
+                              : MImages.eyeClosedIcon,
                           controller: controller.password,
                           obscureText: controller.hidePassword.value,
                           validator: (value) =>
@@ -80,8 +82,8 @@ class LoginScreen extends StatelessWidget {
                             // Perform your action here
                             controller.hidePassword.value =
                                 !controller.hidePassword.value;
-                            print('Suffix icon pressed');
-                            print(controller.hidePassword.value);
+                            // print('Suffix icon pressed');
+                            // print(controller.hidePassword.value);
                           },
                         ),
                       ),
@@ -100,9 +102,12 @@ class LoginScreen extends StatelessWidget {
                           ///Remember Me
                           Row(
                             children: [
-                              Checkbox(
-                                  value: controller.rememberMe.value,
-                                  onChanged: (value) {}),
+                              Obx(
+                                () => Checkbox(
+                                    value: controller.rememberMe.value,
+                                    onChanged: (value) => controller.rememberMe
+                                        .value = !controller.rememberMe.value),
+                              ),
                               const Text(MTexts.rememberMe),
                             ],
                           ),

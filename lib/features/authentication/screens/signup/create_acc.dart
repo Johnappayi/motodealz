@@ -10,6 +10,7 @@ import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
 import 'package:motodealz/utils/constants/text_strings.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
+import 'package:motodealz/utils/validators/validation.dart';
 
 class CreateAccountScreen extends StatelessWidget {
   const CreateAccountScreen({super.key});
@@ -18,7 +19,6 @@ class CreateAccountScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final dark = MHelperFunctions.isDarkMode(context);
     final signUpController = Get.put(SignUpController()); // Bind the controller
-
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -35,8 +35,8 @@ class CreateAccountScreen extends StatelessWidget {
                     SizedBox(
                       height: MSizes.md,
                     ),
-                    Text("Create an account to buy or sell your used vehicles", textAlign: TextAlign.center,
-                        style: MFonts.fontCB1),
+                    Text("Create an account to buy or sell your used vehicles",
+                        textAlign: TextAlign.center, style: MFonts.fontCB1),
                   ],
                 ),
               ),
@@ -46,6 +46,7 @@ class CreateAccountScreen extends StatelessWidget {
 
               /// Form
               Form(
+                key: signUpController.signUpFormKey,
                 child: Padding(
                   padding: const EdgeInsets.only(top: MSizes.spaceBtwSections),
                   child: Column(
@@ -56,6 +57,8 @@ class CreateAccountScreen extends StatelessWidget {
                         hintText: "Enter Username",
                         prefixIcon: MImages.profileIcon,
                         controller: signUpController.username,
+                        validator: (value) =>
+                            MValidator.validateUsername(value),
                       ),
 
                       const SizedBox(height: MSizes.spaceBtwInputFields),
@@ -65,24 +68,39 @@ class CreateAccountScreen extends StatelessWidget {
                         hintText: "Enter Email",
                         prefixIcon: MImages.mailIcon,
                         controller: signUpController.email,
+                        validator: (value) => MValidator.validateEmail(value),
                       ),
 
                       const SizedBox(height: MSizes.spaceBtwInputFields),
 
                       /// Password
-                      InputFieldWithIcon(
-                        hintText: "Enter password",
-                        label: 'Password',
-                        prefixIcon: MImages.passwordIcon,
-                        suffixIcon: MImages.eyeIcon,
-                        controller: signUpController.password,
-                        obscureText: signUpController.hidePassword.value,                        
+                      Obx(
+                        () => InputFieldWithIcon(
+                          hintText: "Enter password",
+                          label: "Password",
+                          prefixIcon: MImages.passwordIcon,
+                          suffixIcon: signUpController.hidePassword.value
+                              ? MImages.eyeIcon
+                              : MImages.eyeClosedIcon,
+                          controller: signUpController.password,
+                          obscureText: signUpController.hidePassword.value,
+                          validator: (value) =>
+                              MValidator.validateEmptyText('Password', value),
+                          onSuffixIconPressed: () {
+                            // Perform your action here
+                            signUpController.hidePassword.value =
+                                !signUpController.hidePassword.value;
+                            // print('Suffix icon pressed');
+                            // print(signUpController.hidePassword.value);
+                          },
+                        ),
                       ),
 
                       const SizedBox(height: MSizes.spaceBtwInputFields),
 
                       const LargeButtonNS(
                         child: Text("Create account"),
+                        // onPressed: () => signUpController.signup(),
                       ),
 
                       const SizedBox(height: MSizes.sm),

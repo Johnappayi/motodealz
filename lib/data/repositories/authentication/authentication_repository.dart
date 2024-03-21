@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:motodealz/common/widgets/navigation_menu.dart';
-import 'package:motodealz/features/authentication/screens/login/login.dart';
+// import 'package:motodealz/features/authentication/screens/login/login.dart';
 import 'package:motodealz/splash_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:motodealz/utils/exceptions/firebase_auth_exceptions.dart';
@@ -48,7 +48,7 @@ void navigateToLogin() {
 
   Future.delayed(const Duration(milliseconds: 500), () {
     // Navigate to login screen after 500 milliseconds (same duration as splash screen)
-    Get.offAll(() => const LoginScreen());
+    Get.offAll(() => const NavigationMenu());
   });
 }
 

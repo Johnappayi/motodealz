@@ -10,4 +10,10 @@ class LoginController extends GetxController {
   final email = TextEditingController();
   final password = TextEditingController();
   GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
+
+  //Email and Password SignIn
+  Future <void> emailAndPasswordSignIn() async{}
+
+
+
 }

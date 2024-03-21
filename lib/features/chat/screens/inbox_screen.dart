@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+// import 'package:get/get.dart';
 import 'package:motodealz/common/styles/text_style.dart';
 import 'package:motodealz/features/chat/model/chat_item.dart';
 import 'package:motodealz/features/chat/screens/inbox_item.dart';
@@ -7,8 +8,10 @@ import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
+// mport 'package:motodealz/features/chat/controller/chat_controller.dart';
 
 class InboxScreen extends StatefulWidget {
+  // final ChatController chatController = Get.put(ChatController());
   const InboxScreen({Key? key}) : super(key: key);
 
   @override
@@ -22,7 +25,7 @@ class InboxScreenState extends State<InboxScreen>
 
   List<ChatItem> allChatItems = [
     const ChatItem(
-      name: 'Adithi Viji',
+      name: 'Aadit Viji',
       lastMsg: 'Hey there! Is the vehicle still available?',
       lastMsgTime: '12:00pm',
       unreadCount: '12',

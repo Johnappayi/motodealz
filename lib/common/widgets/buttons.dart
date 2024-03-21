@@ -60,7 +60,9 @@ class LargeSecButtonWithIcon extends StatelessWidget {
   final Widget child;
   final String icon;
 
-  const LargeSecButtonWithIcon({Key? key, required this.child,required this.icon}) : super(key: key);
+  const LargeSecButtonWithIcon(
+      {Key? key, required this.child, required this.icon})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -68,11 +70,16 @@ class LargeSecButtonWithIcon extends StatelessWidget {
       onPressed: () {},
       style: OutlinedButton.styleFrom(
           minimumSize: const Size(double.infinity, 60.0)),
-      child: Row(mainAxisAlignment: MainAxisAlignment.center,children: [SvgPicture.asset(icon),const SizedBox(width: MSizes.sm,),child]),
+      child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        SvgPicture.asset(icon),
+        const SizedBox(
+          width: MSizes.sm,
+        ),
+        child
+      ]),
     );
   }
 }
-
 
 class LargeSecButton extends StatelessWidget {
   // final VoidCallback onPressed;

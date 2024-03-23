@@ -85,7 +85,7 @@ class CreateAccountScreen extends StatelessWidget {
                           controller: signUpController.password,
                           obscureText: signUpController.hidePassword.value,
                           validator: (value) =>
-                              MValidator.validateEmptyText('Password', value),
+                              MValidator.validatePassword(value),
                           onSuffixIconPressed: () {
                             // Perform your action here
                             signUpController.hidePassword.value =
@@ -98,9 +98,9 @@ class CreateAccountScreen extends StatelessWidget {
 
                       const SizedBox(height: MSizes.spaceBtwInputFields),
 
-                      const LargeButtonNS(
-                        child: Text("Create account"),
-                        // onPressed: () => signUpController.signup(),
+                      LargeButtonNS(
+                        child: const Text("Create account"),
+                        onPressed: () => signUpController.signup(),
                       ),
 
                       const SizedBox(height: MSizes.sm),

@@ -39,10 +39,10 @@ class LargeButton extends StatelessWidget {
 }
 
 class LargeButtonNS extends StatelessWidget {
-  // final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final Widget child;
 
-  const LargeButtonNS({Key? key, required this.child}) : super(key: key);
+  const LargeButtonNS({Key? key, required this.child, this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

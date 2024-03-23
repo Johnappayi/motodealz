@@ -19,12 +19,11 @@ class VehicleController {
         location: "New York",
         description: "Well-maintained Toyota Corolla.",
         images: [
-          MImages.sampleCar1,
-          MImages.sampleCar2,
-          MImages.sampleCar3,
-          MImages.sampleCar4,
-          MImages.sampleCar5,
-          MImages.sampleCar6,
+          MImages.sampleCar1a,
+          MImages.sampleCar1b,
+          MImages.sampleCar1c,
+          MImages.sampleCar1d,
+          
         ]),
     Vehicle(
       brand: "Honda",
@@ -42,11 +41,11 @@ class VehicleController {
       location: "Los Angeles",
       description: "Used Honda Civic in good condition.",
       images: [
-        MImages.sampleCar1,
-        MImages.sampleCar2,
-        MImages.sampleCar3,
-        MImages.sampleCar4,
-        MImages.sampleCar5
+        MImages.sampleCar2a,
+        MImages.sampleCar2b,
+        MImages.sampleCar2c,
+        MImages.sampleCar2d,
+        MImages.sampleCar2e,
       ],
     ),
     Vehicle(
@@ -65,11 +64,11 @@ class VehicleController {
       location: "Chicago",
       description: "Luxurious BMW X5 with low mileage.",
       images: [
-        MImages.sampleCar1,
-        MImages.sampleCar2,
-        MImages.sampleCar3,
-        MImages.sampleCar4,
-        MImages.sampleCar5
+        MImages.sampleCar3a,
+        MImages.sampleCar3b,
+        MImages.sampleCar3c,
+        MImages.sampleCar3d,
+        MImages.sampleCar3e,
       ],
     ),
     Vehicle(
@@ -88,11 +87,10 @@ class VehicleController {
       location: "Miami",
       description: "Ford Fiesta in good condition.",
       images: [
-        MImages.sampleCar1,
-        MImages.sampleCar2,
-        MImages.sampleCar3,
-        MImages.sampleCar4,
-        MImages.sampleCar5
+        MImages.sampleCar4a,
+        MImages.sampleCar4b,
+        MImages.sampleCar4c,
+        MImages.sampleCar4d,
       ],
     ),
     Vehicle(
@@ -111,11 +109,10 @@ class VehicleController {
       location: "Houston",
       description: "Used Chevrolet Malibu with low mileage.",
       images: [
-        MImages.sampleCar1,
-        MImages.sampleCar2,
-        MImages.sampleCar3,
-        MImages.sampleCar4,
-        MImages.sampleCar5
+        MImages.sampleCar5a,
+        MImages.sampleCar5b,
+        MImages.sampleCar5c,
+        MImages.sampleCar5d,
       ],
     ),
     Vehicle(
@@ -134,11 +131,10 @@ class VehicleController {
       location: "Seattle",
       description: "Luxurious Mercedes-Benz GLC in excellent condition.",
       images: [
-        MImages.sampleCar1,
-        MImages.sampleCar2,
-        MImages.sampleCar3,
-        MImages.sampleCar4,
-        MImages.sampleCar5
+        MImages.sampleCar6a,
+        MImages.sampleCar6b,
+        MImages.sampleCar6c,
+        MImages.sampleCar6d,
       ],
     ),
     Vehicle(
@@ -157,11 +153,11 @@ class VehicleController {
       location: "San Francisco",
       description: "Well-maintained Audi A4.",
       images: [
-        MImages.sampleCar1,
-        MImages.sampleCar2,
-        MImages.sampleCar3,
-        MImages.sampleCar4,
-        MImages.sampleCar5
+        MImages.sampleCar7a,
+        MImages.sampleCar7b,
+        MImages.sampleCar7c,
+        MImages.sampleCar7d,
+        MImages.sampleCar7e,
       ],
     ),
     Vehicle(
@@ -180,11 +176,10 @@ class VehicleController {
       location: "Orlando",
       description: "Used Volkswagen Golf in good condition.",
       images: [
-        MImages.sampleCar1,
-        MImages.sampleCar2,
-        MImages.sampleCar3,
-        MImages.sampleCar4,
-        MImages.sampleCar5
+        MImages.sampleCar8a,
+        MImages.sampleCar8b,
+        MImages.sampleCar8c,
+        MImages.sampleCar8d,
       ],
     ),
     Vehicle(
@@ -203,11 +198,10 @@ class VehicleController {
       location: "Los Angeles",
       description: "Sleek Ford Mustang coupe with low mileage.",
       images: [
-        MImages.sampleCar1,
-        MImages.sampleCar2,
-        MImages.sampleCar3,
-        MImages.sampleCar4,
-        MImages.sampleCar5
+        MImages.sampleCar9a,
+        MImages.sampleCar9b,
+        MImages.sampleCar9c,
+        MImages.sampleCar9d,
       ],
     ),
     Vehicle(
@@ -226,11 +220,11 @@ class VehicleController {
       location: "Miami",
       description: "Used Chevrolet Camaro coupe in good condition.",
       images: [
-        MImages.sampleCar1,
-        MImages.sampleCar2,
-        MImages.sampleCar3,
-        MImages.sampleCar4,
-        MImages.sampleCar5
+        MImages.sampleCar10a,
+        MImages.sampleCar10b,
+        MImages.sampleCar10c,
+        MImages.sampleCar10d,
+        
       ],
     ),
     Vehicle(
@@ -249,11 +243,11 @@ class VehicleController {
       location: "New York",
       description: "Luxurious Audi A5 coupe with low mileage.",
       images: [
-        MImages.sampleCar1,
-        MImages.sampleCar2,
-        MImages.sampleCar3,
-        MImages.sampleCar4,
-        MImages.sampleCar5
+        MImages.sampleCar11a,
+        MImages.sampleCar11b,
+        MImages.sampleCar11c,
+        MImages.sampleCar11d,
+        
       ],
     ),
     Vehicle(
@@ -272,11 +266,11 @@ class VehicleController {
       location: "Houston",
       description: "Toyota Tacoma pickup truck with moderate mileage.",
       images: [
-        MImages.sampleCar1,
-        MImages.sampleCar2,
-        MImages.sampleCar3,
-        MImages.sampleCar4,
-        MImages.sampleCar5
+        MImages.sampleCar12a,
+        MImages.sampleCar12b,
+        MImages.sampleCar12c,
+        MImages.sampleCar12d,
+        
       ],
     ),
     Vehicle(
@@ -295,11 +289,11 @@ class VehicleController {
       location: "Chicago",
       description: "Ford F-150 pickup truck with reasonable mileage.",
       images: [
-        MImages.sampleCar1,
-        MImages.sampleCar2,
-        MImages.sampleCar3,
-        MImages.sampleCar4,
-        MImages.sampleCar5
+        MImages.sampleCar13a,
+        MImages.sampleCar13b,
+        MImages.sampleCar13c,
+        MImages.sampleCar13d,
+       
       ],
     ),
   ];

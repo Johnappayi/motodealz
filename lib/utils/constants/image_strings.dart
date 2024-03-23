@@ -74,7 +74,78 @@ class MImages {
   static const String progressBar3 = "assets/images/progress bar 3.svg";
 
   // -- Sample Car Images
-  static const String sampleCar1 = "assets/images/car1.png";
+  static const String sampleCar1a = "assets/images/Sample car/Toyota corolla/img1.jpg";
+  static const String sampleCar1b = "assets/images/Sample car/Toyota corolla/img2.jpg";
+  static const String sampleCar1c = "assets/images/Sample car/Toyota corolla/img3.jpg";
+  static const String sampleCar1d = "assets/images/Sample car/Toyota corolla/img4.jpg";
+
+  static const String sampleCar2a = "assets/images/Sample car/Honda civic/img1.jpg";
+  static const String sampleCar2b = "assets/images/Sample car/Honda civic/img2.jpg";
+  static const String sampleCar2c = "assets/images/Sample car/Honda civic/img3.jpg";
+  static const String sampleCar2d = "assets/images/Sample car/Honda civic/img4.jpg";
+  static const String sampleCar2e = "assets/images/Sample car/Honda civic/img5.jpg";
+
+  static const String sampleCar3a = "assets/images/Sample car/BMW X5/img1.jpg";
+  static const String sampleCar3b = "assets/images/Sample car/BMW X5/img2.jpg";
+  static const String sampleCar3c = "assets/images/Sample car/BMW X5/img3.jpg";
+  static const String sampleCar3d = "assets/images/Sample car/BMW X5/img4.jpg";
+  static const String sampleCar3e = "assets/images/Sample car/BMW X5/img5.jpg";
+
+  static const String sampleCar4a = "assets/images/Sample car/Ford fiesta/img1.jpg";
+  static const String sampleCar4b = "assets/images/Sample car/Ford fiesta/img2.jpg";
+  static const String sampleCar4c = "assets/images/Sample car/Ford fiesta/img3.jpg";
+  static const String sampleCar4d = "assets/images/Sample car/Ford fiesta/img4.jpg";
+
+  static const String sampleCar5a = "assets/images/Sample car/Chevrolet Malibu/img1.jpg";
+  static const String sampleCar5b = "assets/images/Sample car/Chevrolet Malibu/img2.jpg";
+  static const String sampleCar5c = "assets/images/Sample car/Chevrolet Malibu/img3.jpg";
+  static const String sampleCar5d = "assets/images/Sample car/Chevrolet Malibu/img4.jpg";
+
+  static const String sampleCar6a = "assets/images/Sample car/Mercedes-Benz/img1.jpg";
+  static const String sampleCar6b = "assets/images/Sample car/Mercedes-Benz/img2.jpg";
+  static const String sampleCar6c = "assets/images/Sample car/Mercedes-Benz/img3.jpg";
+  static const String sampleCar6d = "assets/images/Sample car/Mercedes-Benz/img4.jpg";
+
+  static const String sampleCar7a = "assets/images/Sample car/Audi A4/img1.jpg";
+  static const String sampleCar7b = "assets/images/Sample car/Audi A4/img2.jpg";
+  static const String sampleCar7c = "assets/images/Sample car/Audi A4/img3.jpg";
+  static const String sampleCar7d = "assets/images/Sample car/Audi A4/img4.jpg";
+  static const String sampleCar7e = "assets/images/Sample car/Audi A4/img5.jpg";
+
+  static const String sampleCar8a = "assets/images/Sample car/Volkswagen golf/img1.jpg";
+  static const String sampleCar8b = "assets/images/Sample car/Volkswagen golf/img2.jpg";
+  static const String sampleCar8c = "assets/images/Sample car/Volkswagen golf/img3.jpg";
+  static const String sampleCar8d = "assets/images/Sample car/Volkswagen golf/img4.jpg";
+
+  static const String sampleCar9a = "assets/images/Sample car/Ford mustang/img1.jpg";
+  static const String sampleCar9b = "assets/images/Sample car/Ford mustang/img2.jpg";
+  static const String sampleCar9c = "assets/images/Sample car/Ford mustang/img3.jpg";
+  static const String sampleCar9d = "assets/images/Sample car/Ford mustang/img4.jpg";
+
+  static const String sampleCar10a = "assets/images/Sample car/Chevrolet camaro/img1.jpg";
+  static const String sampleCar10b = "assets/images/Sample car/Chevrolet camaro/img2.jpg";
+  static const String sampleCar10c = "assets/images/Sample car/Chevrolet camaro/img3.jpg";
+  static const String sampleCar10d = "assets/images/Sample car/Chevrolet camaro/img4.jpg";
+  
+  static const String sampleCar11a = "assets/images/Sample car/Audi A5/img1.jpg";
+  static const String sampleCar11b = "assets/images/Sample car/Audi A5/img2.jpg";
+  static const String sampleCar11c = "assets/images/Sample car/Audi A5/img3.jpg";
+  static const String sampleCar11d = "assets/images/Sample car/Audi A5/img4.jpg";
+
+  static const String sampleCar12a = "assets/images/Sample car/Toyota tacoma/img1.jpg";
+  static const String sampleCar12b = "assets/images/Sample car/Toyota tacoma/img2.jpg";
+  static const String sampleCar12c = "assets/images/Sample car/Toyota tacoma/img3.jpg";
+  static const String sampleCar12d = "assets/images/Sample car/Toyota tacoma/img4.jpg";
+
+  static const String sampleCar13a = "assets/images/Sample car/Ford f-150/img1.jpg";
+  static const String sampleCar13b = "assets/images/Sample car/Ford f-150/img2.jpg";
+  static const String sampleCar13c = "assets/images/Sample car/Ford f-150/img3.jpg";
+  static const String sampleCar13d = "assets/images/Sample car/Ford f-150/img4.jpg";
+
+
+
+
+
   static const String sampleCar2 = "assets/images/car2.png";
   static const String sampleCar3 = "assets/images/car3.png";
   static const String sampleCar4 = "assets/images/car4.png";

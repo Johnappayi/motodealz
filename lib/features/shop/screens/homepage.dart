@@ -5,7 +5,8 @@ import 'package:motodealz/common/widgets/app_bar.dart';
 import 'package:motodealz/common/widgets/car_category_item.dart';
 import 'package:motodealz/common/widgets/listed_ad_frame1.dart';
 import 'package:motodealz/common/widgets/side_bar.dart';
-//import 'package:motodealz/features/shop/screens/vehicle_image_veiw_page.dart';
+import 'package:motodealz/features/shop/controller/vehicle_controller.dart';
+import 'package:motodealz/features/shop/model/vehicle_model.dart';
 import 'package:motodealz/features/shop/screens/vehicle_view_page.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
@@ -22,6 +23,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool _isSideBarOpen = false;
+  final VehicleController _vehicleController = VehicleController();
+  late List<Vehicle> _vehicles;
 
   void _toggleSideBar() {
     setState(() {
@@ -30,20 +33,30 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _vehicles = _vehicleController.getAllVehicles();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final darkMode = MHelperFunctions.isDarkMode(context);
     return SafeArea(
-      child: Stack(children: [
-        Column(
-          children: [
-            MAppBar(onMenuPressed: _toggleSideBar),
-            
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
+      child: Stack(
+        children: [
+          Column(
+            children: [
+              MAppBar(onMenuPressed: _toggleSideBar),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Container(
+                    constraints: BoxConstraints(
+                      // Add constraints to the Container
+                      minHeight: MediaQuery.of(context)
+                          .size
+                          .height, // Set minimum height
+                    ),
+                    child: Padding(
                       padding: const EdgeInsets.all(MSizes.lg),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,11 +87,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                           darkMode: darkMode,
                                           icon: MImages.sedanIcon,
                                           type: 'Sedan',
+                                          onPressed: () {},
                                         ),
                                         CarCategoryItem(
                                           darkMode: darkMode,
                                           icon: MImages.hatchbackIcon,
                                           type: 'Hatchback',
+                                          onPressed: () {},
                                         )
                                       ],
                                     ),
@@ -89,11 +104,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                           darkMode: darkMode,
                                           icon: MImages.suvIcon,
                                           type: 'SUV',
+                                          onPressed: () {},
                                         ),
                                         CarCategoryItem(
                                           darkMode: darkMode,
                                           icon: MImages.muvIcon,
                                           type: 'MUV',
+                                          onPressed: () {},
                                         )
                                       ],
                                     ),
@@ -104,11 +121,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                           darkMode: darkMode,
                                           icon: MImages.coupeIcon,
                                           type: 'Coupe',
+                                          onPressed: () {},
                                         ),
                                         CarCategoryItem(
                                           darkMode: darkMode,
                                           icon: MImages.pickupIcon,
                                           type: 'Pickup',
+                                          onPressed: () {},
                                         )
                                       ],
                                     ),
@@ -121,15 +140,16 @@ class _HomeScreenState extends State<HomeScreen> {
                             height: MSizes.sm,
                           ),
                           Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                const Text(
-                                  "Choose your location",
-                                  style: MFonts.fontCB3,
-                                ),
-                                SvgPicture.asset(MImages.locationIcon,
-                                    colorFilter: MSvgStyle.svgStyle(darkMode)),
-                              ]),
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              const Text(
+                                "Choose your location",
+                                style: MFonts.fontCB3,
+                              ),
+                              SvgPicture.asset(MImages.locationIcon,
+                                  colorFilter: MSvgStyle.svgStyle(darkMode)),
+                            ],
+                          ),
                           const SizedBox(
                             height: MSizes.md,
                           ),
@@ -142,140 +162,48 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               const SizedBox(
                                 height: MSizes.md,
-                              ), // Example Text Widget 1
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  ListedAdFrame1(
-                                    onPressed: () {
-                                      // Navigate to a different page
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const VehicleVeiwScreen()),
-                                      );
-                                    },
-                                    carName: 'Corola Altis',
-                                    year: '2000',
-                                    mileage: '2,50,000km',
-                                    price: 'Rs. 4,50,000',
-                                    isPremium: true,
-                                  ),
-                                  ListedAdFrame1(
-                                    onPressed: () {
-                                      // Navigate to a different page
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const VehicleVeiwScreen()),
-                                      );
-                                    },
-                                    carName: 'Corola Altis',
-                                    year: '2000',
-                                    mileage: '2,50,000km',
-                                    price: 'Rs. 4,50,000',
-                                    isPremium: true,
-                                  ),
-                                ],
                               ),
-                              const SizedBox(
-                                height: MSizes.sm,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  ListedAdFrame1(
+                              GridView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2, // Number of columns
+                                  crossAxisSpacing: MSizes.sm,
+                                  mainAxisSpacing: MSizes.sm,
+                                  childAspectRatio: 3 / 3.5,
+                                ),
+                                itemCount: _vehicles.length,
+                                itemBuilder: (context, index) {
+                                  return ListedAdFrame1(
                                     onPressed: () {
-                                      // Navigate to a different page
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) =>
-                                                const VehicleVeiwScreen()),
+                                          builder: (context) =>
+                                              VehicleVeiwScreen(
+                                            vehicle: _vehicles[index],
+                                          ),
+                                        ),
                                       );
                                     },
-                                    carName: 'Corola Altis',
-                                    year: '2000',
-                                    mileage: '2,50,000km',
-                                    price: 'Rs. 4,50,000',
-                                    isPremium: false,
-                                  ),
-                                  ListedAdFrame1(
-                                    onPressed: () {
-                                      // Navigate to a different page
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const VehicleVeiwScreen()),
-                                      );
-                                    },
-                                    carName: 'Corola Altis',
-                                    year: '2000',
-                                    mileage: '2,50,000km',
-                                    price: 'Rs. 4,50,000',
-                                    isPremium: false,
-                                  ),
-                                ],
-                              ), // Example Text Widget 2
-                              const SizedBox(
-                                height: MSizes.sm,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  ListedAdFrame1(
-                                    onPressed: () {
-                                      // Navigate to a different page
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const VehicleVeiwScreen()),
-                                      );
-                                    },
-                                    carName: 'Corola Altis',
-                                    year: '2000',
-                                    mileage: '2,50,000km',
-                                    price: 'Rs. 4,50,000',
-                                    isPremium: false,
-                                  ),
-                                  ListedAdFrame1(
-                                    onPressed: () {
-                                      // Navigate to a different page
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const VehicleVeiwScreen()),
-                                      );
-                                    },
-                                    carName: 'Corola Altis',
-                                    year: '2000',
-                                    mileage: '2,50,000km',
-                                    price: 'Rs. 4,50,000',
-                                    isPremium: false,
-                                  ),
-                                ],
+                                    vehicle: _vehicles[index],
+                                  );
+                                },
                               ),
                             ],
                           ),
                         ],
                       ),
                     ),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
-        if (_isSideBarOpen) MSideBar(onClose: _toggleSideBar),
-      ]),
+            ],
+          ),
+          if (_isSideBarOpen) MSideBar(onClose: _toggleSideBar),
+        ],
+      ),
     );
   }
 }

@@ -3,11 +3,29 @@ import 'package:intl/intl.dart';
 class MFormatter {
   static String formatDate(DateTime? date) {
     date ??= DateTime.now();
-    return DateFormat('dd-MMM-yyyy').format(date); // Customize the date format as needed
+    return DateFormat('dd-MMM-yyyy')
+        .format(date); // Customize the date format as needed
   }
 
   static String formatCurrency(double amount) {
-    return NumberFormat.currency(locale: 'en_US', symbol: '\$').format(amount); // Customize the currency locale and symbol as needed
+    return 'Rs.${NumberFormat('#,##,##0').format(amount.toInt())}'; // Customize the currency locale and symbol as needed
+  }
+
+  static String formatMileage(int mileage) {
+    return '${NumberFormat('#,##,##0').format(mileage)} km'; // Customize the currency locale and symbol as needed
+  }
+
+  static String formatOwnership(int ownershipCount) {
+    switch (ownershipCount) {
+      case 1:
+        return "1st Owner";
+      case 2:
+        return "2nd Owner";
+      case 3:
+        return "3rd Owner";
+      default:
+        return "$ownershipCount${ownershipCount > 4 ? 'th' : 'th'} Owner";
+    }
   }
 
   static String formatPhoneNumber(String phoneNumber) {
@@ -20,7 +38,6 @@ class MFormatter {
     // Add more custom phone number formatting logic for different formats if needed.
     return phoneNumber;
   }
-
 
   // Not fully tested.
   static String internationalFormatPhoneNumber(String phoneNumber) {
@@ -53,14 +70,4 @@ class MFormatter {
 
     return formattedNumber.toString();
   }
-
-
-
-
 }
-
-
-/*
-*
-*
-* */

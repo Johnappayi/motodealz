@@ -1,11 +1,10 @@
 // ignore_for_file: dead_code
 
 import 'package:flutter/material.dart';
-// import 'package:motodealz/common/widgets/button_container.dart';
+import 'package:motodealz/common/widgets/back_button.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/common/widgets/draggable_sheet.dart';
 import 'package:motodealz/common/widgets/input_field.dart';
-import 'package:motodealz/common/widgets/vehicle_details_ui.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
@@ -28,26 +27,27 @@ class VehicleEditScreen extends StatelessWidget {
               width: MHelperFunctions.screenWidth(),
               height: MHelperFunctions.screenHeight() * 0.45,
             ), //Later change this to carousel
-            MyDraggableSheet(
+            const MyDraggableSheet(
               child: Column(
                 children: [
-                  isEditing
-                      ? const VehicleDetailsEditUI()
-                      : const VehicleDetailsUI(),
-                  const SizedBox(
+                  //Make changes here
+                  // isEditing
+                  //     ? const VehicleDetailsEditUI()
+                  //     : const VehicleDetailsUI(),
+                  SizedBox(
                     height: 90,
                   ) //Dont remove this
                 ],
               ),
             ),
-            // const Padding(
-            //   padding: EdgeInsets.all(MSizes.lg),
-            //   child: Positioned(
-            //     top: 0,
-            //     left: 0,
-            //     child: ButtonContainer(child: MImages.backIcon),
-            //   ),
-            // ),
+            const Positioned(
+              top: 0,
+              left: 0,
+              child: Padding(
+                padding: EdgeInsets.all(MSizes.lg),
+                child: MBackButton(),
+              ),
+            ),
             Positioned(
               bottom: 0,
               child: Container(

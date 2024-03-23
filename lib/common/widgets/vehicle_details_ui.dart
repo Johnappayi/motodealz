@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:motodealz/common/styles/svg_styles.dart';
+import 'package:motodealz/features/shop/model/vehicle_model.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
+import 'package:motodealz/utils/formatters/formatter.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
 
 class VehicleDetailsUI extends StatelessWidget {
   const VehicleDetailsUI({
     super.key,
+    required this.vehicle,
   });
+
+  final Vehicle vehicle;
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +25,8 @@ class VehicleDetailsUI extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: MSizes.defaultSpace),
       child: Column(
         children: [
-          const Text(
-            "Vehicle Name",
+          Text(
+            '${vehicle.brand} ${vehicle.model}',
             style: MFonts.fontBH1,
           ),
           const SizedBox(
@@ -30,26 +35,26 @@ class VehicleDetailsUI extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              const Text(
-                "2010",
+              Text(
+                vehicle.year.toString(),
                 style: MFonts.fontCH3,
               ),
               Text(
                 "|",
                 style: const TextStyle().copyWith(color: MColors.primary2Light),
               ),
-              const Text(
-                "Petrol",
+              Text(
+                vehicle.fuelType,
                 style: MFonts.fontCH3,
               ),
               const Text("|"),
-              const Text(
-                "Manual",
+              Text(
+                vehicle.transmission,
                 style: MFonts.fontCH3,
               ),
               const Text("|"),
-              const Text(
-                "1,28,052km",
+              Text(
+                MFormatter.formatMileage(vehicle.mileage),
                 style: MFonts.fontCH3,
               ),
             ],
@@ -66,8 +71,8 @@ class VehicleDetailsUI extends StatelessWidget {
                   SvgPicture.asset(MImages.ownershipIcon,
                       colorFilter: MSvgStyle.svgStyle(darkMode)),
                   const SizedBox(width: MSizes.sm),
-                  const Text(
-                    "1st Owner",
+                  Text(
+                    MFormatter.formatOwnership(vehicle.ownershipCount),
                     style: MFonts.fontCB2b,
                   )
                 ],
@@ -75,8 +80,8 @@ class VehicleDetailsUI extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  const Text(
-                    "Statuee....",
+                  Text(
+                    vehicle.location,
                     style: MFonts.fontCB2b,
                   ),
                   const SizedBox(width: MSizes.sm),
@@ -92,7 +97,7 @@ class VehicleDetailsUI extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("Posted on 12/08/2023",
+              Text('Posted on ${MFormatter.formatDate(vehicle.datePosted) }',
                   style: MFonts.fontCB3.copyWith(color: MColors.lightGrey)),
               Text("Ad ID: 09982792",
                   style: MFonts.fontCB3.copyWith(color: MColors.lightGrey)),
@@ -113,22 +118,23 @@ class VehicleDetailsUI extends StatelessWidget {
             height: MSizes.sm,
           ),
           Container(
+            width: double.infinity,
             decoration: BoxDecoration(
                 color: darkMode ? MColors.surfaceDark : MColors.surface,
                 borderRadius: BorderRadius.circular(MSizes.cardRadiusLg)),
             padding: const EdgeInsets.all(MSizes.md),
-            child: const Column(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  "Toyota Innova for sale",
+                const Text(
+                  "Toyota Innova for sale", //include title later
                   style: MFonts.fontCB2b,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: MSizes.sm,
                 ),
                 Text(
-                  "March 2010 Innova Auto, Single Owner, MH 01 Reg, 48k kms, Silver/Beige, Flawless, 4 New Tires, Unused Spare, 2 Keys, 5Yr Finance Available.",
+                  vehicle.description,
                   style: MFonts.fontCB2,
                 )
               ],

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-//import 'package:motodealz/common/widgets/navigation_menu.dart';
-import 'package:motodealz/utils/constants/colors.dart';
+import 'package:motodealz/splash_screen.dart';
 import 'package:motodealz/utils/theme/themes.dart';
 
 class MyApp extends StatelessWidget {
@@ -15,7 +14,6 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.system,
       theme: MAppTheme.lightTheme,
       darkTheme: MAppTheme.darkTheme,
-      home: const Scaffold(backgroundColor: MColors.primary, body: Center(child: CircularProgressIndicator(color: Colors.white))),
-    );
+      home: const SplashScreen());
   }
 }

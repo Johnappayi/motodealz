@@ -39,12 +39,13 @@ class AuthenticationRepository extends GetxController {
 }
 
 void navigateToLogin() {
-  Get.offAll(
-    const SplashScreen(),
-    transition: Transition.fade,
-    duration: const Duration(milliseconds: 500),
-    curve: Curves.easeInOut,
-  );
+  
+  // Get.offAll(
+  //   const SplashScreen(),
+  //   transition: Transition.fade,
+  //   duration: const Duration(milliseconds: 500),
+  //   curve: Curves.easeInOut,
+  // );
 
   Future.delayed(const Duration(milliseconds: 500), () {
     // Navigate to login screen after 500 milliseconds (same duration as splash screen)

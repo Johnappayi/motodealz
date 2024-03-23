@@ -76,12 +76,12 @@ class _SearchScreenState extends State<SearchScreen> {
                                       CarCategoryItem(
                                         darkMode: darkMode,
                                         icon: MImages.sedanIcon,
-                                        type: 'Sedan',
+                                        type: 'Sedan', onPressed: () {  },
                                       ),
                                       CarCategoryItem(
                                         darkMode: darkMode,
                                         icon: MImages.hatchbackIcon,
-                                        type: 'Hatchback',
+                                        type: 'Hatchback', onPressed: () {  },
                                       )
                                     ],
                                   ),
@@ -91,12 +91,12 @@ class _SearchScreenState extends State<SearchScreen> {
                                       CarCategoryItem(
                                         darkMode: darkMode,
                                         icon: MImages.suvIcon,
-                                        type: 'SUV',
+                                        type: 'SUV', onPressed: () {  },
                                       ),
                                       CarCategoryItem(
                                         darkMode: darkMode,
                                         icon: MImages.muvIcon,
-                                        type: 'MUV',
+                                        type: 'MUV', onPressed: () {  },
                                       )
                                     ],
                                   ),
@@ -106,12 +106,12 @@ class _SearchScreenState extends State<SearchScreen> {
                                       CarCategoryItem(
                                         darkMode: darkMode,
                                         icon: MImages.coupeIcon,
-                                        type: 'Coupe',
+                                        type: 'Coupe', onPressed: () {  },
                                       ),
                                       CarCategoryItem(
                                         darkMode: darkMode,
                                         icon: MImages.pickupIcon,
-                                        type: 'Pickup',
+                                        type: 'Pickup', onPressed: () {  },
                                       )
                                     ],
                                   ),

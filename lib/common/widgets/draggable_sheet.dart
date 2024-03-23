@@ -59,7 +59,7 @@ class _MyDraggableSheetState extends State<MyDraggableSheet> {
       return DraggableScrollableSheet(
         key: sheet,
         initialChildSize: 0.6,
-        maxChildSize: 0.90,
+        maxChildSize: 0.6,//if premium set it as 0.90
         minChildSize: 0.6,
         expand: true,
         snap: true,

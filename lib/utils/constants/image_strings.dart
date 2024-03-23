@@ -79,6 +79,7 @@ class MImages {
   static const String sampleCar3 = "assets/images/car3.png";
   static const String sampleCar4 = "assets/images/car4.png";
   static const String sampleCar5 = "assets/images/car5.png";
+  static const String sampleCar6 = "assets/images/sampleverticlecar.jpg";
 
   // -- Sample user Images
   static const String sampleUser1 = "assets/images/userImage.png";

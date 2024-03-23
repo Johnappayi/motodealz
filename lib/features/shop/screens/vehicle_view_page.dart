@@ -4,13 +4,13 @@ import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/common/widgets/draggable_sheet.dart';
 import 'package:motodealz/common/widgets/vehicle_details_ui.dart';
 import 'package:motodealz/features/shop/model/vehicle_model.dart';
+import 'package:motodealz/features/shop/screens/vehicle_image_veiw_page.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
 import 'package:motodealz/utils/formatters/formatter.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
-
-import '../../../common/widgets/image_carousel.dart';
+import 'package:motodealz/common/widgets/image_carousel.dart';
 
 class VehicleVeiwScreen extends StatelessWidget {
   const VehicleVeiwScreen({super.key, required this.vehicle});
@@ -24,7 +24,17 @@ class VehicleVeiwScreen extends StatelessWidget {
       child: Scaffold(
         body: Stack(
           children: [
-             const MImageCarousel(),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>  VehicleImageViewScreen(vehicle: vehicle,),
+                  ),
+                );
+              },
+              child: MImageCarousel1(images: vehicle.images),
+            ),
             MyDraggableSheet(
               child: Column(
                 children: [

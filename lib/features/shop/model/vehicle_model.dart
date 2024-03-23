@@ -14,6 +14,7 @@ class Vehicle {
   DateTime datePosted;
   String location;
   String description;
+  List<String> images;
 
   Vehicle({
     // required this.id,
@@ -31,5 +32,6 @@ class Vehicle {
     required this.datePosted,
     required this.location,
     required this.description,
+    required this.images,
   });
 }

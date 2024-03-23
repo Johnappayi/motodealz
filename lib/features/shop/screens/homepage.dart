@@ -77,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     borderRadius: BorderRadius.circular(
                                         MSizes.cardRadiusMd)),
                                 child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Column(
                                       crossAxisAlignment:
@@ -87,47 +87,86 @@ class _HomeScreenState extends State<HomeScreen> {
                                           darkMode: darkMode,
                                           icon: MImages.sedanIcon,
                                           type: 'Sedan',
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            setState(() {
+                                              // Update the list of vehicles based on the selected category
+                                              _vehicles = _vehicleController
+                                                  .getVehiclesByCategory(
+                                                      'Sedan');
+                                            });
+                                          },
                                         ),
+                                        const SizedBox(height: MSizes.nm,),
                                         CarCategoryItem(
                                           darkMode: darkMode,
                                           icon: MImages.hatchbackIcon,
                                           type: 'Hatchback',
-                                          onPressed: () {},
+                                          onPressed: () { setState(() {
+                                              // Update the list of vehicles based on the selected category
+                                              _vehicles = _vehicleController
+                                                  .getVehiclesByCategory(
+                                                      'Hatchback');
+                                            });},
                                         )
                                       ],
                                     ),
                                     const Spacer(),
                                     Column(
+                                       crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         CarCategoryItem(
                                           darkMode: darkMode,
                                           icon: MImages.suvIcon,
                                           type: 'SUV',
-                                          onPressed: () {},
+                                          onPressed: () { setState(() {
+                                              // Update the list of vehicles based on the selected category
+                                              _vehicles = _vehicleController
+                                                  .getVehiclesByCategory(
+                                                      'SUV');
+                                            });},
                                         ),
+                                        const SizedBox(height: MSizes.nm,),
                                         CarCategoryItem(
                                           darkMode: darkMode,
                                           icon: MImages.muvIcon,
                                           type: 'MUV',
-                                          onPressed: () {},
+                                          onPressed: () { setState(() {
+                                              // Update the list of vehicles based on the selected category
+                                              _vehicles = _vehicleController
+                                                  .getVehiclesByCategory(
+                                                      'MUV');
+                                            });},
                                         )
                                       ],
                                     ),
                                     const Spacer(),
                                     Column(
+                                       crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         CarCategoryItem(
                                           darkMode: darkMode,
                                           icon: MImages.coupeIcon,
                                           type: 'Coupe',
-                                          onPressed: () {},
+                                          onPressed: () { setState(() {
+                                              // Update the list of vehicles based on the selected category
+                                              _vehicles = _vehicleController
+                                                  .getVehiclesByCategory(
+                                                      'Coupe');
+                                            });},
                                         ),
+                                        const SizedBox(height: MSizes.nm,),
                                         CarCategoryItem(
                                           darkMode: darkMode,
                                           icon: MImages.pickupIcon,
                                           type: 'Pickup',
-                                          onPressed: () {},
+                                          onPressed: () { setState(() {
+                                              // Update the list of vehicles based on the selected category
+                                              _vehicles = _vehicleController
+                                                  .getVehiclesByCategory(
+                                                      'Pickup');
+                                            });},
                                         )
                                       ],
                                     ),
@@ -137,7 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ],
                           ),
                           const SizedBox(
-                            height: MSizes.sm,
+                            height: MSizes.nm,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,

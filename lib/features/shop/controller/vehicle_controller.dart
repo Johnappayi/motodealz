@@ -300,11 +300,27 @@ class VehicleController {
 
   // Method to get all vehicles
   List<Vehicle> getAllVehicles() {
-    return vehicles;
-  }
+  vehicles.sort((a, b) {
+    // Sort by isPremium property in descending order
+    if (a.isPremium && !b.isPremium) {
+      return -1; // a should come before b
+    } else if (!a.isPremium && b.isPremium) {
+      return 1; // b should come before a
+    } else {
+      return 0; // No change in order
+    }
+  });
+  return vehicles;
+}
+
 
   // Method to filter vehicles by brand
   List<Vehicle> getVehiclesByBrand(String brand) {
     return vehicles.where((vehicle) => vehicle.brand == brand).toList();
+  }
+
+  // Method to filter vehicles by brand
+  List<Vehicle> getVehiclesByCategory(String category) {
+    return vehicles.where((vehicle) => vehicle.category == category).toList();
   }
 }

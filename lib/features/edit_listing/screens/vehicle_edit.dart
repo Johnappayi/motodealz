@@ -22,7 +22,7 @@ class VehicleEditScreen extends StatelessWidget {
         body: Stack(
           children: [
             Image.asset(
-              MImages.sampleCar1,
+              MImages.sampleCar1a,
               fit: BoxFit.cover,
               width: MHelperFunctions.screenWidth(),
               height: MHelperFunctions.screenHeight() * 0.45,

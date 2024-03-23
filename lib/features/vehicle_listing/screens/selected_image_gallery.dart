@@ -12,10 +12,10 @@ class SelectedImageGallery extends StatefulWidget {
 
 class SelectedImageGalleryState extends State<SelectedImageGallery> {
   final List<String> _uploadedImages = [
-    MImages.sampleCar1,
-    MImages.sampleCar2,
-    MImages.sampleCar3,
-    MImages.sampleCar4,
+    MImages.sampleCar1a,
+    MImages.sampleCar2a,
+    MImages.sampleCar3a,
+    MImages.sampleCar4a,
     // Add more image URLs here
   ];
 

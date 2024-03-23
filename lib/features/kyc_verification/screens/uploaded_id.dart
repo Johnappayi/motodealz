@@ -56,7 +56,7 @@ class UserVerificationUploadedIDScreen extends StatelessWidget {
                   const SizedBox(
                     height: MSizes.nm,
                   ),
-                  Image.asset( MImages.sampleCar1,width: MHelperFunctions.screenWidth(),height: MHelperFunctions.screenHeight()*0.25, fit: BoxFit.cover,),
+                  Image.asset( MImages.sampleCar1a,width: MHelperFunctions.screenWidth(),height: MHelperFunctions.screenHeight()*0.25, fit: BoxFit.cover,),
                   const SizedBox(
                     height: MSizes.defaultSpace,
                   ),
@@ -67,7 +67,7 @@ class UserVerificationUploadedIDScreen extends StatelessWidget {
                   const SizedBox(
                     height: MSizes.nm,
                   ),
-                   Image.asset( MImages.sampleCar1,width: MHelperFunctions.screenWidth(),height: MHelperFunctions.screenHeight()*0.25, fit: BoxFit.cover,),
+                   Image.asset( MImages.sampleCar1a,width: MHelperFunctions.screenWidth(),height: MHelperFunctions.screenHeight()*0.25, fit: BoxFit.cover,),
                    const SizedBox(
                     height: MSizes.defaultSpace,
                   ),

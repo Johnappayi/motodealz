@@ -47,7 +47,8 @@ class ListedAdFrame1 extends StatelessWidget {
                     child: Column(
                       children: [
                         Image.asset(
-                          MImages.sampleCar1,
+                          height:  MHelperFunctions.screenHeight() * 0.15,
+                          vehicle.images[0],
                           fit: BoxFit.cover,
                         ),
                         Container(

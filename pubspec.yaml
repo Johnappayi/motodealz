@@ -57,10 +57,22 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
+    - assets/images/Sample car/Audi A4/
+    - assets/images/Sample car/Audi A5/
+    - assets/images/Sample car/BMW X5/
+    - assets/images/Sample car/Chevrolet camaro/
+    - assets/images/Sample car/Chevrolet Malibu/
+    - assets/images/Sample car/Ford f-150/
+    - assets/images/Sample car/Ford fiesta/
+    - assets/images/Sample car/Ford mustang/
+    - assets/images/Sample car/Honda civic/
+    - assets/images/Sample car/Mercedes-Benz/
+    - assets/images/Sample car/Toyota corolla/
+    - assets/images/Sample car/Toyota tacoma/
+    - assets/images/Sample car/Volkswagen golf/
     - assets/logos/
     - assets/logos/popular_brand/
     - assets/icons/
-
   
   fonts:
     - family: Lato

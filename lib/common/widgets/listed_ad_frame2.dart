@@ -42,7 +42,7 @@ class ListedAdFrame2 extends StatelessWidget {
             child: Stack(
               children: [
                 Image.asset(
-                  MImages.sampleCar1,
+                  MImages.sampleCar1a,
                   height: MHelperFunctions.screenHeight() * 0.22,
                   width: MHelperFunctions.screenWidth(),
                   fit: BoxFit.cover,

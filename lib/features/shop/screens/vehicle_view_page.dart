@@ -12,10 +12,17 @@ import 'package:motodealz/utils/formatters/formatter.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
 import 'package:motodealz/common/widgets/image_carousel.dart';
 
-class VehicleVeiwScreen extends StatelessWidget {
-  const VehicleVeiwScreen({super.key, required this.vehicle});
+class VehicleVeiwScreen extends StatefulWidget {
+  const VehicleVeiwScreen({Key? key, required this.vehicle}) : super(key: key);
 
   final Vehicle vehicle;
+
+  @override
+  VehicleVeiwScreenState createState() => VehicleVeiwScreenState();
+}
+
+class VehicleVeiwScreenState extends State<VehicleVeiwScreen> {
+  bool _hasNavigatedToImageViewScreen = false;
 
   @override
   Widget build(BuildContext context) {
@@ -26,24 +33,22 @@ class VehicleVeiwScreen extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>  VehicleImageViewScreen(vehicle: vehicle,),
-                  ),
-                );
+                _navigateToImageViewScreen(context);
               },
-              child: MImageCarousel1(images: vehicle.images),
+              child: MImageCarousel1(images: widget.vehicle.images),
             ),
             MyDraggableSheet(
               child: Column(
                 children: [
-                  VehicleDetailsUI(vehicle: vehicle),
+                  VehicleDetailsUI(vehicle: widget.vehicle),
                   const SizedBox(
                     height: 90,
                   ) //Dont remove this
                 ],
               ),
+              onCollapse: () {
+                _navigateToImageViewScreen(context);
+              },
             ),
             const Positioned(
               top: 0,
@@ -64,7 +69,7 @@ class VehicleVeiwScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      MFormatter.formatCurrency(vehicle.price),
+                      MFormatter.formatCurrency(widget.vehicle.price),
                       style: MFonts.fontCH1,
                     ),
                     const SmallButton(child: Text("Chat"))
@@ -76,5 +81,20 @@ class VehicleVeiwScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _navigateToImageViewScreen(BuildContext context) {
+    if (!_hasNavigatedToImageViewScreen) {
+      _hasNavigatedToImageViewScreen = true;
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => VehicleImageViewScreen(vehicle: widget.vehicle),
+        ),
+      ).then((_) {
+        // Reset the flag when the navigation is completed
+        _hasNavigatedToImageViewScreen = false;
+      });
+    }
   }
 }

@@ -35,22 +35,4 @@ class Vehicle {
     required this.description,
     required this.images,
   });
-
-  final String brand;
-  final String model;
-  final String category;
-  final String transmission;
-  final String fuelType;
-  final String ownershipCount;
-  final String year;
-  final String mileage;
-  final String isPremium;
-  final String ownerId;
-  final String datePosted;
-  final String location;
-  final String description;
-  
-  String images;
-  String price;
-
 }

@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motodealz/data/repositories/user/user_repository.dart';
-import 'package:motodealz/features/authentication/screens/password_configuration/forgot_password.dart';
 import 'package:motodealz/features/authentication/screens/password_configuration/forgot_password_final.dart';
 import 'package:motodealz/utils/helpers/network_manager.dart';
 import 'package:motodealz/utils/popups/full_screen_loader.dart';
 import 'package:motodealz/utils/popups/loader.dart';
 
 import '../../../../data/repositories/authentication/authentication_repository.dart';
-import '../../../profile/model/userDetails.dart';
+import '../../../profile/model/user_details.dart';
 
 class SignUpController extends GetxController {
   static SignUpController get instance => Get.find();

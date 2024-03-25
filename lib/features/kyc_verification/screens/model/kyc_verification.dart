@@ -1,9 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-
-class kycVerification{
-  kycVerification({
-
+class KYCVerification {
+  KYCVerification({
     required this.idnumber,
     required this.firstname,
     required this.lastname,
@@ -12,8 +8,6 @@ class kycVerification{
     required this.image,
     required this.frontidImg,
     required this.backidImg,
-    
-
   });
 
   final String idnumber;
@@ -25,3 +19,4 @@ class kycVerification{
   final String backidImg;
 
   String image;
+}

@@ -1,103 +1,108 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:motodealz/features/shop/model/vehicle_model.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
+import 'package:motodealz/utils/formatters/formatter.dart';
 
 class ListedAdFrame2 extends StatelessWidget {
   const ListedAdFrame2({
-    super.key,
-    required this.carName,
-    required this.price,
-    required this.year,
-    required this.mileage,
-    required this.isPremium,
-  });
+    Key? key,
+    required this.vehicle,
+    required this.onPressed,
+  }) : super(key: key);
 
-  final String carName;
-  final String price;
-  final String year;
-  final String mileage;
-  final bool isPremium;
+  final Vehicle vehicle;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
     final darkMode = MHelperFunctions.isDarkMode(context);
 
-    return Container(
-      decoration: BoxDecoration(boxShadow: [
-        BoxShadow(
-            color: darkMode ? MColors.shadowDark : MColors.shadowLight,
-            blurRadius: 10.0,
-            offset: const Offset(2, 2)),
-      ]),
-      child: Stack(
-        clipBehavior: Clip.none,
+    return GestureDetector(
+      onTap: onPressed,
+      child: Column(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(MSizes.cardRadiusLg),
-            // ignore: sized_box_for_whitespace
+          Container(
+            decoration: BoxDecoration(boxShadow: [
+              BoxShadow(
+                  color: darkMode ? MColors.shadowDark : MColors.shadowLight,
+                  blurRadius: 10.0,
+                  offset: const Offset(2, 2)),
+            ]),
             child: Stack(
+              clipBehavior: Clip.none,
               children: [
-                Image.asset(
-                  MImages.sampleCar1a,
-                  height: MHelperFunctions.screenHeight() * 0.22,
-                  width: MHelperFunctions.screenWidth(),
-                  fit: BoxFit.cover,
-                ),
-                Positioned(
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  child: Container(
-                      height: MHelperFunctions.screenHeight() * 0.08,
-                      decoration: BoxDecoration(
-                        color: isPremium
-                            ? (darkMode
-                                ? MColors.cardDark.withOpacity(0.8)
-                                : MColors.card.withOpacity(0.8))
-                            : (darkMode
-                                ? MColors.surfaceDark.withOpacity(0.8)
-                                : MColors.surface.withOpacity(0.8)),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(MSizes.cardRadiusLg),
+                  // ignore: sized_box_for_whitespace
+                  child: Stack(
+                    children: [
+                      Image.asset(
+                        vehicle.images[0],
+                        height: MHelperFunctions.screenHeight() * 0.22,
+                        width: MHelperFunctions.screenWidth(),
+                        fit: BoxFit.cover,
                       ),
-                      padding: const EdgeInsets.symmetric(horizontal:  MSizes.md, vertical: MSizes.sm),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(children: [
-                            Text(
-                              carName,
-                              style: MFonts.fontCB1b,
+                      Positioned(
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        child: Container(
+                            height: MHelperFunctions.screenHeight() * 0.08,
+                            decoration: BoxDecoration(
+                              color: vehicle.isPremium
+                                  ? (darkMode
+                                      ? MColors.cardDark.withOpacity(0.8)
+                                      : MColors.card.withOpacity(0.8))
+                                  : (darkMode
+                                      ? MColors.surfaceDark.withOpacity(0.8)
+                                      : MColors.surface.withOpacity(0.8)),
                             ),
-                            const Spacer(),
-                            Text(
-                              mileage,
-                              style: MFonts.fontCB4,
-                            ),
-                          ]),
-                          
-                          Row(children: [
-                            Text(
-                              year,
-                              style: MFonts.fontCB4,
-                            ),
-                            const Spacer(),
-                            Text(
-                              price,
-                              style: MFonts.fontCB1b,
-                            ),
-                          ]),
-                        ],
-                      )),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: MSizes.md, vertical: MSizes.sm),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(children: [
+                                  Text(
+                                    '${vehicle.brand} ${vehicle.model}',
+                                    style: MFonts.fontCB1b,
+                                  ),
+                                  const Spacer(),
+                                  Text(
+                                    MFormatter.formatMileage(vehicle.mileage),
+                                    style: MFonts.fontCB4,
+                                  ),
+                                ]),
+                                Row(children: [
+                                  Text(
+                                    vehicle.year.toString(),
+                                    style: MFonts.fontCB4,
+                                  ),
+                                  const Spacer(),
+                                  Text(
+                                    MFormatter.formatCurrency(vehicle.price),
+                                    style: MFonts.fontCB1b,
+                                  ),
+                                ]),
+                              ],
+                            )),
+                      ),
+                    ],
+                  ),
                 ),
+                if (vehicle.isPremium)
+                  Positioned(
+                      top: -5,
+                      left: 1,
+                      child: Image.asset(MImages.premiumIcon)),
               ],
             ),
           ),
-          if (isPremium)
-            Positioned(
-                top: -5, left: 1, child: Image.asset(MImages.premiumIcon)),
         ],
       ),
     );

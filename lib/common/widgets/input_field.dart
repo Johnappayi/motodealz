@@ -40,13 +40,13 @@ class SearchField extends StatelessWidget {
     Key? key,
     required this.hintText,
     this.prefixIcon,
-    this.suffixIcon,
+    this.suffixIcon, this.onChanged,
   }) : super(key: key);
 
   final String hintText;
   final String? prefixIcon;
   final String? suffixIcon;
-  // Making label nullable
+  final ValueChanged<String>? onChanged; 
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +55,7 @@ class SearchField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TextFormField(
+           onChanged: onChanged, 
           decoration: InputDecoration(
             hintText: hintText,
             enabledBorder: const OutlineInputBorder().copyWith(

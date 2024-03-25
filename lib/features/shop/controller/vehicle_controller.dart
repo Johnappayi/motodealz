@@ -23,7 +23,6 @@ class VehicleController {
           MImages.sampleCar1b,
           MImages.sampleCar1c,
           MImages.sampleCar1d,
-          
         ]),
     Vehicle(
       brand: "Honda",
@@ -224,7 +223,6 @@ class VehicleController {
         MImages.sampleCar10b,
         MImages.sampleCar10c,
         MImages.sampleCar10d,
-        
       ],
     ),
     Vehicle(
@@ -247,7 +245,6 @@ class VehicleController {
         MImages.sampleCar11b,
         MImages.sampleCar11c,
         MImages.sampleCar11d,
-        
       ],
     ),
     Vehicle(
@@ -270,7 +267,6 @@ class VehicleController {
         MImages.sampleCar12b,
         MImages.sampleCar12c,
         MImages.sampleCar12d,
-        
       ],
     ),
     Vehicle(
@@ -293,34 +289,81 @@ class VehicleController {
         MImages.sampleCar13b,
         MImages.sampleCar13c,
         MImages.sampleCar13d,
-       
       ],
     ),
   ];
 
-  // Method to get all vehicles
-  List<Vehicle> getAllVehicles() {
-  vehicles.sort((a, b) {
-    // Sort by isPremium property in descending order
-    if (a.isPremium && !b.isPremium) {
-      return -1; // a should come before b
-    } else if (!a.isPremium && b.isPremium) {
-      return 1; // b should come before a
-    } else {
-      return 0; // No change in order
-    }
-  });
-  return vehicles;
-}
+  late Map<String, List<Vehicle>> _vehiclesByBrand;
 
+  // Define lists of known models, brands, and categories
+  List<String> vehicleModels = [];
+  List<String> vehicleBrands = [];
+  List<String> vehicleCategories = [];
 
-  // Method to filter vehicles by brand
-  List<Vehicle> getVehiclesByBrand(String brand) {
-    return vehicles.where((vehicle) => vehicle.brand == brand).toList();
+  // Constructor to initialize the lists and index vehicles by brand
+  VehicleController() {
+    // Extract unique models, brands, and categories
+    vehicleModels = vehicles.map((vehicle) => vehicle.model).toSet().toList();
+    vehicleBrands = vehicles.map((vehicle) => vehicle.brand).toSet().toList();
+    vehicleCategories =
+        vehicles.map((vehicle) => vehicle.category).toSet().toList();
+    // Index vehicles by brand
+    _indexVehiclesByBrand(vehicles);
   }
 
-  // Method to filter vehicles by brand
+  // Index vehicles by brand
+  void _indexVehiclesByBrand(List<Vehicle> vehicles) {
+    _vehiclesByBrand = {};
+    for (var vehicle in vehicles) {
+      var brand = vehicle.brand.toLowerCase();
+      _vehiclesByBrand.putIfAbsent(brand, () => []).add(vehicle);
+    }
+  }
+
+  // Method to search vehicles by brand
+  List<Vehicle> searchVehiclesByBrand(String query) {
+    var lowercaseQuery = query.toLowerCase();
+    return _vehiclesByBrand[lowercaseQuery] ?? [];
+  }
+
+  // Method to get all vehicles
+  List<Vehicle> getAllVehicles() {
+    vehicles.sort((a, b) {
+      // Sort by isPremium property in descending order
+      if (a.isPremium && !b.isPremium) {
+        return -1; // a should come before b
+      } else if (!a.isPremium && b.isPremium) {
+        return 1; // b should come before a
+      } else {
+        return 0; // No change in order
+      }
+    });
+    return vehicles;
+  }
+
+  // Method to filter vehicles by category
   List<Vehicle> getVehiclesByCategory(String category) {
     return vehicles.where((vehicle) => vehicle.category == category).toList();
+  }
+
+   List<Vehicle> getVehiclesByBrand(String brand) {
+    return vehicles.where((vehicle) => vehicle.brand.toLowerCase() == brand.toLowerCase()).toList();
+  }
+
+  // Method to search vehicles by criteria
+  List<Vehicle> searchVehicles(String query) {
+    // Convert the query to lowercase for case-insensitive matching
+    var lowercaseQuery = query.toLowerCase();
+
+    // Filter vehicles based on partial matches for brand, model, and category
+    return vehicles.where((vehicle) {
+      var matchesBrand = vehicle.brand.toLowerCase().contains(lowercaseQuery);
+      var matchesModel = vehicle.model.toLowerCase().contains(lowercaseQuery);
+      var matchesCategory =
+          vehicle.category.toLowerCase().contains(lowercaseQuery);
+
+      // Return true if any of the criteria matches
+      return matchesBrand || matchesModel || matchesCategory;
+    }).toList();
   }
 }

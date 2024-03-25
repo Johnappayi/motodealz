@@ -165,10 +165,17 @@ class MImages {
       "assets/images/waiting man(user verif waiting page).svg";
   static const String verifyImg5 =
       "assets/images/jumping girl(user verif waiting page).svg";
-  static const String shadowImg = "assets/images/shadow.svg";
+  
+  static const String noResultImg = "assets/images/searching man(search page).svg";
+
 
   // -- Brand Icons
   static const String bmwLogo = "assets/logos/popular_brand/BMW 6.png";
+  static const String tataLogo = "assets/logos/popular_brand/Tata.png";
+  static const String mahindraLogo = "assets/logos/popular_brand/Mahindra.png";
+  static const String benzLogo = "assets/logos/popular_brand/Mercedes.png";
+  static const String volkswagenLogo = "assets/logos/popular_brand/Volkswagen.png";
+  
   // static const String adidasLogo = "assets/icons/brands/adidas-logo.png";
   // static const String appleLogo = "assets/icons/brands/apple-logo.png";
   // static const String jordanLogo = "assets/icons/brands/jordan-logo.png";

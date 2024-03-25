@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:motodealz/common/widgets/app_bar.dart';
 import 'package:motodealz/common/widgets/car_category_item.dart';
 import 'package:motodealz/common/widgets/input_field.dart';
 import 'package:motodealz/common/widgets/listed_ad_frame2.dart';
 import 'package:motodealz/common/widgets/popular_brand_container.dart';
 import 'package:motodealz/common/widgets/side_bar.dart';
+import 'package:motodealz/features/shop/controller/vehicle_controller.dart';
+import 'package:motodealz/features/shop/model/vehicle_model.dart';
+import 'package:motodealz/features/shop/screens/vehicle_view_page.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
+import 'package:motodealz/utils/device/device_utility.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -21,11 +25,20 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   bool _isSideBarOpen = false;
+  final VehicleController _vehicleController = VehicleController();
+  late List<Vehicle> _vehicles;
+  bool _showResults = false;
 
   void _toggleSideBar() {
     setState(() {
       _isSideBarOpen = !_isSideBarOpen;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _vehicles = _vehicleController.getAllVehicles();
   }
 
   @override
@@ -37,210 +50,338 @@ class _SearchScreenState extends State<SearchScreen> {
           Column(
             children: [
               MAppBar(onMenuPressed: _toggleSideBar),
-              const Padding(
-                padding: EdgeInsets.only(left: MSizes.lg, right: MSizes.lg, bottom: MSizes.nm),
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: MSizes.lg, right: MSizes.lg, bottom: MSizes.nm),
                 child: SearchField(
-                            prefixIcon: MImages.searchBarIcon,
-                            hintText: 'What are you looking for!',
-                          ),
-              ),   
+                  prefixIcon: MImages.searchBarIcon,
+                  hintText: 'What are you looking for!',
+                  onChanged: (query) {
+                    setState(() {
+                      // Filter vehicles based on the search query
+                      _vehicles = _vehicleController.searchVehicles(query);
+                      // Hide popular brands when user starts searching
+                      _showResults = true;
+                    });
+                  },
+                ),
+              ),
               Expanded(
                 child: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.all(MSizes.lg),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "Select Category",
-                              style: MFonts.fontBH1,
-                            ), // Example Text Widget 1
-                            Container(
-                              padding: const EdgeInsets.all(MSizes.md),
-                              decoration: BoxDecoration(
-                                  color: darkMode
-                                      ? MColors.surfaceDark
-                                      : MColors.surface,
-                                  borderRadius: BorderRadius.circular(
-                                      MSizes.cardRadiusMd)),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      CarCategoryItem(
-                                        darkMode: darkMode,
-                                        icon: MImages.sedanIcon,
-                                        type: 'Sedan', onPressed: () {  },
-                                      ),
-                                      CarCategoryItem(
-                                        darkMode: darkMode,
-                                        icon: MImages.hatchbackIcon,
-                                        type: 'Hatchback', onPressed: () {  },
-                                      )
-                                    ],
-                                  ),
-                                  const Spacer(),
-                                  Column(
-                                    children: [
-                                      CarCategoryItem(
-                                        darkMode: darkMode,
-                                        icon: MImages.suvIcon,
-                                        type: 'SUV', onPressed: () {  },
-                                      ),
-                                      CarCategoryItem(
-                                        darkMode: darkMode,
-                                        icon: MImages.muvIcon,
-                                        type: 'MUV', onPressed: () {  },
-                                      )
-                                    ],
-                                  ),
-                                  const Spacer(),
-                                  Column(
-                                    children: [
-                                      CarCategoryItem(
-                                        darkMode: darkMode,
-                                        icon: MImages.coupeIcon,
-                                        type: 'Coupe', onPressed: () {  },
-                                      ),
-                                      CarCategoryItem(
-                                        darkMode: darkMode,
-                                        icon: MImages.pickupIcon,
-                                        type: 'Pickup', onPressed: () {  },
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ), // Example Text Widget 2
-                          ],
-                        ),
-                        const SizedBox(
-                          height: MSizes.defaultSpace,
-                        ),
-                        const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Popular Brands",
-                              style: MFonts.fontBH1,
-                            ),
-                            SizedBox(
-                              height: MSizes.md,
-                            ),
-                            SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                children: [
-                                  PopularBrandContainer(
-                                      icon: MImages.bmwLogo),
-                                  SizedBox(
-                                    width: MSizes.nm,
-                                  ),
-                                  PopularBrandContainer(
-                                      icon: MImages.bmwLogo),
-                                  SizedBox(
-                                    width: MSizes.nm,
-                                  ),
-                                  PopularBrandContainer(
-                                      icon: MImages.bmwLogo),
-                                  SizedBox(
-                                    width: MSizes.nm,
-                                  ),
-                                  PopularBrandContainer(
-                                      icon: MImages.bmwLogo),
-                                  SizedBox(
-                                    width: MSizes.nm,
-                                  ),
-                                  PopularBrandContainer(
-                                      icon: MImages.bmwLogo),
-                                ],
-                              ),
-                            ), // Example Text Widget 2
-                          ],
-                        ),
-                        const SizedBox(
-                          height: MSizes.defaultSpace,
-                        ),
-                        const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Recommended for you ",
-                              style: MFonts.fontBH1,
-                            ),
-                            SizedBox(
-                              height: MSizes.md,
-                            ), // Example Text Widget 1
+                  child: Container(
+                    constraints: BoxConstraints(
+                        // Add constraints to the Container
+                        minHeight: MDeviceUtils.getScreenHeight()),
+                    child: Padding(
+                      padding: const EdgeInsets.all(MSizes.lg),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (!_showResults) ...[
                             Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                ListedAdFrame2(
-                                  carName: 'Corola Altis',
-                                  year: '2000',
-                                  mileage: '2,50,000km',
-                                  price: 'Rs. 4,50,000',
-                                  isPremium: true,
-                                ),
-                                SizedBox(
-                                  height: MSizes.lg,
-                                ),
-                                ListedAdFrame2(
-                                  carName: 'Corola Altis',
-                                  year: '2000',
-                                  mileage: '2,50,000km',
-                                  price: 'Rs. 4,50,000',
-                                  isPremium: true,
-                                ),
-                                SizedBox(
-                                  height: MSizes.lg,
-                                ),
-                                ListedAdFrame2(
-                                  carName: 'Corola Altis',
-                                  year: '2000',
-                                  mileage: '2,50,000km',
-                                  price: 'Rs. 4,50,000',
-                                  isPremium: false,
-                                ),
-                                SizedBox(
-                                  height: MSizes.lg,
-                                ),
-                                ListedAdFrame2(
-                                  carName: 'Corola Altis',
-                                  year: '2000',
-                                  mileage: '2,50,000km',
-                                  price: 'Rs. 4,50,000',
-                                  isPremium: false,
-                                ),
-                                SizedBox(
-                                  height: MSizes.lg,
-                                ),
-                                ListedAdFrame2(
-                                  carName: 'Corola Altis',
-                                  year: '2000',
-                                  mileage: '2,50,000km',
-                                  price: 'Rs. 4,50,000',
-                                  isPremium: false,
-                                ),
-                                SizedBox(
-                                  height: MSizes.lg,
-                                ),
-                                ListedAdFrame2(
-                                  carName: 'Corola Altis',
-                                  year: '2000',
-                                  mileage: '2,50,000km',
-                                  price: 'Rs. 4,50,000',
-                                  isPremium: false,
-                                ),
+                                const Text(
+                                  "Browse Categories",
+                                  style: MFonts.fontBH1,
+                                ), // Example Text Widget 1
+                                Container(
+                                  padding: const EdgeInsets.all(MSizes.md),
+                                  decoration: BoxDecoration(
+                                      color: darkMode
+                                          ? MColors.surfaceDark
+                                          : MColors.surface,
+                                      borderRadius: BorderRadius.circular(
+                                          MSizes.cardRadiusMd)),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          CarCategoryItem(
+                                            darkMode: darkMode,
+                                            icon: MImages.sedanIcon,
+                                            type: 'Sedan',
+                                            onPressed: () {
+                                              setState(() {
+                                                // Update the list of vehicles based on the selected category
+                                                _vehicles = _vehicleController
+                                                    .getVehiclesByCategory(
+                                                        'Sedan');
+
+                                                _showResults = true;
+                                              });
+                                            },
+                                          ),
+                                          const SizedBox(
+                                            height: MSizes.nm,
+                                          ),
+                                          CarCategoryItem(
+                                            darkMode: darkMode,
+                                            icon: MImages.hatchbackIcon,
+                                            type: 'Hatchback',
+                                            onPressed: () {
+                                              setState(() {
+                                                // Update the list of vehicles based on the selected category
+                                                _vehicles = _vehicleController
+                                                    .getVehiclesByCategory(
+                                                        'Hatchback');
+                                                _showResults = true;
+                                              });
+                                            },
+                                          )
+                                        ],
+                                      ),
+                                      const Spacer(),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          CarCategoryItem(
+                                            darkMode: darkMode,
+                                            icon: MImages.suvIcon,
+                                            type: 'SUV',
+                                            onPressed: () {
+                                              setState(() {
+                                                // Update the list of vehicles based on the selected category
+                                                _vehicles = _vehicleController
+                                                    .getVehiclesByCategory(
+                                                        'SUV');
+                                                _showResults = true;
+                                              });
+                                            },
+                                          ),
+                                          const SizedBox(
+                                            height: MSizes.nm,
+                                          ),
+                                          CarCategoryItem(
+                                            darkMode: darkMode,
+                                            icon: MImages.muvIcon,
+                                            type: 'MUV',
+                                            onPressed: () {
+                                              setState(() {
+                                                // Update the list of vehicles based on the selected category
+                                                _vehicles = _vehicleController
+                                                    .getVehiclesByCategory(
+                                                        'MUV');
+                                                _showResults = true;
+                                              });
+                                            },
+                                          )
+                                        ],
+                                      ),
+                                      const Spacer(),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          CarCategoryItem(
+                                            darkMode: darkMode,
+                                            icon: MImages.coupeIcon,
+                                            type: 'Coupe',
+                                            onPressed: () {
+                                              setState(() {
+                                                // Update the list of vehicles based on the selected category
+                                                _vehicles = _vehicleController
+                                                    .getVehiclesByCategory(
+                                                        'Coupe');
+                                                _showResults = true;
+                                              });
+                                            },
+                                          ),
+                                          const SizedBox(
+                                            height: MSizes.nm,
+                                          ),
+                                          CarCategoryItem(
+                                            darkMode: darkMode,
+                                            icon: MImages.pickupIcon,
+                                            type: 'Pickup',
+                                            onPressed: () {
+                                              setState(() {
+                                                // Update the list of vehicles based on the selected category
+                                                _vehicles = _vehicleController
+                                                    .getVehiclesByCategory(
+                                                        'Pickup');
+                                                _showResults = true;
+                                              });
+                                            },
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ), // Example Text Widget 2
                               ],
                             ),
+                            const SizedBox(
+                              height: MSizes.nm,
+                            ),
                           ],
-                        ),
-                      ],
+                          if (!_showResults) ...[
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  "Popular Brands",
+                                  style: MFonts.fontBH1,
+                                ),
+                                const SizedBox(
+                                  height: MSizes.md,
+                                ),
+                                SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    children: [
+                                      PopularBrandContainer(
+                                        icon: MImages.bmwLogo,
+                                        onPressed: () {
+                                          setState(() {
+                                            // Update the list of vehicles based on the selected category
+                                            _vehicles = _vehicleController
+                                                .getVehiclesByBrand('bmw');
+                                            _showResults = true;
+                                          });
+                                        },
+                                      ),
+                                      const SizedBox(
+                                        width: MSizes.nm,
+                                      ),
+                                      PopularBrandContainer(
+                                        icon: MImages.benzLogo,
+                                        onPressed: () {
+                                          setState(() {
+                                            // Update the list of vehicles based on the selected category
+                                            _vehicles = _vehicleController
+                                                .getVehiclesByBrand('mercedes');
+                                            _showResults = true;
+                                          });
+                                        },
+                                      ),
+                                      const SizedBox(
+                                        width: MSizes.nm,
+                                      ),
+                                      PopularBrandContainer(
+                                        icon: MImages.volkswagenLogo,
+                                        onPressed: () {
+                                          setState(() {
+                                            // Update the list of vehicles based on the selected category
+                                            _vehicles = _vehicleController
+                                                .getVehiclesByBrand(
+                                                    'volkswagen');
+                                            _showResults = true;
+                                          });
+                                        },
+                                      ),
+                                      const SizedBox(
+                                        width: MSizes.nm,
+                                      ),
+                                      PopularBrandContainer(
+                                        icon: MImages.mahindraLogo,
+                                        onPressed: () {
+                                          setState(() {
+                                            // Update the list of vehicles based on the selected category
+                                            _vehicles = _vehicleController
+                                                .getVehiclesByBrand('mahindra');
+                                            _showResults = true;
+                                          });
+                                        },
+                                      ),
+                                      const SizedBox(
+                                        width: MSizes.nm,
+                                      ),
+                                      PopularBrandContainer(
+                                        icon: MImages.tataLogo,
+                                        onPressed: () {
+                                          setState(() {
+                                            // Update the list of vehicles based on the selected category
+                                            _vehicles = _vehicleController
+                                                .getVehiclesByBrand('tata');
+                                            _showResults = true;
+                                          });
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ), // Example Text Widget 2
+                              ],
+                            ),
+                            const SizedBox(
+                              height: MSizes.defaultSpace,
+                            ),
+                          ],
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                _showResults
+                                    ? "Search Results"
+                                    : "Top Recommendations",
+                                style: MFonts.fontBH1,
+                              ),
+                              const SizedBox(
+                                height: MSizes.md,
+                              ),
+                              if (_showResults && _vehicles.isEmpty) ...[
+                                SizedBox(
+                                  height:
+                                      MHelperFunctions.screenHeight() * 0.55,
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        SvgPicture.asset(MImages.noResultImg),
+                                        const SizedBox(
+                                          height: MSizes.defaultSpace,
+                                        ),
+                                        const Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: MSizes.defaultSpace),
+                                          child: Text(
+                                            "Looks like we’ve got nothing at the moment",
+                                            style: MFonts.fontCH4,
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              ],
+                              GridView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 1, // Number of columns
+                                  mainAxisSpacing: MSizes.sm,
+                                  childAspectRatio: 378 / 200,
+                                ),
+                                itemCount: _vehicles.length,
+                                itemBuilder: (context, index) {
+                                  return ListedAdFrame2(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              VehicleVeiwScreen(
+                                            vehicle: _vehicles[index],
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    vehicle: _vehicles[index],
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

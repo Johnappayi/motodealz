@@ -1,3 +1,4 @@
+
 class Vehicle {
   // String id;
   String brand;
@@ -45,10 +46,11 @@ class Vehicle {
   final String mileage;
   final String isPremium;
   final String ownerId;
+  final String datePosted;
+  final String location;
   final String description;
-
-  String location;
-  String datePosted;
+  
   String images;
   String price;
+
 }

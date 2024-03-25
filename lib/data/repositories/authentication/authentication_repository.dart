@@ -4,7 +4,6 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:motodealz/common/widgets/navigation_menu.dart';
 import 'package:motodealz/features/authentication/screens/signup/create_acc.dart';
-// import 'package:motodealz/features/authentication/screens/login/login.dart';
 import 'package:motodealz/splash_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:motodealz/utils/exceptions/firebase_auth_exceptions.dart';
@@ -37,94 +36,87 @@ class AuthenticationRepository extends GetxController {
       navigateToLogin();
     }
   }
-}
 
-void navigateToLogin() {
-  
-  // Get.offAll(
-  //   const SplashScreen(),
-  //   transition: Transition.fade,
-  //   duration: const Duration(milliseconds: 500),
-  //   curve: Curves.easeInOut,
-  // );
+  void navigateToLogin() {
+    // Get.offAll(
+    //   const SplashScreen(),
+    //   transition: Transition.fade,
+    //   duration: const Duration(milliseconds: 500),
+    //   curve: Curves.easeInOut,
+    // );
 
-  Future.delayed(const Duration(milliseconds: 500), () {
-    // Navigate to login screen after 500 milliseconds (same duration as splash screen)
-    Get.offAll(() => const CreateAccountScreen());
-  });
-}
+    Future.delayed(const Duration(milliseconds: 500), () {
+      // Navigate to login screen after 500 milliseconds (same duration as splash screen)
+      Get.offAll(() => const CreateAccountScreen());
+    });
+  }
 
-void navigateToHome() {
-  Get.offAll(
-    const SplashScreen(),
-    transition: Transition.fade,
-    duration: const Duration(milliseconds: 500),
-    curve: Curves.easeInOut,
-  );
+  void navigateToHome() {
+    Get.offAll(
+      const SplashScreen(),
+      transition: Transition.fade,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
 
-  Future.delayed(const Duration(milliseconds: 500), () {
-    // Navigate to home screen after 500 milliseconds (same duration as splash screen)
-    Get.offAll(() => const NavigationMenu());
-  });
-}
+    Future.delayed(const Duration(milliseconds: 500), () {
+      // Navigate to home screen after 500 milliseconds (same duration as splash screen)
+      Get.offAll(() => const NavigationMenu());
+    });
+  }
 
-/// [EmailAuthentication] - LOGIN
-Future<UserCredential> loginWithEmailAndPassword(
-    String email, String password) async {
-  final FirebaseAuth auth = FirebaseAuth.instance;
-  try {
-    return await auth.signInWithEmailAndPassword(
-        email: email, password: password);
-  } on FirebaseAuthException catch (e) {
-    throw MFirebaseAuthException(e.code).message;
-  } on FirebaseException catch (e) {
-    throw MFirebaseAuthException(e.code).message;
-  } on FormatException catch (_) {
-    throw const MFormatException();
-  } on PlatformException catch (e) {
-    throw MPlatformException(e.code).message;
-  } catch (e) {
-    throw 'Something went wrong. Please try again';
+  /// [EmailAuthentication] - LOGIN
+  Future<UserCredential> loginWithEmailAndPassword(
+      String email, String password) async {
+    try {
+      return await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
+    } on FirebaseAuthException catch (e) {
+      throw MFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw MFirebaseAuthException(e.code).message;
+    } on FormatException catch (_) {
+      throw const MFormatException();
+    } on PlatformException catch (e) {
+      throw MPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
+
+  /// [EmailAuthentication] - REGISTER
+  Future<UserCredential> registerWithEmailAndPassword(
+      String email, String password) async {
+    try {
+      return await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+    } on FirebaseAuthException catch (e) {
+      throw MFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw MFirebaseAuthException(e.code).message;
+    } on FormatException catch (_) {
+      throw const MFormatException();
+    } on PlatformException catch (e) {
+      throw MPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
+
+  /// [EmailVerification] - MAIL VERIFICATION
+  Future<void> sendEmailVerification() async {
+    try {
+      await _auth.currentUser?.sendEmailVerification();
+    } on FirebaseAuthException catch (e) {
+      throw MFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw MFirebaseAuthException(e.code).message;
+    } on FormatException catch (_) {
+      throw const MFormatException();
+    } on PlatformException catch (e) {
+      throw MPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
   }
 }
-
-/// [EmailAuthentication] - REGISTER
-Future<UserCredential> registerWithEmailAndPassword(
-    String email, String password) async {
-  final FirebaseAuth auth = FirebaseAuth.instance;
-
-  try {
-    return await auth.createUserWithEmailAndPassword(
-        email: email, password: password);
-  } on FirebaseAuthException catch (e) {
-    throw MFirebaseAuthException(e.code).message;
-  } on FirebaseException catch (e) {
-    throw MFirebaseAuthException(e.code).message;
-  } on FormatException catch (_) {
-    throw const MFormatException();
-  } on PlatformException catch (e) {
-    throw MPlatformException(e.code).message;
-  } catch (e) {
-    throw 'Something went wrong. Please try again';
-  }
-}
-
-/// [EmailVerification] - MAIL VERIFICATION
-Future <void> sendEmailVerification() async{
-    final FirebaseAuth auth = FirebaseAuth.instance;
-
-  try{
-    await auth.currentUser?.sendEmailVerification();
-  }on FirebaseAuthException catch (e) {
-    throw MFirebaseAuthException(e.code).message;
-  } on FirebaseException catch (e) {
-    throw MFirebaseAuthException(e.code).message;
-  } on FormatException catch (_) {
-    throw const MFormatException();
-  } on PlatformException catch (e) {
-    throw MPlatformException(e.code).message;
-  } catch (e) {
-    throw 'Something went wrong. Please try again';
-  }
-}
-

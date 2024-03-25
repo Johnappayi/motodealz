@@ -26,4 +26,8 @@ class MFullScreenLoader {
       ),
     );
   }
+
+  static stopLoading() {
+    Navigator.of(Get.overlayContext!).pop();
+  }
 }

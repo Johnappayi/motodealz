@@ -18,17 +18,16 @@ Future<void> main() async {
   // Register NavigationController with GetX
   Get.put(NavigationController());
 
-  //Todo: Init Local Storage
+  /// Init Local Storage
   await GetStorage.init();
 
-  //Todo: Await Native Splash
+  /// Await Native Splash
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
-  //Todo: Initialize Firebase
+  /// Initialize Firebase and Authentication
 
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform).then((FirebaseApp value) => Get.put(AuthenticationRepository()),
+  Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform).then((FirebaseApp value) => Get.put(AuthenticationRepository()),
   );
-  //Todo: Initialize Authentication
 
   runApp(const MyApp());
 }

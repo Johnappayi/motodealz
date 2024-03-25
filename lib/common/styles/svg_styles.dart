@@ -8,6 +8,11 @@ class MSvgStyle {
         ? const ColorFilter.mode(MColors.white, BlendMode.srcIn)
         : const ColorFilter.mode(MColors.black, BlendMode.srcIn);
   }
+  static ColorFilter svgStyleInv(bool darkMode) {
+    return darkMode
+        ? const ColorFilter.mode(MColors.black, BlendMode.srcIn)
+        : const ColorFilter.mode(MColors.white, BlendMode.srcIn);
+  }
   static ColorFilter svgStyle2(bool darkMode) {
     return darkMode
         ? ColorFilter.mode(MColors.secondary.withOpacity(0.7), BlendMode.srcIn)
@@ -17,5 +22,10 @@ class MSvgStyle {
     return darkMode
         ? const ColorFilter.mode(MColors.secondary, BlendMode.srcIn)
         : const ColorFilter.mode(MColors.primary, BlendMode.srcIn);
+  }
+  static ColorFilter svgStyle4(bool darkMode) {
+    return darkMode
+        ? const ColorFilter.mode(MColors.black, BlendMode.srcIn)
+        : const ColorFilter.mode(MColors.white, BlendMode.srcIn);
   }
 }

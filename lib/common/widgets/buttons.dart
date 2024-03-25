@@ -39,15 +39,15 @@ class LargeButton extends StatelessWidget {
 }
 
 class LargeButtonNS extends StatelessWidget {
-  // final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final Widget child;
 
-  const LargeButtonNS({Key? key, required this.child}) : super(key: key);
+  const LargeButtonNS({Key? key, required this.child, this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: onPressed,
       style: ElevatedButton.styleFrom(
           minimumSize: const Size(double.infinity, 60.0)),
       child: child,
@@ -60,7 +60,9 @@ class LargeSecButtonWithIcon extends StatelessWidget {
   final Widget child;
   final String icon;
 
-  const LargeSecButtonWithIcon({Key? key, required this.child,required this.icon}) : super(key: key);
+  const LargeSecButtonWithIcon(
+      {Key? key, required this.child, required this.icon})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -68,11 +70,16 @@ class LargeSecButtonWithIcon extends StatelessWidget {
       onPressed: () {},
       style: OutlinedButton.styleFrom(
           minimumSize: const Size(double.infinity, 60.0)),
-      child: Row(mainAxisAlignment: MainAxisAlignment.center,children: [SvgPicture.asset(icon),const SizedBox(width: MSizes.sm,),child]),
+      child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        SvgPicture.asset(icon),
+        const SizedBox(
+          width: MSizes.sm,
+        ),
+        child
+      ]),
     );
   }
 }
-
 
 class LargeSecButton extends StatelessWidget {
   // final VoidCallback onPressed;
@@ -86,6 +93,24 @@ class LargeSecButton extends StatelessWidget {
       onPressed: () {},
       style: OutlinedButton.styleFrom(
           minimumSize: const Size(double.infinity, 60.0)),
+      child: child,
+    );
+  }
+}
+
+class SmallSecButton extends StatelessWidget {
+  // final VoidCallback onPressed;
+  final Widget child;
+  //   required this.onPressed-add later
+  const SmallSecButton({Key? key, required this.child}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return OutlinedButton(
+      onPressed: () {},
+      style: OutlinedButton.styleFrom(
+        minimumSize: Size(MHelperFunctions.screenWidth() * 0.39, 60.0),
+      ),
       child: child,
     );
   }

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:motodealz/common/widgets/button_container.dart';
+import 'package:motodealz/common/widgets/image_carousel.dart';
+import 'package:motodealz/features/shop/model/vehicle_model.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
-import 'package:motodealz/utils/helpers/helper_functions.dart';
 
 class VehicleImageViewScreen extends StatelessWidget {
-  const VehicleImageViewScreen({super.key});
+  const VehicleImageViewScreen({super.key, required this.vehicle});
+  final Vehicle vehicle;
 
   @override
   Widget build(BuildContext context) {
@@ -14,18 +17,21 @@ class VehicleImageViewScreen extends StatelessWidget {
         padding: const EdgeInsets.all(MSizes.lg),
         child: Column(
           children: [
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                ButtonContainer(child:MImages.closeIcon,)
+                ButtonContainer(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: MImages.closeIcon,
+                )
               ],
             ),
-            Image.asset(
-              MImages.sampleCar1,
-              fit: BoxFit.fitWidth,
-              width: MHelperFunctions.screenWidth()* 0.8855,
-              height: MHelperFunctions.screenHeight() * 0.7276,
-            ), 
+            const SizedBox(
+              height: MSizes.defaultSpace,
+            ),
+            Expanded(child: MImageCarousel2(images: vehicle.images)),
           ],
         ),
       ),

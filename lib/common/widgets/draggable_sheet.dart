@@ -5,7 +5,8 @@ import 'package:motodealz/utils/helpers/helper_functions.dart';
 
 class MyDraggableSheet extends StatefulWidget {
   final Widget child;
-  const MyDraggableSheet({super.key, required this.child});
+  final VoidCallback? onCollapse;
+  const MyDraggableSheet({super.key, required this.child, this.onCollapse});
 
   @override
   State<MyDraggableSheet> createState() => _MyDraggableSheetState();
@@ -23,7 +24,10 @@ class _MyDraggableSheetState extends State<MyDraggableSheet> {
 
   void onChanged() {
     final currentSize = controller.size;
-    if (currentSize <= 0.05) collapse();
+    if (currentSize <= 0.6) {
+    // Call onCollapse callback when sheet is collapsed
+    widget.onCollapse?.call();
+  }
   }
 
   void collapse() => animateSheet(getSheet.snapSizes!.first);
@@ -59,8 +63,8 @@ class _MyDraggableSheetState extends State<MyDraggableSheet> {
       return DraggableScrollableSheet(
         key: sheet,
         initialChildSize: 0.6,
-        maxChildSize: 0.90,
-        minChildSize: 0.6,
+        maxChildSize: 0.6,//if premium set it as 0.90
+        minChildSize: 0.5,
         expand: true,
         snap: true,
         snapSizes: const [

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:motodealz/common/widgets/navigation_menu.dart';
+import 'package:motodealz/bindings/general_bindings.dart';
+import 'package:motodealz/splash_screen.dart';
 import 'package:motodealz/utils/theme/themes.dart';
 
 class MyApp extends StatelessWidget {
@@ -10,10 +11,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.system,
       theme: MAppTheme.lightTheme,
       darkTheme: MAppTheme.darkTheme,
-      home: const NavigationMenu(),
-    );
+      initialBinding: GeneralBindings(),
+      home: const SplashScreen());
   }
 }

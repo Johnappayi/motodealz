@@ -20,6 +20,7 @@ class NavigationMenu extends StatelessWidget {
     final darkMode = MHelperFunctions.isDarkMode(context);
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       floatingActionButton: FloatingActionButton(
           foregroundColor: darkMode ? MColors.primary : MColors.card,
           backgroundColor: darkMode ? MColors.secondary : MColors.primary,

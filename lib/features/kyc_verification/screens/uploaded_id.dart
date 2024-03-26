@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-// import 'package:motodealz/common/widgets/button_container.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:motodealz/common/widgets/back_button.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
+import 'package:motodealz/features/kyc_verification/screens/final_screen.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
-// import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
 
@@ -25,27 +26,27 @@ class UserVerificationUploadedIDScreen extends StatelessWidget {
               bottom: MSizes.defaultSpace),
           child: Column(
             children: [
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                // children: [ButtonContainer(child: MImages.closeIcon)],
+             const Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [MBackButton()],
               ),
               const Text(
                 "KYC VERIFICATION",
                 style: MFonts.fontAH1,
               ),
-              const SizedBox(
+             const SizedBox(
                 height: MSizes.spaceBtwSections,
+              ),
+              SvgPicture.asset(MImages.progressBar1),
+              const SizedBox(
+                height: MSizes.defaultSpace,
               ),
               const Text(
                 "Uploaded ID Card",
                 style: MFonts.fontBH1,
               ),
-              const SizedBox(
-                height: MSizes.spaceBtwSections,
-              ),
-              const SizedBox(
-                height: MSizes.spaceBtwSections,
-              ),
+             
+              
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -56,7 +57,7 @@ class UserVerificationUploadedIDScreen extends StatelessWidget {
                   const SizedBox(
                     height: MSizes.nm,
                   ),
-                  Image.asset( MImages.sampleCar1a,width: MHelperFunctions.screenWidth(),height: MHelperFunctions.screenHeight()*0.25, fit: BoxFit.cover,),
+                  Image.asset( MImages.sampleCar1a,width: MHelperFunctions.screenWidth(),height: MHelperFunctions.screenHeight()*0.225, fit: BoxFit.cover,),
                   const SizedBox(
                     height: MSizes.defaultSpace,
                   ),
@@ -67,9 +68,9 @@ class UserVerificationUploadedIDScreen extends StatelessWidget {
                   const SizedBox(
                     height: MSizes.nm,
                   ),
-                   Image.asset( MImages.sampleCar1a,width: MHelperFunctions.screenWidth(),height: MHelperFunctions.screenHeight()*0.25, fit: BoxFit.cover,),
+                   Image.asset( MImages.sampleCar1a,width: MHelperFunctions.screenWidth(),height: MHelperFunctions.screenHeight()*0.225, fit: BoxFit.cover,),
                    const SizedBox(
-                    height: MSizes.defaultSpace,
+                    height: MSizes.sm,
                   ),
                    Text(
                     "Please ensure that the provided images are clear and visible",
@@ -78,7 +79,7 @@ class UserVerificationUploadedIDScreen extends StatelessWidget {
                   const SizedBox(
                     height: MSizes.defaultSpace,
                   ),
-                  const LargeButtonNS(child: Text("Verify")),
+                   LargeButtonNS(child: const Text("Verify"),onPressed: () => MHelperFunctions.navigateToScreen(context, const UserVerificationLastScreen()),),
                 ],
               )
             ],

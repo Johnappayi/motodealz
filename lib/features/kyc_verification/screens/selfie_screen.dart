@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:motodealz/common/widgets/back_button.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
+import 'package:motodealz/features/kyc_verification/screens/upload_choice.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
@@ -17,32 +20,36 @@ class UserVerificationSelfieScreen extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min, // Set mainAxisSize to min
             children: [
-              const Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: MSizes.defaultSpace,
-                  vertical: MSizes.defaultSpace,
-                ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: MSizes.defaultSpace,
+                    right: MSizes.defaultSpace,
+                    top: MSizes.nm,
+                    bottom: MSizes.defaultSpace),
                 child: Column(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      // children: [ButtonContainer(child: MImages.closeIcon)],
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [MBackButton()],
                     ),
-                    Text(
+                    const Text(
                       "KYC VERIFICATION",
                       style: MFonts.fontAH1,
                     ),
-                    SizedBox(height: MSizes.spaceBtwSections),
-                    Text(
+                    const SizedBox(
+                      height: MSizes.spaceBtwSections,
+                    ),
+                    SvgPicture.asset(MImages.progressBar2),
+                    const SizedBox(
+                      height: MSizes.defaultSpace,
+                    ),
+                    const Text(
                       "Take a Selfie",
                       style: MFonts.fontBH1,
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: MSizes.spaceBtwSections),
-              const SizedBox(height: MSizes.spaceBtwSections),
-              const SizedBox(height: MSizes.spaceBtwSections),
               const SizedBox(height: MSizes.spaceBtwSections),
               SizedBox(
                 width: MHelperFunctions.screenWidth(),
@@ -66,14 +73,21 @@ class UserVerificationSelfieScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: MSizes.nm),
-              const Padding(
-                padding: EdgeInsets.symmetric(
+              const SizedBox(height: MSizes.spaceBtwSections),
+              Padding(
+                padding: const EdgeInsets.symmetric(
                   horizontal: MSizes.defaultSpace,
                   vertical: MSizes.defaultSpace,
                 ),
                 child: Column(
                   children: [
-                    LargeButtonNS(child: Text("Take a picture")),
+                    LargeButtonNS(
+                      child: const Text("Take a picture"),
+                      onPressed: () {
+                        MHelperFunctions.navigateToScreen(context,
+                            const UserVerificationUploadChoiceScreen());
+                      },
+                    ),
                   ],
                 ),
               )

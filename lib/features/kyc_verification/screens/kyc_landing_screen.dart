@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-// import 'package:motodealz/common/widgets/button_container.dart';
+import 'package:motodealz/common/widgets/button_container.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
+import 'package:motodealz/features/kyc_verification/screens/basic_info.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
@@ -25,9 +26,16 @@ class UserVerificationStartScreen extends StatelessWidget {
                 bottom: MSizes.defaultSpace),
             child: Column(
               children: [
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.end,
-                  // children: [ButtonContainer(child: MImages.closeIcon)],
+                  children: [
+                    ButtonContainer(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: MImages.closeIcon,
+                    )
+                  ],
                 ),
                 const Text(
                   "KYC VERIFICATION",
@@ -45,13 +53,15 @@ class UserVerificationStartScreen extends StatelessWidget {
                 ),
                 Container(
                   padding: const EdgeInsets.all(MSizes.md),
-                  width: MHelperFunctions.screenWidth() * 0.85,
+                  width: MHelperFunctions.screenWidth(),
                   decoration: BoxDecoration(
                       border: Border.all(color: MColors.outline, width: 1),
                       color: darkMode ? MColors.surfaceDark : MColors.surface,
                       borderRadius: BorderRadius.circular(MSizes.cardRadiusMd)),
                   child: Column(children: [
-                    SvgPicture.asset(MImages.verifyImg1),
+                    SizedBox(
+                        height: MHelperFunctions.screenHeight() * 0.115,
+                        child: SvgPicture.asset(MImages.verifyImg1)),
                     const SizedBox(
                       height: MSizes.nm,
                     ),
@@ -66,13 +76,15 @@ class UserVerificationStartScreen extends StatelessWidget {
                 ),
                 Container(
                   padding: const EdgeInsets.all(MSizes.md),
-                  width: MHelperFunctions.screenWidth() * 0.85,
+                  width: MHelperFunctions.screenWidth() ,
                   decoration: BoxDecoration(
                       border: Border.all(color: MColors.outline, width: 1),
                       color: darkMode ? MColors.surfaceDark : MColors.surface,
                       borderRadius: BorderRadius.circular(MSizes.cardRadiusMd)),
                   child: Column(children: [
-                    SvgPicture.asset(MImages.verifyImg2),
+                    SizedBox(
+                        height: MHelperFunctions.screenHeight() * 0.115,
+                        child: SvgPicture.asset(MImages.verifyImg2)),
                     const SizedBox(
                       height: MSizes.nm,
                     ),
@@ -87,13 +99,15 @@ class UserVerificationStartScreen extends StatelessWidget {
                 ),
                 Container(
                   padding: const EdgeInsets.all(MSizes.md),
-                  width: MHelperFunctions.screenWidth() * 0.85,
+                  width: MHelperFunctions.screenWidth(),
                   decoration: BoxDecoration(
                       border: Border.all(color: MColors.outline, width: 1),
                       color: darkMode ? MColors.surfaceDark : MColors.surface,
                       borderRadius: BorderRadius.circular(MSizes.cardRadiusMd)),
                   child: Column(children: [
-                    SvgPicture.asset(MImages.verifyImg3),
+                    SizedBox(
+                        height: MHelperFunctions.screenHeight() * 0.115,
+                        child: SvgPicture.asset(MImages.verifyImg3)),
                     const SizedBox(
                       height: MSizes.nm,
                     ),
@@ -106,7 +120,11 @@ class UserVerificationStartScreen extends StatelessWidget {
                 const SizedBox(
                   height: MSizes.spaceBtwSections,
                 ),
-                const LargeButton(child: Text("Get started"))
+                LargeButtonNS(
+                  onPressed: () => MHelperFunctions.navigateToScreen(
+                      context, const UserVerificationInfoScreen()),
+                  child: const Text("Get started"),
+                )
               ],
             ),
           ),

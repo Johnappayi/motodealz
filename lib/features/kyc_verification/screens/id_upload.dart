@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:motodealz/common/widgets/back_button.dart';
 // import 'package:motodealz/common/widgets/button_container.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/common/widgets/select_file.dart';
+import 'package:motodealz/features/kyc_verification/screens/uploaded_id.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
+import 'package:motodealz/utils/constants/image_strings.dart';
 // import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
+import 'package:motodealz/utils/helpers/helper_functions.dart';
 
 class UserVerificationUploadScreen extends StatelessWidget {
   const UserVerificationUploadScreen({super.key});
@@ -24,9 +29,9 @@ class UserVerificationUploadScreen extends StatelessWidget {
               bottom: MSizes.defaultSpace),
           child: Column(
             children: [
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                // children: [ButtonContainer(child: MImages.closeIcon)],
+             const Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [MBackButton()],
               ),
               const Text(
                 "KYC VERIFICATION",
@@ -35,16 +40,15 @@ class UserVerificationUploadScreen extends StatelessWidget {
               const SizedBox(
                 height: MSizes.spaceBtwSections,
               ),
+              SvgPicture.asset(MImages.progressBar3),
+              const SizedBox(
+                height: MSizes.defaultSpace,
+              ),
               const Text(
-                "Uploaded ID Card",
+                "Upload ID Card",
                 style: MFonts.fontBH1,
               ),
-              const SizedBox(
-                height: MSizes.spaceBtwSections,
-              ),
-              const SizedBox(
-                height: MSizes.spaceBtwSections,
-              ),
+              
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -68,7 +72,7 @@ class UserVerificationUploadScreen extends StatelessWidget {
                   ),
                   const SelectFile(),
                   const SizedBox(
-                    height: MSizes.defaultSpace,
+                    height: MSizes.sm,
                   ),
                   Text(
                     "Please ensure that the provided images are clear and visible",
@@ -77,7 +81,7 @@ class UserVerificationUploadScreen extends StatelessWidget {
                   const SizedBox(
                     height: MSizes.defaultSpace,
                   ),
-                  const LargeButtonNS(child: Text("Verify")),
+                   LargeButtonNS(child: const Text("Verify"),onPressed: () =>  MHelperFunctions.navigateToScreen(context, const UserVerificationUploadedIDScreen()),),
                 ],
               )
             ],

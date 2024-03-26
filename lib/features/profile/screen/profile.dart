@@ -5,6 +5,7 @@ import 'package:motodealz/common/styles/svg_styles.dart';
 // import 'package:motodealz/common/widgets/button_container.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/common/widgets/listed_ad_frame3.dart';
+import 'package:motodealz/features/kyc_verification/screens/kyc_landing_screen.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
@@ -123,21 +124,24 @@ class ProfileScreen extends StatelessWidget {
                           const SizedBox(
                             height: MSizes.md,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset(
-                                MImages.verifyIcon,
-                                colorFilter: MSvgStyle.svgStyle(darkMode),
-                              ),
-                              const SizedBox(
-                                width: MSizes.sm,
-                              ),
-                              const Text(
-                                "Verify now",
-                                style: MFonts.fontCH2,
-                              )
-                            ],
+                          GestureDetector(
+                            onTap: () => MHelperFunctions.navigateToScreen(context, const UserVerificationStartScreen()),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset(
+                                  MImages.verifyIcon,
+                                  colorFilter: MSvgStyle.svgStyle(darkMode),
+                                ),
+                                const SizedBox(
+                                  width: MSizes.sm,
+                                ),
+                                const Text(
+                                  "Verify now",
+                                  style: MFonts.fontCH2,
+                                )
+                              ],
+                            ),
                           )
                         ]),
                       ),
@@ -286,8 +290,11 @@ class ProfileScreen extends StatelessWidget {
                         const SizedBox(
                           height: MSizes.defaultSpace,
                         ),
-                        const LargeButtonNS(
-                          child: Text("Logout"),
+                        LargeButtonNS(
+                          onPressed: () {
+                           
+                          },
+                          child: const Text("Logout"),
                         ),
                         const SizedBox(
                           height: MSizes.defaultSpace,

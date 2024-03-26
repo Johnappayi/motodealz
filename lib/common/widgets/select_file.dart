@@ -14,7 +14,7 @@ class SelectFile extends StatelessWidget {
     final darkmode = MHelperFunctions.isDarkMode(context);
     return Container(
       width: MHelperFunctions.screenWidth(),
-      height: MHelperFunctions.screenHeight() * 0.25,
+      height: MHelperFunctions.screenHeight() * 0.225,
       decoration: BoxDecoration(
         border: Border.all(
             width: 1.5,

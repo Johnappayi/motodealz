@@ -1,12 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:motodealz/common/widgets/back_button.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
+import 'package:motodealz/features/kyc_verification/screens/uploaded_id.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
+import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
 
-class UserVerificationIdCaptureScreen extends StatelessWidget {
+class UserVerificationIdCaptureScreen extends StatefulWidget {
   const UserVerificationIdCaptureScreen({Key? key}) : super(key: key);
+
+  @override
+  UserVerificationIdCaptureScreenState createState() =>
+      UserVerificationIdCaptureScreenState();
+}
+
+class UserVerificationIdCaptureScreenState
+    extends State<UserVerificationIdCaptureScreen> {
+  int _currentStep = 1; // 1 for front side, 2 for back side
+
+  void _nextStep() {
+    setState(() {
+      _currentStep++;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,31 +35,36 @@ class UserVerificationIdCaptureScreen extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min, // Set mainAxisSize to min
             children: [
-              const Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: MSizes.defaultSpace,
-                  vertical: MSizes.defaultSpace,
-                ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: MSizes.defaultSpace,
+                    right: MSizes.defaultSpace,
+                    top: MSizes.nm,
+                    bottom: MSizes.defaultSpace),
                 child: Column(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      // children: [ButtonContainer(child: MImages.closeIcon)],
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [MBackButton()],
                     ),
-                    Text(
+                    const Text(
                       "KYC VERIFICATION",
                       style: MFonts.fontAH1,
                     ),
-                    SizedBox(height: MSizes.spaceBtwSections),
-                    Text(
+                    const SizedBox(
+                      height: MSizes.spaceBtwSections,
+                    ),
+                    SvgPicture.asset(MImages.progressBar3),
+                    const SizedBox(
+                      height: MSizes.defaultSpace,
+                    ),
+                    const Text(
                       "Submit ID Card",
                       style: MFonts.fontBH1,
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: MSizes.spaceBtwSections),
-              const SizedBox(height: MSizes.spaceBtwSections),
               const SizedBox(height: MSizes.spaceBtwSections),
               const SizedBox(height: MSizes.spaceBtwSections),
               SizedBox(
@@ -59,29 +83,43 @@ class UserVerificationIdCaptureScreen extends StatelessWidget {
                     // Cutout Rectangle
                     CustomPaint(
                       painter: RectanglePainter(),
-                      child: const Center(
-                        
-                      ),
+                      child: const Center(),
                     ),
                   ],
                 ),
               ),
               const SizedBox(height: MSizes.nm),
-              const Padding(
-                padding: EdgeInsets.symmetric(
+               Padding(
+                padding: const EdgeInsets.symmetric(
                   horizontal: MSizes.defaultSpace,
                   vertical: MSizes.defaultSpace,
                 ),
                 child: Column(
                   children: [
                     Text(
-                      "Take a photo of the FRONT side",
+                      _currentStep == 1
+                          ? "Take a photo of the FRONT side"
+                          : "Take a photo of the BACK side",
                       style: MFonts.fontCB1,
                     ),
-                    SizedBox(height: MSizes.spaceBtwSections),
-                    SizedBox(height: MSizes.spaceBtwSections),
-                    SizedBox(height: MSizes.spaceBtwSections),
-                    LargeButtonNS(child: Text("Take a picture")),
+                    const SizedBox(height: MSizes.spaceBtwSections),
+                    const SizedBox(height: MSizes.spaceBtwSections),
+                    const SizedBox(height: MSizes.spaceBtwSections),
+                    LargeButtonNS(
+                      child: const Text("Take a picture"),
+                      onPressed: () {
+                        // Add logic to capture photo
+                        if (_currentStep == 1) {
+                          // Capture front side photo
+                          // Proceed to next step
+                          _nextStep();
+                        } else {
+                          // Capture back side photo
+                          // Navigate to next page or perform desired action
+                          MHelperFunctions.navigateToScreen(context, const UserVerificationUploadedIDScreen());
+                        }
+                      },
+                    ),
                   ],
                 ),
               )

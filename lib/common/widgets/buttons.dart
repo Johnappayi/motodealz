@@ -22,15 +22,15 @@ class SmallButton extends StatelessWidget {
 }
 
 class LargeButton extends StatelessWidget {
-  // final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final Widget child;
 
-  const LargeButton({Key? key, required this.child}) : super(key: key);
+  const LargeButton({Key? key, required this.child, this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: onPressed,
       style: ElevatedButton.styleFrom(
           minimumSize: Size(MHelperFunctions.screenWidth() * 0.85, 60.0)),
       child: child,
@@ -82,15 +82,15 @@ class LargeSecButtonWithIcon extends StatelessWidget {
 }
 
 class LargeSecButton extends StatelessWidget {
-  // final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final Widget child;
 
-  const LargeSecButton({Key? key, required this.child}) : super(key: key);
+  const LargeSecButton({Key? key, required this.child,  this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
-      onPressed: () {},
+      onPressed: onPressed,
       style: OutlinedButton.styleFrom(
           minimumSize: const Size(double.infinity, 60.0)),
       child: child,

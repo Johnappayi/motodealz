@@ -34,6 +34,4 @@ class Vehicle {
     required this.description,
     required this.images,
   });
-
- 
 }

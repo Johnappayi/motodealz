@@ -280,7 +280,7 @@ class VehicleController {
       mileage: 60000,
       price: 30000.0,
       isPremium: false,
-      ownerId: "678901",
+      ownerId: "123456",
       datePosted: DateTime.now().subtract(const Duration(days: 5)),
       location: "Chicago",
       description: "Ford F-150 pickup truck with reasonable mileage.",
@@ -349,6 +349,10 @@ class VehicleController {
    List<Vehicle> getVehiclesByBrand(String brand) {
     return vehicles.where((vehicle) => vehicle.brand.toLowerCase() == brand.toLowerCase()).toList();
   }
+  List<Vehicle> getVehiclesByOwnerId(String ownerId) {
+    return vehicles.where((vehicle) => vehicle.ownerId == ownerId).toList();
+  }
+
 
   // Method to search vehicles by criteria
   List<Vehicle> searchVehicles(String query) {

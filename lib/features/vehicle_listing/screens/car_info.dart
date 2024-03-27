@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-// import 'package:motodealz/common/widgets/button_container.dart';
+import 'package:motodealz/common/widgets/button_container.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/common/widgets/input_field.dart';
-// import 'package:motodealz/common/widgets/select_file.dart';
+import 'package:motodealz/features/vehicle_listing/screens/image_select.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
+import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
+import 'package:motodealz/utils/helpers/helper_functions.dart';
 
 class VehicleListingInfoScreen extends StatelessWidget {
   const VehicleListingInfoScreen({super.key});
@@ -12,29 +14,37 @@ class VehicleListingInfoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final bool darkMode = MHelperFunctions.isDarkMode(context);
-    return const Scaffold(
+    return  Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
             child: Padding(
-          padding: EdgeInsets.only(
+          padding: const EdgeInsets.only(
               left: MSizes.defaultSpace,
               right: MSizes.defaultSpace,
               top: MSizes.nm,
               bottom: MSizes.defaultSpace),
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                // children: [ButtonContainer(child: MImages.closeIcon)],
-              ),
-              Text(
+               Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ButtonContainer(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: MImages.closeIcon,
+                    )
+                  ],
+                ),
+               
+              const Text(
                 "SELL YOUR CAR",
                 style: MFonts.fontAH1,
               ),
-              SizedBox(
+              const SizedBox(
                 height: MSizes.spaceBtwSections,
               ),
-              Form(
+              const Form(
                 child: Column(
                   children: [
                     InputField(
@@ -104,14 +114,13 @@ class VehicleListingInfoScreen extends StatelessWidget {
                       label: "VIN Number",
                       hintText: "Enter the vehicle identification number",
                     ),
-                    
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: MSizes.spaceBtwSections,
               ),
-              LargeButton(child: Text("Continue"))
+               LargeButtonNS(child: const Text("Continue") ,onPressed: () => MHelperFunctions.navigateToScreen(context, const VehicleImageSelectScreen()),)
             ],
           ),
         )),

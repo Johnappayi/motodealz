@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:motodealz/common/styles/svg_styles.dart';
 import 'package:motodealz/common/widgets/back_button.dart';
-// import 'package:motodealz/common/widgets/button_container.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/common/widgets/input_field.dart';
 import 'package:motodealz/features/kyc_verification/screens/selfie_screen.dart';
@@ -16,7 +16,7 @@ class UserVerificationInfoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final bool darkMode = MHelperFunctions.isDarkMode(context);
+    final bool darkMode =MHelperFunctions.isDarkMode(context);
     return  Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -39,7 +39,7 @@ class UserVerificationInfoScreen extends StatelessWidget {
               const SizedBox(
                 height: MSizes.spaceBtwSections,
               ),
-              SvgPicture.asset(MImages.progressBar1),
+              SvgPicture.asset(MImages.progressBar1,colorFilter: MSvgStyle.svgStyle3(darkMode),),
               const SizedBox(
                 height: MSizes.defaultSpace,
               ),

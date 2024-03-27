@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:motodealz/common/widgets/button_container.dart';
 // import 'package:motodealz/common/widgets/button_container.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
@@ -23,10 +24,17 @@ class VehicleVerificationLastScreen extends StatelessWidget {
               bottom: MSizes.defaultSpace),
           child: Column(
             children: [
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                // children: [ButtonContainer(child: MImages.closeIcon)],
-              ),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ButtonContainer(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: MImages.closeIcon,
+                    )
+                  ],
+                ),
               const Text(
                 "THANK YOU!",
                 style: MFonts.fontAH1,
@@ -54,8 +62,7 @@ class VehicleVerificationLastScreen extends StatelessWidget {
               const SizedBox(height: MSizes.spaceBtwSections),
               const SizedBox(height: MSizes.spaceBtwSections),
               const SizedBox(height: MSizes.spaceBtwSections),
-              const SizedBox(height: MSizes.spaceBtwSections),
-              const LargeButton(child: Text("Continue"))
+               LargeButton(child: const Text("Continue"), onPressed: () { },)
             ],
           ),
         )),

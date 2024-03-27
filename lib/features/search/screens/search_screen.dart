@@ -317,7 +317,10 @@ class _SearchScreenState extends State<SearchScreen> {
                             children: [
                               Text(
                                 _showResults
-                                    ? "Search Results"
+                                    ? (_vehicles.isEmpty
+                                            ? null
+                                            : "Search Results") ??
+                                        ""
                                     : "Top Recommendations",
                                 style: MFonts.fontBH1,
                               ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:motodealz/common/styles/svg_styles.dart';
 import 'package:motodealz/common/widgets/back_button.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/features/kyc_verification/screens/uploaded_id.dart';
@@ -29,6 +30,7 @@ class UserVerificationIdCaptureScreenState
 
   @override
   Widget build(BuildContext context) {
+    final bool darkMode = MHelperFunctions.isDarkMode(context);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -54,7 +56,10 @@ class UserVerificationIdCaptureScreenState
                     const SizedBox(
                       height: MSizes.spaceBtwSections,
                     ),
-                    SvgPicture.asset(MImages.progressBar3),
+                    SvgPicture.asset(
+                      MImages.progressBar3,
+                      colorFilter: MSvgStyle.svgStyle3(darkMode),
+                    ),
                     const SizedBox(
                       height: MSizes.defaultSpace,
                     ),
@@ -89,7 +94,7 @@ class UserVerificationIdCaptureScreenState
                 ),
               ),
               const SizedBox(height: MSizes.nm),
-               Padding(
+              Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: MSizes.defaultSpace,
                   vertical: MSizes.defaultSpace,
@@ -116,7 +121,8 @@ class UserVerificationIdCaptureScreenState
                         } else {
                           // Capture back side photo
                           // Navigate to next page or perform desired action
-                          MHelperFunctions.navigateToScreen(context, const UserVerificationUploadedIDScreen());
+                          MHelperFunctions.navigateToScreen(context,
+                              const UserVerificationUploadedIDScreen());
                         }
                       },
                     ),

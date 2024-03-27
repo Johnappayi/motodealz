@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
+import 'package:motodealz/features/vehicle_listing/screens/car_info.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
@@ -67,18 +68,18 @@ class VehicleVerificationIdCaptureScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: MSizes.nm),
-              const Padding(
-                padding: EdgeInsets.symmetric(
+               Padding(
+                padding: const EdgeInsets.symmetric(
                   horizontal: MSizes.defaultSpace,
                   vertical: MSizes.defaultSpace,
                 ),
                 child: Column(
                   children: [
-                    SizedBox(height: MSizes.spaceBtwSections),
-                    SizedBox(height: MSizes.spaceBtwSections),
-                    SizedBox(height: MSizes.spaceBtwSections),
-                    SizedBox(height: MSizes.spaceBtwSections),
-                    LargeButtonNS(child: Text("Take a picture")),
+                    const SizedBox(height: MSizes.spaceBtwSections),
+                    const SizedBox(height: MSizes.spaceBtwSections),
+                    const SizedBox(height: MSizes.spaceBtwSections),
+                    const SizedBox(height: MSizes.spaceBtwSections),
+                    LargeButtonNS(child: const Text("Take a picture"),onPressed: () => MHelperFunctions.navigateToScreen(context, const VehicleListingInfoScreen()),),
                   ],
                 ),
               )

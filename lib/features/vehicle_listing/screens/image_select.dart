@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:motodealz/common/widgets/button_container.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/common/widgets/select_file.dart';
+import 'package:motodealz/features/vehicle_listing/screens/final_screen.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
+import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
 import 'package:motodealz/utils/constants/text_strings.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
@@ -28,10 +31,17 @@ const VehicleImageSelectScreen({Key? key}) : super(key: key);
               bottom: MSizes.defaultSpace),
           child: Column(
             children: [
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                // children: [ButtonContainer(child: MImages.closeIcon)],
-              ),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ButtonContainer(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: MImages.closeIcon,
+                    )
+                  ],
+                ),
               const Text(
                 "VEHICLE IMAGE",
                 style: MFonts.fontAH1,
@@ -103,7 +113,7 @@ const VehicleImageSelectScreen({Key? key}) : super(key: key);
                const SizedBox(
                 height: MSizes.spaceBtwSections,
               ),
-              const LargeButtonNS(child: Text("Upload"))
+               LargeButtonNS(child: const Text("Upload"),onPressed: () => MHelperFunctions.navigateToScreen(context, const VehicleVerificationLastScreen()),)
             ],
           ),
         )),

@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:motodealz/common/styles/svg_styles.dart';
-import 'package:motodealz/common/widgets/button_container.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/common/widgets/listed_ad_frame3.dart';
 import 'package:motodealz/features/kyc_verification/screens/kyc_landing_screen.dart';
-import 'package:motodealz/features/profile/controller/user_controller.dart';
-import 'package:motodealz/features/profile/model/user_details.dart';
-import 'package:motodealz/features/shop/screens/vehicle_view_page.dart';
+import 'package:motodealz/common/controller/user_controller.dart';
+import 'package:motodealz/common/model/user_details.dart';
+import 'package:motodealz/features/vehicle_listing/edit_listing/screens/vehicle_edit.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
@@ -33,11 +32,11 @@ class ProfileScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(MSizes.lg),
                 child: Column(
                   children: [
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        ButtonContainer(
-                            onPressed: () {}, child: MImages.settingsIcon)
+                      //   ButtonContainer(
+                      //       onPressed: () {}, child: MImages.settingsIcon)
                       ],
                     ),
                     const Text(
@@ -187,9 +186,10 @@ class ProfileScreen extends StatelessWidget {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => VehicleVeiwScreen(
-                                        vehicle: user.vehicles![index],
-                                      ),
+                                      builder: (context) => VehicleEditScreen( vehicle:user.vehicles![index],),
+                                      // VehicleVeiwScreen(
+                                      //   vehicle: user.vehicles![index],
+                                      // ),
                                     ),
                                   );
                                 },
@@ -319,3 +319,4 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 }
+

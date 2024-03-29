@@ -1,4 +1,4 @@
-import 'package:motodealz/features/shop/model/vehicle_model.dart';
+import 'package:motodealz/common/model/vehicle_model.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
 
 class VehicleController {
@@ -23,7 +23,8 @@ class VehicleController {
           MImages.sampleCar1b,
           MImages.sampleCar1c,
           MImages.sampleCar1d,
-        ]),
+        ],
+        id: '1'),
     Vehicle(
       brand: "Honda",
       model: "Civic",
@@ -46,6 +47,7 @@ class VehicleController {
         MImages.sampleCar2d,
         MImages.sampleCar2e,
       ],
+      id: '2',
     ),
     Vehicle(
       brand: "BMW",
@@ -69,6 +71,7 @@ class VehicleController {
         MImages.sampleCar3d,
         MImages.sampleCar3e,
       ],
+      id: '3',
     ),
     Vehicle(
       brand: "Ford",
@@ -91,6 +94,7 @@ class VehicleController {
         MImages.sampleCar4c,
         MImages.sampleCar4d,
       ],
+      id: '4',
     ),
     Vehicle(
       brand: "Chevrolet",
@@ -113,6 +117,7 @@ class VehicleController {
         MImages.sampleCar5c,
         MImages.sampleCar5d,
       ],
+      id: '5',
     ),
     Vehicle(
       brand: "Mercedes-Benz",
@@ -135,6 +140,7 @@ class VehicleController {
         MImages.sampleCar6c,
         MImages.sampleCar6d,
       ],
+      id: '6',
     ),
     Vehicle(
       brand: "Audi",
@@ -158,6 +164,7 @@ class VehicleController {
         MImages.sampleCar7d,
         MImages.sampleCar7e,
       ],
+      id: '7',
     ),
     Vehicle(
       brand: "Volkswagen",
@@ -180,6 +187,7 @@ class VehicleController {
         MImages.sampleCar8c,
         MImages.sampleCar8d,
       ],
+      id: '8',
     ),
     Vehicle(
       brand: "Ford",
@@ -202,6 +210,7 @@ class VehicleController {
         MImages.sampleCar9c,
         MImages.sampleCar9d,
       ],
+      id: '9',
     ),
     Vehicle(
       brand: "Chevrolet",
@@ -224,6 +233,7 @@ class VehicleController {
         MImages.sampleCar10c,
         MImages.sampleCar10d,
       ],
+      id: '10',
     ),
     Vehicle(
       brand: "Audi",
@@ -246,6 +256,7 @@ class VehicleController {
         MImages.sampleCar11c,
         MImages.sampleCar11d,
       ],
+      id: '11',
     ),
     Vehicle(
       brand: "Toyota",
@@ -268,6 +279,7 @@ class VehicleController {
         MImages.sampleCar12c,
         MImages.sampleCar12d,
       ],
+      id: '12',
     ),
     Vehicle(
       brand: "Ford",
@@ -290,6 +302,7 @@ class VehicleController {
         MImages.sampleCar13c,
         MImages.sampleCar13d,
       ],
+      id: '13',
     ),
   ];
 
@@ -309,6 +322,7 @@ class VehicleController {
         vehicles.map((vehicle) => vehicle.category).toSet().toList();
     // Index vehicles by brand
     _indexVehiclesByBrand(vehicles);
+    
   }
 
   // Index vehicles by brand
@@ -346,14 +360,22 @@ class VehicleController {
     return vehicles.where((vehicle) => vehicle.category == category).toList();
   }
 
-   List<Vehicle> getVehiclesByBrand(String brand) {
-    return vehicles.where((vehicle) => vehicle.brand.toLowerCase() == brand.toLowerCase()).toList();
+  List<Vehicle> getVehiclesByBrand(String brand) {
+    return vehicles
+        .where((vehicle) => vehicle.brand.toLowerCase() == brand.toLowerCase())
+        .toList();
   }
+
   List<Vehicle> getVehiclesByOwnerId(String ownerId) {
     return vehicles.where((vehicle) => vehicle.ownerId == ownerId).toList();
   }
 
-
+ // Method to get a single vehicle by its ID
+  Vehicle getVehicleById(String id) {
+    // Search for the vehicle with the given ID in the list of vehicles
+    return vehicles.firstWhere((vehicle) => vehicle.id == id );
+  }
+  
   // Method to search vehicles by criteria
   List<Vehicle> searchVehicles(String query) {
     // Convert the query to lowercase for case-insensitive matching

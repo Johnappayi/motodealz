@@ -1,7 +1,7 @@
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 
-import 'package:motodealz/features/shop/model/vehicle_model.dart';
+import 'package:motodealz/common/model/vehicle_model.dart';
 
 /// Model class representing user data.
 class UserModel {

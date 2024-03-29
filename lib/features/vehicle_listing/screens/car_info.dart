@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:motodealz/common/widgets/button_container.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/common/widgets/input_field.dart';
+import 'package:motodealz/common/widgets/navigation_menu.dart';
 import 'package:motodealz/features/vehicle_listing/screens/image_select.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
@@ -30,7 +32,7 @@ class VehicleListingInfoScreen extends StatelessWidget {
                   children: [
                     ButtonContainer(
                       onPressed: () {
-                        Navigator.pop(context);
+                        Get.offAll(const NavigationMenu());
                       },
                       child: MImages.closeIcon,
                     )
@@ -44,7 +46,7 @@ class VehicleListingInfoScreen extends StatelessWidget {
               const SizedBox(
                 height: MSizes.spaceBtwSections,
               ),
-              const Form(
+               const Form(
                 child: Column(
                   children: [
                     InputField(

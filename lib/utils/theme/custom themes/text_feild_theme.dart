@@ -50,11 +50,11 @@ class MTextFormFieldTheme {
     floatingLabelStyle: const TextStyle().copyWith(color: MColors.white.withOpacity(0.8)),
     border: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(MSizes.inputFieldRadius),
-      borderSide:  BorderSide(width: 1, color: MColors.secondary.withOpacity(0.4)),
+      borderSide:  BorderSide.none,
     ),
     enabledBorder: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(MSizes.inputFieldRadius),
-      borderSide:  BorderSide(width: 1, color: MColors.secondary.withOpacity(0.4)),
+      borderSide:  BorderSide.none,
     ),
     focusedBorder: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(MSizes.inputFieldRadius),

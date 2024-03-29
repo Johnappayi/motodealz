@@ -1,44 +1,63 @@
-// ignore_for_file: dead_code
-
 import 'package:flutter/material.dart';
+import 'package:motodealz/common/model/vehicle_model.dart';
 import 'package:motodealz/common/widgets/back_button.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/common/widgets/draggable_sheet.dart';
-import 'package:motodealz/common/widgets/input_field.dart';
+import 'package:motodealz/common/widgets/image_carousel.dart';
+import 'package:motodealz/common/widgets/vehicle_details_ui.dart';
+import 'package:motodealz/features/shop/screens/vehicle_image_veiw_page.dart';
+import 'package:motodealz/features/vehicle_listing/controller/ad_controller.dart';
+import 'package:motodealz/features/vehicle_listing/model/ad_model.dart';
 import 'package:motodealz/utils/constants/colors.dart';
-import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
 
-class VehicleEditScreen extends StatelessWidget {
-  const VehicleEditScreen({super.key});
+import 'vehicle_details_edit_ui.dart';
+
+class VehicleEditScreen extends StatefulWidget {
+  const VehicleEditScreen({Key? key, required this.vehicle}) : super(key: key);
+
+  final Vehicle vehicle;
+  
+
+  @override
+  State<VehicleEditScreen> createState() => _VehicleEditScreenState();
+}
+
+class _VehicleEditScreenState extends State<VehicleEditScreen> {
+  bool _hasNavigatedToImageViewScreen = false;
+  
 
   @override
   Widget build(BuildContext context) {
     final bool darkMode = MHelperFunctions.isDarkMode(context);
-    bool isEditing = false;
+    AdListed adListed = AdController().getAdDetailsByVehicleId(widget.vehicle.id);
+
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Stack(
           children: [
-            Image.asset(
-              MImages.sampleCar1a,
-              fit: BoxFit.cover,
-              width: MHelperFunctions.screenWidth(),
-              height: MHelperFunctions.screenHeight() * 0.45,
+            GestureDetector(
+              onTap: () {
+                _navigateToImageViewScreen(context);
+              },
+              child: MImageCarousel1(images: widget.vehicle.images),
             ), //Later change this to carousel
-            const MyDraggableSheet(
+            MyDraggableSheet(
               child: Column(
                 children: [
-                  //Make changes here
-                  // isEditing
-                  //     ? const VehicleDetailsEditUI()
-                  //     : const VehicleDetailsUI(),
-                  SizedBox(
+                  VehicleDetailsUI(
+                    vehicle: widget.vehicle, adListed: adListed,
+                  ),
+                  const SizedBox(
                     height: 90,
                   ) //Dont remove this
                 ],
               ),
+              onCollapse: () {
+                _navigateToImageViewScreen(context);
+              },
             ),
             const Positioned(
               top: 0,
@@ -55,21 +74,26 @@ class VehicleEditScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(MSizes.lg),
                 decoration: BoxDecoration(
                     color: darkMode ? MColors.black : MColors.white),
-                child: isEditing
-                    ? const Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SmallSecButton(child: Text("Cancel")),
-                          SmallButton(child: Text("Save")),
-                        ],
-                      )
-                    : const Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SmallSecButton(child: Text("Delete")),
-                          SmallButton(child: Text("Edit")),
-                        ],
-                      ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SmallSecButton(
+                        onPressed: _deleteVehicle, child: const Text("Delete")),
+                    SmallButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => VehicleDetailsEditUI(
+                              vehicleId: widget.vehicle.id,
+                            ),
+                          ),
+                        );
+                      },
+                      child: const Text("Edit"),
+                    ),
+                  ],
+                ),
               ),
             )
           ],
@@ -77,96 +101,26 @@ class VehicleEditScreen extends StatelessWidget {
       ),
     );
   }
-}
 
-class VehicleDetailsEditUI extends StatelessWidget {
-  const VehicleDetailsEditUI({super.key});
+  void _navigateToImageViewScreen(BuildContext context) {
+    if (!_hasNavigatedToImageViewScreen) {
+      _hasNavigatedToImageViewScreen = true;
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => VehicleImageViewScreen(vehicle: widget.vehicle),
+        ),
+      ).then((_) {
+        // Reset the flag when the navigation is completed
+        _hasNavigatedToImageViewScreen = false;
+      });
+    }
+  }
 
-  @override
-  Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.all(MSizes.defaultSpace),
-      child: Column(
-        children: [
-          Row(),
-          SizedBox(
-            height: MSizes.spaceBtwItems,
-          ),
-          Form(
-            child: Column(
-              children: [
-                InputField(
-                  label: "Brand",
-                  hintText: "Enter brand name",
-                ),
-                SizedBox(
-                  height: MSizes.spaceBtwInputFields,
-                ),
-                InputField(
-                  label: "Model",
-                  hintText: "Enter the model",
-                ),
-                SizedBox(
-                  height: MSizes.spaceBtwInputFields,
-                ),
-                InputField(
-                  label: "Year",
-                  hintText: "Enter the make year",
-                ),
-                SizedBox(
-                  height: MSizes.spaceBtwInputFields,
-                ),
-                InputField(
-                  label: "Color",
-                  hintText: "Enter the color",
-                ),
-                SizedBox(
-                  height: MSizes.spaceBtwInputFields,
-                ),
-                InputField(
-                  label: "KM driven",
-                  hintText: "Enter total KMs driven",
-                ),
-                SizedBox(
-                  height: MSizes.spaceBtwInputFields,
-                ),
-                InputField(
-                  label: "No. of Owners",
-                  hintText: "Enter no. of owners",
-                ),
-                SizedBox(
-                  height: MSizes.spaceBtwInputFields,
-                ),
-                InputField(
-                  label: "Ad title",
-                  hintText: "Enter an ad title",
-                ),
-                SizedBox(
-                  height: MSizes.spaceBtwInputFields,
-                ),
-                InputField(
-                  label: "Description",
-                  hintText: "Describe the details of your vehicle",
-                ),
-                SizedBox(
-                  height: MSizes.spaceBtwInputFields,
-                ),
-                InputField(
-                  label: "Registeration no.",
-                  hintText: "Enter the licence plate number ",
-                ),
-                SizedBox(
-                  height: MSizes.spaceBtwInputFields,
-                ),
-                InputField(
-                  label: "VIN Number",
-                  hintText: "Enter the vehicle identification number",
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
+  void _deleteVehicle() {
+    // Delete vehicle logic here
+    // For example:
+    // VehicleController().deleteVehicle(widget.vehicle);
+    // After deleting, you might want to navigate back or do any other action
   }
 }

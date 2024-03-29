@@ -1,5 +1,5 @@
 class Vehicle {
-  // String id;
+  String id;
   String brand;
   String model;
   String category;
@@ -17,7 +17,7 @@ class Vehicle {
   List<String> images;
 
   Vehicle({
-    // required this.id,
+    required this.id,
     required this.brand,
     required this.model,
     required this.category,

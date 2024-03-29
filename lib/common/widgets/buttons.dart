@@ -4,15 +4,15 @@ import 'package:motodealz/utils/constants/sizes.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
 
 class SmallButton extends StatelessWidget {
-  // final VoidCallback onPressed;
+  final VoidCallback onPressed;
   final Widget child;
   //   required this.onPressed-add later
-  const SmallButton({Key? key, required this.child}) : super(key: key);
+  const SmallButton({Key? key, required this.child, required this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: onPressed ,
       style: ElevatedButton.styleFrom(
         minimumSize: Size(MHelperFunctions.screenWidth() * 0.39, 60.0),
       ),
@@ -99,15 +99,15 @@ class LargeSecButton extends StatelessWidget {
 }
 
 class SmallSecButton extends StatelessWidget {
-  // final VoidCallback onPressed;
+  final VoidCallback onPressed;
   final Widget child;
   //   required this.onPressed-add later
-  const SmallSecButton({Key? key, required this.child}) : super(key: key);
+  const SmallSecButton({Key? key, required this.child, required this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
-      onPressed: () {},
+      onPressed: onPressed,
       style: OutlinedButton.styleFrom(
         minimumSize: Size(MHelperFunctions.screenWidth() * 0.39, 60.0),
       ),

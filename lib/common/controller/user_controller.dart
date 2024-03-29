@@ -1,5 +1,5 @@
-import 'package:motodealz/features/profile/model/user_details.dart';
-import 'package:motodealz/features/shop/controller/vehicle_controller.dart';
+import 'package:motodealz/common/model/user_details.dart';
+import 'package:motodealz/common/controller/vehicle_controller.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
 
 final VehicleController _vehicleController = VehicleController();

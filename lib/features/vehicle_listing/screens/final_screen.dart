@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:motodealz/common/widgets/button_container.dart';
-// import 'package:motodealz/common/widgets/button_container.dart';
+import 'package:get/get.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
+import 'package:motodealz/common/widgets/navigation_menu.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
@@ -24,17 +24,10 @@ class VehicleVerificationLastScreen extends StatelessWidget {
               bottom: MSizes.defaultSpace),
           child: Column(
             children: [
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    ButtonContainer(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: MImages.closeIcon,
-                    )
-                  ],
-                ),
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [SizedBox(height: 35)],
+              ),
               const Text(
                 "THANK YOU!",
                 style: MFonts.fontAH1,
@@ -53,7 +46,6 @@ class VehicleVerificationLastScreen extends StatelessWidget {
               const SizedBox(height: MSizes.spaceBtwSections),
               const SizedBox(height: MSizes.spaceBtwSections),
               const SizedBox(height: MSizes.spaceBtwSections),
-            
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: MSizes.defaultSpace),
@@ -62,7 +54,12 @@ class VehicleVerificationLastScreen extends StatelessWidget {
               const SizedBox(height: MSizes.spaceBtwSections),
               const SizedBox(height: MSizes.spaceBtwSections),
               const SizedBox(height: MSizes.spaceBtwSections),
-               LargeButton(child: const Text("Continue"), onPressed: () { },)
+              LargeButtonNS(
+                child: const Text("Continue"),
+                onPressed: () {
+                  Get.offAll(const NavigationMenu());
+                },
+              )
             ],
           ),
         )),

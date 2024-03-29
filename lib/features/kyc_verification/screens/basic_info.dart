@@ -51,7 +51,7 @@ class UserVerificationInfoScreen extends StatelessWidget {
               const SizedBox(
                 height: MSizes.nm,
               ),
-              const Form(
+               const Form(
                 child: Column(
                   children: [
                     InputField(

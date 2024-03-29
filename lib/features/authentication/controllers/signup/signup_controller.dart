@@ -7,7 +7,7 @@ import 'package:motodealz/utils/popups/full_screen_loader.dart';
 import 'package:motodealz/utils/popups/loader.dart';
 
 import '../../../../data/repositories/authentication/authentication_repository.dart';
-import '../../../profile/model/user_details.dart';
+import '../../../../common/model/user_details.dart';
 
 class SignUpController extends GetxController {
   static SignUpController get instance => Get.find();

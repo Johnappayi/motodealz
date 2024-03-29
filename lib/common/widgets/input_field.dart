@@ -11,12 +11,16 @@ class InputField extends StatelessWidget {
     super.key,
     required this.hintText,
     required this.label,
+    this.isEnabled
   });
   final String hintText;
   final String label;
+  final bool? isEnabled;
+  
 
   @override
   Widget build(BuildContext context) {
+    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -28,6 +32,7 @@ class InputField extends StatelessWidget {
           height: MSizes.sm,
         ),
         TextFormField(
+          enabled: isEnabled ?? true,
           decoration: InputDecoration(hintText: hintText),
         ),
       ],

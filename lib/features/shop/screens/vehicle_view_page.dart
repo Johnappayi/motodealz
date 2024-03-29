@@ -3,8 +3,10 @@ import 'package:motodealz/common/widgets/back_button.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/common/widgets/draggable_sheet.dart';
 import 'package:motodealz/common/widgets/vehicle_details_ui.dart';
-import 'package:motodealz/features/shop/model/vehicle_model.dart';
+import 'package:motodealz/common/model/vehicle_model.dart';
 import 'package:motodealz/features/shop/screens/vehicle_image_veiw_page.dart';
+import 'package:motodealz/features/vehicle_listing/controller/ad_controller.dart';
+import 'package:motodealz/features/vehicle_listing/model/ad_model.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
@@ -27,6 +29,8 @@ class VehicleVeiwScreenState extends State<VehicleVeiwScreen> {
   @override
   Widget build(BuildContext context) {
     final bool darkMode = MHelperFunctions.isDarkMode(context);
+    AdListed adListed = AdController().getAdDetailsByVehicleId(widget.vehicle.id);
+
     return SafeArea(
       child: Scaffold(
         body: Stack(
@@ -40,7 +44,8 @@ class VehicleVeiwScreenState extends State<VehicleVeiwScreen> {
             MyDraggableSheet(
               child: Column(
                 children: [
-                  VehicleDetailsUI(vehicle: widget.vehicle),
+                  VehicleDetailsUI(vehicle: widget.vehicle,
+                  adListed:adListed ),
                   const SizedBox(
                     height: 90,
                   ) //Dont remove this
@@ -72,7 +77,8 @@ class VehicleVeiwScreenState extends State<VehicleVeiwScreen> {
                       MFormatter.formatCurrency(widget.vehicle.price),
                       style: MFonts.fontCH1,
                     ),
-                    const SmallButton(child: Text("Chat"))
+                     SmallButton(onPressed: () {  },
+                    child: const Text("Chat"))
                   ],
                 ),
               ),

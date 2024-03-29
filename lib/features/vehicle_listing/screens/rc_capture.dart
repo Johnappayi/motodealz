@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:motodealz/common/widgets/button_container.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
+import 'package:motodealz/common/widgets/navigation_menu.dart';
 import 'package:motodealz/features/vehicle_listing/screens/car_info.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
+import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
 
@@ -17,30 +21,36 @@ class VehicleVerificationIdCaptureScreen extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min, // Set mainAxisSize to min
             children: [
-              const Padding(
-                padding: EdgeInsets.symmetric(
+               Padding(
+                padding: const EdgeInsets.symmetric(
                   horizontal: MSizes.defaultSpace,
                   vertical: MSizes.defaultSpace,
                 ),
                 child: Column(
                   children: [
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      // children: [ButtonContainer(child: MImages.closeIcon)],
-                    ),
-                    Text(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ButtonContainer(
+                      onPressed: () {
+                        Get.offAll(const NavigationMenu());
+                      },
+                      child: MImages.closeIcon,
+                    )
+                  ],
+                ),
+                    const Text(
                       "UPLOAD RC DETAILS",
                       style: MFonts.fontAH1,
                     ),
-                    SizedBox(height: MSizes.spaceBtwSections),
-                    Text(
+                    const SizedBox(height: MSizes.spaceBtwSections),
+                    const Text(
                       "Submit RC Details",
                       style: MFonts.fontBH1,
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: MSizes.spaceBtwSections),
               const SizedBox(height: MSizes.spaceBtwSections),
               const SizedBox(height: MSizes.spaceBtwSections),
               const SizedBox(height: MSizes.spaceBtwSections),

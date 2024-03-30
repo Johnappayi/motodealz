@@ -26,3 +26,28 @@ class SplashScreen extends StatelessWidget {
     );
   }
 }
+
+class SplashScreen2 extends StatelessWidget {
+  const SplashScreen2({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                MColors.secondary,
+                MColors.primary,
+              ],
+            ),
+          ),
+        ),
+        const Center(child: CircularProgressIndicator())
+      ],
+    );
+  }
+}

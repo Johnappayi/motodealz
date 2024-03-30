@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:motodealz/common/controller/vehicle_controller.dart';
 import 'package:motodealz/common/model/vehicle_model.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
-import 'package:motodealz/features/vehicle_listing/controller/ad_controller.dart';
-import 'package:motodealz/features/vehicle_listing/model/ad_model.dart';
+import 'package:motodealz/features/vehicle_listing/add_listing/controller/ad_controller.dart';
+import 'package:motodealz/features/vehicle_listing/add_listing/model/ad_model.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
 

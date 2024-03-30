@@ -1,10 +1,10 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:motodealz/common/styles/svg_styles.dart';
-import 'package:motodealz/common/widgets/back_button.dart';
+import 'package:get/get.dart';
+import 'package:motodealz/common/widgets/button_container.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
-import 'package:motodealz/features/kyc_verification/screens/upload_choice.dart';
+import 'package:motodealz/common/widgets/navigation_menu.dart';
+import 'package:motodealz/features/vehicle_listing/add_listing/screens/uploaded_rc.dart';
 import 'package:motodealz/splash_screen.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
@@ -13,16 +13,16 @@ import 'package:motodealz/utils/constants/sizes.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-class UserVerificationSelfieScreen extends StatefulWidget {
-  const UserVerificationSelfieScreen({Key? key}) : super(key: key);
+class VehicleVerificationIdCaptureScreen extends StatefulWidget {
+  const VehicleVerificationIdCaptureScreen({Key? key}) : super(key: key);
 
   @override
-  State<UserVerificationSelfieScreen> createState() =>
-      _UserVerificationSelfieScreenState();
+  State<VehicleVerificationIdCaptureScreen> createState() =>
+      _VehicleVerificationIdCaptureScreenState();
 }
 
-class _UserVerificationSelfieScreenState
-    extends State<UserVerificationSelfieScreen> {
+class _VehicleVerificationIdCaptureScreenState
+    extends State<VehicleVerificationIdCaptureScreen> {
   late Future<void> _initFuture;
   late CameraController _controller;
   XFile? image; // Initialize image to null
@@ -38,32 +38,29 @@ class _UserVerificationSelfieScreenState
   }
 
   Future<void> _initializeCamera() async {
-  final PermissionStatus status = await Permission.camera.request();
-  if (status != PermissionStatus.granted) {
-    // Handle denied permission or show a message to the user
-    //print('Camera permission denied');
-    return;
-  }
-
-  try {
-    final cameras = await availableCameras();
-    // Find the front-facing camera
-    final CameraDescription frontCamera = cameras.firstWhere(
-      (camera) => camera.lensDirection == CameraLensDirection.front,
-     
-    );
-    _controller = CameraController(
-      frontCamera,
-      ResolutionPreset.veryHigh,
-    );
-    await _controller.initialize(); // Wait for controller initialization
-    if (mounted) {
-      setState(() {}); // Trigger a rebuild after camera initialization
+    final PermissionStatus status = await Permission.camera.request();
+    if (status != PermissionStatus.granted) {
+      // Handle denied permission or show a message to the user
+      //print('Camera permission denied');
+      return;
     }
-  } catch (e) {
-    //print("Error initializing camera: $e");
+
+    try {
+      final cameras = await availableCameras();
+      final firstCamera = cameras.first;
+
+      _controller = CameraController(
+        firstCamera,
+        ResolutionPreset.veryHigh,
+      );
+      await _controller.initialize(); // Wait for controller initialization
+      if (mounted) {
+        setState(() {}); // Trigger a rebuild after camera initialization
+      }
+    } catch (e) {
+      //print("Error initializing camera: $e");
+    }
   }
-}
 
   @override
   void dispose() {
@@ -88,7 +85,6 @@ class _UserVerificationSelfieScreenState
   }
 
   Widget _buildScreen() {
-    final bool darkMode = MHelperFunctions.isDarkMode(context);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -96,45 +92,44 @@ class _UserVerificationSelfieScreenState
             mainAxisSize: MainAxisSize.min, // Set mainAxisSize to min
             children: [
               Padding(
-                padding: const EdgeInsets.only(
-                    left: MSizes.defaultSpace,
-                    right: MSizes.defaultSpace,
-                    top: MSizes.nm,
-                    bottom: MSizes.defaultSpace),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: MSizes.defaultSpace,
+                  vertical: MSizes.defaultSpace,
+                ),
                 child: Column(
                   children: [
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [MBackButton()],
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        ButtonContainer(
+                          onPressed: () {
+                            Get.offAll(() => const NavigationMenu());
+                          },
+                          child: MImages.closeIcon,
+                        )
+                      ],
                     ),
                     const Text(
-                      "KYC VERIFICATION",
+                      "UPLOAD RC DETAILS",
                       style: MFonts.fontAH1,
                     ),
-                    const SizedBox(
-                      height: MSizes.spaceBtwSections,
-                    ),
-                    SvgPicture.asset(
-                      MImages.progressBar2,
-                      colorFilter: MSvgStyle.svgStyle3(darkMode),
-                    ),
-                    const SizedBox(
-                      height: MSizes.defaultSpace,
-                    ),
+                    const SizedBox(height: MSizes.spaceBtwSections),
                     const Text(
-                      "Take a Selfie",
+                      "Submit RC Details",
                       style: MFonts.fontBH1,
                     ),
                   ],
                 ),
               ),
               const SizedBox(height: MSizes.spaceBtwSections),
+              const SizedBox(height: MSizes.spaceBtwSections),
+              const SizedBox(height: MSizes.spaceBtwSections),
               SizedBox(
                 width: MHelperFunctions.screenWidth(),
-                height: MHelperFunctions.screenHeight() * 0.50,
+                height: MHelperFunctions.screenHeight() * 0.35,
                 child: Stack(
                   children: [
-                    //Image from camera
+                    // Camera preview clipped to the desired portion
                     _controller.value.isInitialized == true
                         ? ClipRect(
                             child: Align(
@@ -146,7 +141,8 @@ class _UserVerificationSelfieScreenState
                                   fit: BoxFit.fitWidth,
                                   alignment: Alignment.center,
                                   child: SizedBox(
-                                    width: MHelperFunctions.screenWidth(),                                   
+                                    width: MHelperFunctions.screenWidth(),
+                                    
                                     child: CameraPreview(_controller),
                                   ),
                                 ),
@@ -154,7 +150,6 @@ class _UserVerificationSelfieScreenState
                             ),
                           )
                         : const Center(child: CircularProgressIndicator()),
-
                     // Cutout Rectangle
                     CustomPaint(
                       painter: RectanglePainter(),
@@ -171,14 +166,21 @@ class _UserVerificationSelfieScreenState
                 ),
                 child: Column(
                   children: [
+                    const SizedBox(height: MSizes.spaceBtwSections),
+                    const SizedBox(height: MSizes.spaceBtwSections),
+                    const SizedBox(height: MSizes.spaceBtwSections),
+                    const SizedBox(height: MSizes.defaultSpace),
                     LargeButtonNS(
                       onPressed: _controller.value.isInitialized == true
                           ? () async {
                               try {
                                 image = await _controller.takePicture();
                                 if (mounted) {
-                                  MHelperFunctions.navigateToScreen(context,
-                                      const UserVerificationUploadChoiceScreen());
+                                  MHelperFunctions.navigateToScreen(
+                                      context,
+                                      UploadedRCScreen(
+                                        imagePath: image!.path,
+                                      ));
                                 }
                               } catch (e) {
                                 // print(e);
@@ -209,14 +211,15 @@ class RectanglePainter extends CustomPainter {
       paint,
     );
 
-    // Draw inner rectangle as a hole/ Ratio of a credit card
-    final double holeWidth = size.width * 0.75; // Adjust as needed
-    final double holeHeight = holeWidth;
+    // Draw inner rectangle as a hole
+    const double aadharCardRatio = 1.587; // Ratio of a credit card
+    final double holeWidth = size.width * 0.88; // Adjust as needed
+    final double holeHeight =
+        holeWidth / aadharCardRatio; // Calculate height based on ratio
 
     final holeSize = Size(holeWidth, holeHeight);
-    const double yOffset = -20.0;
     final holeRect = Rect.fromCenter(
-      center: size.center(Offset.zero) + const Offset(0, yOffset),
+      center: size.center(Offset.zero),
       width: holeSize.width,
       height: holeSize.height,
     );

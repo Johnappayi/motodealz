@@ -4,7 +4,7 @@ import 'package:motodealz/common/widgets/button_container.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/common/widgets/navigation_menu.dart';
 import 'package:motodealz/common/widgets/select_file.dart';
-import 'package:motodealz/features/vehicle_listing/screens/final_screen.dart';
+import 'package:motodealz/features/vehicle_listing/add_listing/screens/final_screen.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
@@ -12,7 +12,7 @@ import 'package:motodealz/utils/constants/sizes.dart';
 import 'package:motodealz/utils/constants/text_strings.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
 
-import '../../../common/widgets/selected_image_gallery.dart';
+import '../../../../common/widgets/selected_image_gallery.dart';
 
 class VehicleImageSelectScreen extends StatelessWidget {
 const VehicleImageSelectScreen({Key? key}) : super(key: key);

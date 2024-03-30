@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:motodealz/common/styles/svg_styles.dart';
 import 'package:motodealz/common/widgets/back_button.dart';
-// import 'package:motodealz/common/widgets/button_container.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/common/widgets/select_file.dart';
 import 'package:motodealz/features/kyc_verification/screens/uploaded_id.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
-// import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
 
@@ -82,7 +80,7 @@ class UserVerificationUploadScreen extends StatelessWidget {
                   const SizedBox(
                     height: MSizes.defaultSpace,
                   ),
-                   LargeButtonNS(child: const Text("Verify"),onPressed: () =>  MHelperFunctions.navigateToScreen(context, const UserVerificationUploadedIDScreen()),),
+                   LargeButtonNS(child: const Text("Verify"),onPressed: () =>  MHelperFunctions.navigateToScreen(context, const UserVerificationUploadedIDScreen(imageFrontPath: '', imageBackPath: '',)),),
                 ],
               )
             ],

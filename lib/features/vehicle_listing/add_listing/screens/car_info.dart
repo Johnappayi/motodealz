@@ -4,7 +4,7 @@ import 'package:motodealz/common/widgets/button_container.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/common/widgets/input_field.dart';
 import 'package:motodealz/common/widgets/navigation_menu.dart';
-import 'package:motodealz/features/vehicle_listing/screens/image_select.dart';
+import 'package:motodealz/features/vehicle_listing/add_listing/screens/image_select.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
@@ -12,6 +12,7 @@ import 'package:motodealz/utils/helpers/helper_functions.dart';
 
 class VehicleListingInfoScreen extends StatelessWidget {
   const VehicleListingInfoScreen({super.key});
+  
 
   @override
   Widget build(BuildContext context) {

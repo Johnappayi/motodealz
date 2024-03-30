@@ -1,4 +1,4 @@
-import 'package:motodealz/features/vehicle_listing/model/ad_model.dart';
+import 'package:motodealz/features/vehicle_listing/add_listing/model/ad_model.dart';
 
 class AdController {
  List<AdListed> adListings = [

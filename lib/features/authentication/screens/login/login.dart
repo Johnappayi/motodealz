@@ -4,6 +4,8 @@ import 'package:motodealz/common/styles/spacing_styles.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/common/widgets/input_field.dart';
 import 'package:motodealz/features/authentication/controllers/login/login_controller.dart';
+import 'package:motodealz/features/authentication/screens/password_configuration/forgot_password_final.dart';
+import 'package:motodealz/features/authentication/screens/signup/create_acc.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
@@ -89,8 +91,9 @@ class LoginScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: MSizes.spaceBtwInputFields),
 
-                      const LargeButtonNS(
-                        child: Text("Login"),
+                      LargeButtonNS(
+                        child: const Text("Login"),
+                        onPressed: () => controller.emailAndPasswordSignIn(),
                       ),
 
                       const SizedBox(height: MSizes.sm),
@@ -114,7 +117,8 @@ class LoginScreen extends StatelessWidget {
 
                           ///Forgot Password
                           TextButton(
-                              onPressed: () {},
+                              onPressed: () => Get.to(
+                                  () => const ForgotPasswordLastScreen()),
                               child: const Text(MTexts.forgetPassword)),
                         ],
                       ),
@@ -165,7 +169,8 @@ class LoginScreen extends StatelessWidget {
                   style: MFonts.fontCB1,
                 ),
                 TextButton(
-                    onPressed: () {}, child: const Text("Create Account")),
+                    onPressed: () => Get.to(() => const CreateAccountScreen()),
+                    child: const Text("Create Account")),
               ])
             ],
           ),

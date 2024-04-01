@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:motodealz/common/styles/svg_styles.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/common/widgets/listed_ad_frame3.dart';
+import 'package:motodealz/data/repositories/authentication/authentication_repository.dart';
 import 'package:motodealz/features/kyc_verification/screens/kyc_landing_screen.dart';
 import 'package:motodealz/common/controller/user_controller.dart';
 import 'package:motodealz/common/model/user_details.dart';
@@ -301,7 +302,7 @@ class ProfileScreen extends StatelessWidget {
                           height: MSizes.defaultSpace,
                         ),
                         LargeButtonNS(
-                          onPressed: () {},
+                          onPressed: () => AuthenticationRepository.instance.logout(),
                           child: const Text("Logout"),
                         ),
                         const SizedBox(

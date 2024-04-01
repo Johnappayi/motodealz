@@ -4,6 +4,7 @@ import 'package:motodealz/common/styles/spacing_styles.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/common/widgets/input_field.dart';
 import 'package:motodealz/features/authentication/controllers/signup/signup_controller.dart';
+import 'package:motodealz/features/authentication/screens/login/login.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
@@ -150,7 +151,7 @@ class CreateAccountScreen extends StatelessWidget {
                   "Already have an account?",
                   style: MFonts.fontCB1,
                 ),
-                TextButton(onPressed: () {}, child: const Text("Login")),
+                TextButton(onPressed: () => Get.to(() => const LoginScreen()), child: const Text("Login")),
               ])
             ],
           ),

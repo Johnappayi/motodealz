@@ -34,7 +34,7 @@ class MAnimationLoaderWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Lottie.asset(animation, width: MediaQuery.of(context).size.width),
+          Lottie.asset(animation, width: MediaQuery.of(context).size.width * 0.6),
           const SizedBox(height: MSizes.defaultSpace),
           Text(
             text,

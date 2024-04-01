@@ -60,7 +60,7 @@ class UserVerificationUploadedIDScreen extends StatelessWidget {
                   height: MSizes.spaceBtwSections,
                 ),
                 SvgPicture.asset(
-                  MImages.progressBar1,
+                  MImages.progressBar3,
                   colorFilter: MSvgStyle.svgStyle3(darkMode),
                 ),
                 const SizedBox(

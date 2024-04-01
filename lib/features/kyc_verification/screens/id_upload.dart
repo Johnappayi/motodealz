@@ -1,18 +1,51 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:motodealz/common/styles/svg_styles.dart';
 import 'package:motodealz/common/widgets/back_button.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/common/widgets/select_file.dart';
-import 'package:motodealz/features/kyc_verification/screens/uploaded_id.dart';
+import 'package:motodealz/features/kyc_verification/screens/final_screen.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
 
-class UserVerificationUploadScreen extends StatelessWidget {
+class UserVerificationUploadScreen extends StatefulWidget {
   const UserVerificationUploadScreen({super.key});
+
+  @override
+  State<UserVerificationUploadScreen> createState() =>
+      _UserVerificationUploadScreenState();
+}
+
+class _UserVerificationUploadScreenState
+    extends State<UserVerificationUploadScreen> {
+  File? _frontImage;
+  File? _backImage;
+  bool hasUploaded1 =false;
+  bool hasUploaded2 =false;
+
+  Future<void> _getImage(ImageSource source, bool isFront) async {
+    final picker = ImagePicker();
+
+    // Use pickImage instead of getImage
+    final pickedFile = await picker.pickImage(source: source);
+
+    if (pickedFile != null) {
+      setState(() {
+        if (isFront) {
+          _frontImage = File(pickedFile.path);
+           hasUploaded1 =true;
+        } else {
+          _backImage = File(pickedFile.path);
+          hasUploaded2 =true;
+        }
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +61,7 @@ class UserVerificationUploadScreen extends StatelessWidget {
               bottom: MSizes.defaultSpace),
           child: Column(
             children: [
-             const Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [MBackButton()],
               ),
@@ -39,7 +72,10 @@ class UserVerificationUploadScreen extends StatelessWidget {
               const SizedBox(
                 height: MSizes.spaceBtwSections,
               ),
-              SvgPicture.asset(MImages.progressBar3,colorFilter: MSvgStyle.svgStyle3(darkMode),),
+              SvgPicture.asset(
+                MImages.progressBar3,
+                colorFilter: MSvgStyle.svgStyle3(darkMode),
+              ),
               const SizedBox(
                 height: MSizes.defaultSpace,
               ),
@@ -47,7 +83,6 @@ class UserVerificationUploadScreen extends StatelessWidget {
                 "Upload ID Card",
                 style: MFonts.fontBH1,
               ),
-              
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -58,7 +93,21 @@ class UserVerificationUploadScreen extends StatelessWidget {
                   const SizedBox(
                     height: MSizes.nm,
                   ),
-                  const SelectFile(),
+                  if(hasUploaded1) 
+                  SizedBox(
+                      width: MHelperFunctions.screenWidth(),
+                      height: MHelperFunctions.screenWidth() / 2.1,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: Image.file(
+                          File(_frontImage!.path),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    )
+                  else SelectFile(
+                    onPressed: () => _getImage(ImageSource.gallery, true),
+                  ),
                   const SizedBox(
                     height: MSizes.defaultSpace,
                   ),
@@ -69,8 +118,21 @@ class UserVerificationUploadScreen extends StatelessWidget {
                   const SizedBox(
                     height: MSizes.nm,
                   ),
-                  const SelectFile(),
-                  const SizedBox(
+                  if(hasUploaded2) 
+                  SizedBox(
+                      width: MHelperFunctions.screenWidth(),
+                      height: MHelperFunctions.screenWidth() / 2.1,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: Image.file(
+                          File(_backImage!.path),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    )
+                  else SelectFile(
+                    onPressed: () => _getImage(ImageSource.gallery, false),
+                  ),const SizedBox(
                     height: MSizes.sm,
                   ),
                   Text(
@@ -80,7 +142,12 @@ class UserVerificationUploadScreen extends StatelessWidget {
                   const SizedBox(
                     height: MSizes.defaultSpace,
                   ),
-                   LargeButtonNS(child: const Text("Verify"),onPressed: () =>  MHelperFunctions.navigateToScreen(context, const UserVerificationUploadedIDScreen(imageFrontPath: '', imageBackPath: '',)),),
+                  LargeButtonNS(
+                    child: const Text("Continue"),
+                    onPressed: () => MHelperFunctions.navigateToScreen(
+                        context,
+                        const UserVerificationLastScreen()),
+                  ),
                 ],
               )
             ],

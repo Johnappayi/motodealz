@@ -1,44 +1,53 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
 
 class SelectedImageGallery extends StatefulWidget {
-  const SelectedImageGallery({Key? key}) : super(key: key);
-
+  const SelectedImageGallery({Key? key, required this.images, required this.onImageRemoved})
+      : super(key: key);
+  final List<String> images;
+  final Function(int) onImageRemoved; // Callback to notify when an image is removed
   @override
   SelectedImageGalleryState createState() => SelectedImageGalleryState();
 }
 
 class SelectedImageGalleryState extends State<SelectedImageGallery> {
-  final List<String> _uploadedImages = [
-    MImages.sampleCar1a,
-    MImages.sampleCar2a,
-    MImages.sampleCar3a,
-    MImages.sampleCar4a,
-    // Add more image URLs here
-  ];
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MHelperFunctions.screenHeight() * 0.25,
+      height: MHelperFunctions.screenHeight() * 0.35,
       child: GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3, // Number of columns
           crossAxisSpacing: MSizes.nm,
           mainAxisSpacing: MSizes.nm,
         ),
-        itemCount: _uploadedImages.length,
+        itemCount: widget.images.length,
         itemBuilder: (context, index) {
-          return Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8.0),
-              image: DecorationImage(
-                image: AssetImage(_uploadedImages[index]), // Changed from Image.asset to AssetImage
-                fit: BoxFit.cover,
+          return Stack(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
+                  image: DecorationImage(
+                    image: FileImage(File(widget.images[index])), // Use FileImage instead of AssetImage
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
-            ),
+              Positioned(
+                top: 0,
+                right: 0,
+                child: IconButton(
+                  icon: const Icon(Icons.close),
+                  onPressed: () {
+                    // Remove the image when the close icon is pressed
+                    widget.onImageRemoved(index);
+                  },
+                ),
+              ),
+            ],
           );
         },
       ),

@@ -1,39 +1,79 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:motodealz/common/widgets/button_container.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/common/widgets/navigation_menu.dart';
 import 'package:motodealz/common/widgets/select_file.dart';
 import 'package:motodealz/features/vehicle_listing/add_listing/screens/final_screen.dart';
-import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
-import 'package:motodealz/utils/constants/text_strings.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
 
 import '../../../../common/widgets/selected_image_gallery.dart';
 
-class VehicleImageSelectScreen extends StatelessWidget {
-const VehicleImageSelectScreen({Key? key}) : super(key: key);
+class VehicleImageSelectScreen extends StatefulWidget {
+  const VehicleImageSelectScreen({Key? key}) : super(key: key);
 
+  @override
+  VehicleImageSelectScreenState createState() =>
+      VehicleImageSelectScreenState();
+}
 
+class VehicleImageSelectScreenState extends State<VehicleImageSelectScreen> {
+  final _imagePicker = ImagePicker(); // Create ImagePicker instance
+  final _maxImageCount = 10; // Maximum number of images allowed
+
+  List<File> selectedImages = [];
+
+  Future<void> _pickMultipleImages() async {
+    // Pick multiple images directly without requesting permissions
+    final pickedImages = await _imagePicker.pickMultiImage();
+    if (pickedImages.isNotEmpty) {
+      final selectedFiles =
+          pickedImages.map((image) => File(image.path)).toList();
+
+      // Check if adding new images exceeds maximum
+      if (selectedImages.length + selectedFiles.length > _maxImageCount) {
+        Get.snackbar(
+          "Image Limit Reached",
+          "You can only select up to $_maxImageCount images.",
+          snackPosition: SnackPosition.BOTTOM,
+        );
+        // Filter out images that would exceed the limit
+        final allowedImages =
+            selectedFiles.sublist(0, _maxImageCount - selectedImages.length);
+        setState(() {
+          selectedImages.addAll(allowedImages);
+        });
+        return;
+      }
+
+      setState(() {
+        selectedImages.addAll(selectedFiles);
+      });
+    }
+  }
+
+  void _removeImage(int index) {
+    setState(() {
+      selectedImages.removeAt(index);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    final dark = MHelperFunctions.isDarkMode(context);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-            child: Padding(
-          padding: const EdgeInsets.only(
-              left: MSizes.defaultSpace,
-              right: MSizes.defaultSpace,
-              top: MSizes.nm,
-              bottom: MSizes.defaultSpace),
-          child: Column(
-            children: [
-              Row(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+                horizontal: MSizes.defaultSpace, vertical: MSizes.nm),
+            child: Column(
+              children: [
+                Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     ButtonContainer(
@@ -41,84 +81,58 @@ const VehicleImageSelectScreen({Key? key}) : super(key: key);
                         Get.offAll(const NavigationMenu());
                       },
                       child: MImages.closeIcon,
-                    )
+                    ),
                   ],
                 ),
-              const Text(
-                "VEHICLE IMAGE",
-                style: MFonts.fontAH1,
-              ),
-              const SizedBox(
-                height: MSizes.defaultSpace,
-              ),
-              const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Upload photos",
-                    style: MFonts.fontCH4,
-                  ),
-                  SizedBox(
-                    height: MSizes.sm,
-                  ),
-                  SelectFile()
-                ],
-              ),
-              const SizedBox(height: MSizes.nm),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Flexible(
-                    child: Divider(
-                      color: dark ? MColors.darkGrey : MColors.lightGrey,
-                      thickness: 0.5,
-                      indent: 60,
-                      endIndent: 5,
-                    ),
-                  ),
-                  Text(MTexts.or,
-                      style: Theme.of(context).textTheme.labelMedium),
-                  Flexible(
-                    child: Divider(
-                      color: dark ? MColors.darkGrey : MColors.lightGrey,
-                      thickness: 0.5,
-                      indent: 5,
-                      endIndent: 60,
-                    ),
-                  )
-                ],
-              ),
-              const SizedBox(height: MSizes.nm),
-              const LargeSecButton(
-                child: Text(
-                  "Take a picture",
-                  style: MFonts.fontCB1,
+                const Text(
+                  "VEHICLE IMAGE",
+                  style: MFonts.fontAH1,
                 ),
-              ),
-              const SizedBox(
-                height: MSizes.spaceBtwSections,
-              ),
-             
-              const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Selected photos",
-                    style: MFonts.fontCH4,
+                const SizedBox(height: MSizes.defaultSpace),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Upload photos",
+                      style: MFonts.fontCH4,
+                    ),
+                    const SizedBox(height: MSizes.sm),
+                    SelectFile(
+                      onPressed: _pickMultipleImages,
+                    ),
+                  ],
+                ),
+                if (selectedImages.isNotEmpty)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: MSizes.spaceBtwSections),
+                      const Text(
+                        "Selected photos",
+                        style: MFonts.fontCH4,
+                      ),
+                      const SizedBox(height: MSizes.sm),
+                      SelectedImageGallery(
+                        images:
+                            selectedImages.map((file) => file.path).toList(),
+                        onImageRemoved: _removeImage,
+                      ),
+                    ],
                   ),
-                  SizedBox(
-                    height: MSizes.sm,
-                  ),
-                  SelectedImageGallery()
-                ],
-              ),
-               const SizedBox(
-                height: MSizes.spaceBtwSections,
-              ),
-               LargeButtonNS(child: const Text("Upload"),onPressed: () => MHelperFunctions.navigateToScreen(context, const VehicleVerificationLastScreen()),)
-            ],
+                const SizedBox(height: MSizes.spaceBtwSections),
+                LargeButtonNS(
+                  onPressed: selectedImages.isNotEmpty
+                      ? () => MHelperFunctions.navigateToScreen(
+                            context,
+                            const VehicleVerificationLastScreen(),
+                          )
+                      : null,
+                  child: const Text("Upload"), // Disable button if no images are uploaded
+                ),
+              ],
+            ),
           ),
-        )),
+        ),
       ),
     );
   }

@@ -151,7 +151,9 @@ class CreateAccountScreen extends StatelessWidget {
                   "Already have an account?",
                   style: MFonts.fontCB1,
                 ),
-                TextButton(onPressed: () => Get.to(() => const LoginScreen()), child: const Text("Login")),
+                TextButton(
+                    onPressed: () => Get.to(() => const LoginScreen()),
+                    child: const Text("Login")),
               ])
             ],
           ),

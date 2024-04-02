@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:motodealz/data/repositories/authentication/authentication_repository.dart';
-// import 'package:motodealz/utils/constants/image_strings.dart';
+import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/helpers/network_manager.dart';
 import 'package:motodealz/utils/popups/full_screen_loader.dart';
 import 'package:motodealz/utils/popups/loader.dart';
@@ -26,8 +26,8 @@ class LoginController extends GetxController {
   //Email and Password SignIn
   Future<void> emailAndPasswordSignIn() async {
     try {
-      // // Start Loading
-      // MFullScreenLoader.openLoadingDialog('Logging you in...', MImages.success);
+      // Start Loading
+      MFullScreenLoader.openLoadingDialog('Logging you in...', MImages.success);
 
       //Check Internet Connectivity
       final isConnected = await NetworkManager.instance.isConnected();
@@ -51,7 +51,7 @@ class LoginController extends GetxController {
       }
 
       // Login user using Email and Password Authentication
-      await AuthenticationRepository.instance
+      final userCredential = await AuthenticationRepository.instance
           .loginWithEmailAndPassword(email.text.trim(), password.text.trim());
 
       // Remove Loader
@@ -60,7 +60,7 @@ class LoginController extends GetxController {
       //Redirect
       AuthenticationRepository.instance.checkAuthentication();
     } catch (e) {
-      MFullScreenLoader.stopLoading();
+      print('Error during login: $e');
       MLoaders.errorSnackBar(title: 'Oh Snap', message: e.toString());
     }
   }

@@ -29,7 +29,7 @@ class AuthenticationRepository extends GetxController {
   }
 
   // Function to check user authentication status
-  checkAuthentication() async {
+  void checkAuthentication() async {
     final user = _auth.currentUser;
     if (user != null) {
       if (user.emailVerified) {
@@ -89,23 +89,43 @@ class AuthenticationRepository extends GetxController {
   // }
 
   /// [EmailAuthentication] - LOGIN
-  Future<UserCredential> loginWithEmailAndPassword(
-      String email, String password) async {
-    try {
-      return await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
-    } on FirebaseAuthException catch (e) {
+Future<UserCredential> loginWithEmailAndPassword(String email, String password) async {
+  try {
+    // Sign in with email and password
+    UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+
+    // Check if the ID token is close to expiration
+    if (userCredential.user != null) {
+      IdTokenResult idTokenResult = await userCredential.user!.getIdTokenResult();
+      DateTime tokenExpirationTime = DateTime.fromMillisecondsSinceEpoch(idTokenResult.expirationTime as int);
+      
+      // Check if the token is close to expiration (e.g., within 5 minutes)
+      if (tokenExpirationTime.isBefore(DateTime.now().add(const Duration(minutes: 5)))) {
+        // Refresh the token
+        await userCredential.user!.getIdToken(true);
+      }
+    }
+    return userCredential;
+  } catch (e) {
+    // Handle specific Firebase and platform exceptions
+    if (e is FirebaseAuthException) {
       throw MFirebaseAuthException(e.code).message;
-    } on FirebaseException catch (e) {
+    } else if (e is FirebaseException) {
       throw MFirebaseAuthException(e.code).message;
-    } on FormatException catch (_) {
+    } else if (e is FormatException) {
       throw const MFormatException();
-    } on PlatformException catch (e) {
+    } else if (e is PlatformException) {
       throw MPlatformException(e.code).message;
-    } catch (e) {
+    } else {
+      // Handle other generic exceptions
       throw 'Something went wrong. Please try again';
     }
   }
+}
+
 
   /// [EmailAuthentication] - REGISTER
   Future<UserCredential> registerWithEmailAndPassword(

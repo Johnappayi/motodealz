@@ -89,15 +89,9 @@ class LoginScreen extends StatelessWidget {
                           },
                         ),
                       ),
-                      const SizedBox(height: MSizes.spaceBtwInputFields),
+                      
 
-                      LargeButtonNS(
-                        child: const Text("Login"),
-                        onPressed: () => controller.emailAndPasswordSignIn(),
-                      ),
-
-                      const SizedBox(height: MSizes.sm),
-
+                      
                       ///Remember Me & Forgot Password
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -122,6 +116,16 @@ class LoginScreen extends StatelessWidget {
                               child: const Text(MTexts.forgetPassword)),
                         ],
                       ),
+
+                      const SizedBox(height: MSizes.spaceBtwInputFields),
+
+                      LargeButtonNS(
+                        child: const Text("Login"),
+                        onPressed: () => controller.emailAndPasswordSignIn(),
+                      ),
+
+                      const SizedBox(height: MSizes.spaceBtwItems),
+
                     ],
                   ),
                 ),

@@ -4,8 +4,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:motodealz/data/repositories/user/user_repository.dart';
 import 'package:motodealz/features/authentication/screens/signup/email_verification_screen.dart';
-// import 'package:motodealz/features/authentication/screens/password_configuration/forgot_password_final.dart';
-// import 'package:motodealz/utils/constants/image_strings.dart';
+import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/helpers/network_manager.dart';
 import 'package:motodealz/utils/popups/full_screen_loader.dart';
 import 'package:motodealz/utils/popups/loader.dart';
@@ -25,10 +24,10 @@ class SignUpController extends GetxController {
 
   void signup() async {
     try {
-      // // Start Loading
-      // MFullScreenLoader.openLoadingDialog(
-      //     'We are processing your information...',
-      //     MImages.success);
+      // Start Loading
+      MFullScreenLoader.openLoadingDialog(
+          'We are processing your information...',
+          MImages.success);
 
       //Check Internet Connectivity
       final isConnected = await NetworkManager.instance.isConnected();

@@ -48,7 +48,7 @@ class EmailVerificationScreen extends StatelessWidget {
                 height: MSizes.md,
               ),
               const Text(
-                  "Congratulations! Your just one step away from starting your journey with us. Kindly verify your email to continue.",
+                  "Congratulations! You are just one step away from starting your journey with us. Kindly verify your email to continue.",
                   textAlign: TextAlign.center,
                   style: MFonts.fontCB1),
               const SizedBox(

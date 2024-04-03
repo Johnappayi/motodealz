@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart';
 import 'package:motodealz/common/model/user_details.dart';
 import 'package:motodealz/data/repositories/user/user_repository.dart';
 import 'package:motodealz/utils/popups/loader.dart';
@@ -14,7 +13,8 @@ class UserController extends GetxController {
   Future<void> saveUserRecord(UserCredential? userCredentials) async {
     try {
       if (userCredentials != null) {
-        final username = userCredentials.user!.displayName ?? '';
+        final username =
+            UserModel.generateUsername(userCredentials.user!.displayName ?? '');
 
         //Map Data
         final user = UserModel(
@@ -22,6 +22,9 @@ class UserController extends GetxController {
             username: username,
             email: userCredentials.user!.email ?? '',
             profilePicture: userCredentials.user!.photoURL ?? '');
+
+        // Save user data
+        await userRepository.saveUserRecord(user);
       }
     } catch (e) {
       MLoaders.warningSnackBar(

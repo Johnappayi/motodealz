@@ -31,12 +31,28 @@ class UserModel {
     required this.profilePicture,
   });
 
+  /// Helper function to get the full name
+  String get fullName => '$firstname $lastname';
+
+  /// Static function to split the full name
+  static List<String> nameParts(fullName) => fullName.split(" ");
+
+  ///Static function to generate username from the full name.
+  static String generateUsername(fullName) {
+    List<String> nameParts = fullName.split(" ");
+    String firstName = nameParts[0].toLowerCase();
+    String lastName = nameParts.length > 1 ? nameParts[1].toLowerCase() : "";
+
+    String camelCaseUsername = "$firstName$lastName";
+    return camelCaseUsername;
+  }
+
   ///Static function to create an empty user model.
   static UserModel empty() => UserModel(
-        id: "",
-        username: "",
-        email: "",
-        profilePicture: "",
+        id: '',
+        username: '',
+        email: '',
+        profilePicture: '',
         firstname: '',
         lastname: '',
       );

@@ -157,9 +157,9 @@ class LoginScreen extends StatelessWidget {
 
               const SizedBox(height: MSizes.spaceBtwSections),
 
-              const LargeSecButtonWithIcon(
+              LargeSecButtonWithIcon(
                 icon: MImages.google,
-                child: Text(
+                child: const Text(
                   "Continue with google",
                   style: MFonts.fontCB1,
                 ),

@@ -23,7 +23,7 @@ class LoginController extends GetxController {
     super.onInit();
   }
 
-  //Email and Password SignIn
+  // Email and Password SignIn
   Future<void> emailAndPasswordSignIn() async {
     try {
       // Start Loading
@@ -51,7 +51,7 @@ class LoginController extends GetxController {
       }
 
       // Login user using Email and Password Authentication
-      await AuthenticationRepository.instance
+      final userCredentials = await AuthenticationRepository.instance
           .loginWithEmailAndPassword(email.text.trim(), password.text.trim());
 
       // Remove Loader
@@ -60,7 +60,33 @@ class LoginController extends GetxController {
       //Redirect
       AuthenticationRepository.instance.checkAuthentication();
     } catch (e) {
-      print('Error during login: $e');
+      MLoaders.errorSnackBar(title: 'Oh Snap', message: e.toString());
+    }
+  }
+
+  // Google SignIn Authentication
+  Future<void> googleSignIn() async {
+    try {
+      // Start Loading
+      MFullScreenLoader.openLoadingDialog('Logging you in...', MImages.success);
+
+      //Check Internet Connectivity
+      final isConnected = await NetworkManager.instance.isConnected();
+      if (!isConnected) {
+        //Remove Loader
+        MFullScreenLoader.stopLoading();
+        return;
+      }
+
+      // Google Authentication
+      final userCredentials =
+          AuthenticationRepository.instance.signInWithGoogle();
+      // Remove Loader
+      MFullScreenLoader.stopLoading();
+
+      //Redirect
+      AuthenticationRepository.instance.checkAuthentication();
+    } catch (e) {
       MLoaders.errorSnackBar(title: 'Oh Snap', message: e.toString());
     }
   }

@@ -163,6 +163,7 @@ class LoginScreen extends StatelessWidget {
                   "Continue with google",
                   style: MFonts.fontCB1,
                 ),
+                onPressed: () => controller.googleSignIn(),
               ),
 
               const SizedBox(height: MSizes.nm),

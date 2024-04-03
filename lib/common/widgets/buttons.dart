@@ -56,18 +56,18 @@ class LargeButtonNS extends StatelessWidget {
 }
 
 class LargeSecButtonWithIcon extends StatelessWidget {
-  // final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final Widget child;
   final String icon;
 
   const LargeSecButtonWithIcon(
-      {Key? key, required this.child, required this.icon})
+      {Key? key, required this.child, required this.icon, this.onPressed})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
-      onPressed: () {},
+      onPressed: onPressed,
       style: OutlinedButton.styleFrom(
           minimumSize: const Size(double.infinity, 60.0)),
       child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [

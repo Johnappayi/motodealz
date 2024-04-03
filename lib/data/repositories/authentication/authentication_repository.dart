@@ -1,7 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:motodealz/common/widgets/navigation_menu.dart';
 import 'package:motodealz/features/authentication/screens/login/login.dart';
 import 'package:motodealz/features/authentication/screens/signup/create_acc.dart';
@@ -33,24 +35,20 @@ class AuthenticationRepository extends GetxController {
     final user = _auth.currentUser;
     if (user != null) {
       if (user.emailVerified) {
-      Get.offAll(() => const NavigationMenu());
+        Get.offAll(() => const NavigationMenu());
+      } else {
+        Get.offAll(
+            () => EmailVerificationScreen(email: _auth.currentUser?.email));
+      }
     } else {
-      Get.offAll(() => EmailVerificationScreen(email: _auth.currentUser?.email));
-    }
-    }
-    else{
       // Local Storage
-    deviceStorage.writeIfNull('IsFirstTime', true);
-    deviceStorage.read('IsFirstTime') != true
-        ? Get.offAll(() => const LoginScreen())
-        : Get.offAll(const CreateAccountScreen());
-
+      deviceStorage.writeIfNull('IsFirstTime', true);
+      deviceStorage.read('IsFirstTime') != true
+          ? Get.offAll(() => const LoginScreen())
+          : Get.offAll(const CreateAccountScreen());
     }
-    
 
-    
-
-    // 
+    //
     // Listen to authentication state changes
     //
     //   navigateToHome();
@@ -89,43 +87,27 @@ class AuthenticationRepository extends GetxController {
   // }
 
   /// [EmailAuthentication] - LOGIN
-Future<UserCredential> loginWithEmailAndPassword(String email, String password) async {
-  try {
-    // Sign in with email and password
-    UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
-
-    // Check if the ID token is close to expiration
-    if (userCredential.user != null) {
-      IdTokenResult idTokenResult = await userCredential.user!.getIdTokenResult();
-      DateTime tokenExpirationTime = DateTime.fromMillisecondsSinceEpoch(idTokenResult.expirationTime as int);
-      
-      // Check if the token is close to expiration (e.g., within 5 minutes)
-      if (tokenExpirationTime.isBefore(DateTime.now().add(const Duration(minutes: 5)))) {
-        // Refresh the token
-        await userCredential.user!.getIdToken(true);
-      }
-    }
-    return userCredential;
-  } catch (e) {
-    // Handle specific Firebase and platform exceptions
-    if (e is FirebaseAuthException) {
+  Future<UserCredential> loginWithEmailAndPassword(
+      String email, String password) async {
+    try {
+      // Sign in with email and password
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      return userCredential;
+    } on FirebaseAuthException catch (e) {
       throw MFirebaseAuthException(e.code).message;
-    } else if (e is FirebaseException) {
+    } on FirebaseException catch (e) {
       throw MFirebaseAuthException(e.code).message;
-    } else if (e is FormatException) {
+    } on FormatException catch (_) {
       throw const MFormatException();
-    } else if (e is PlatformException) {
+    } on PlatformException catch (e) {
       throw MPlatformException(e.code).message;
-    } else {
-      // Handle other generic exceptions
+    } catch (e) {
       throw 'Something went wrong. Please try again';
     }
   }
-}
-
 
   /// [EmailAuthentication] - REGISTER
   Future<UserCredential> registerWithEmailAndPassword(
@@ -163,9 +145,39 @@ Future<UserCredential> loginWithEmailAndPassword(String email, String password) 
     }
   }
 
+  ///[GoogleAuthentication] - GOOGLE
+  Future<UserCredential?> signInWithGoogle() async {
+    try {
+      // Trigger the authentication flow
+      final GoogleSignInAccount? userAccount = await GoogleSignIn().signIn();
+
+      // Obtain the auth details from the request
+      final GoogleSignInAuthentication? googleAuth =
+          await userAccount?.authentication;
+
+      // Create a new credential
+      final credentials = GoogleAuthProvider.credential(
+          accessToken: googleAuth?.accessToken, idToken: googleAuth?.idToken);
+
+      // Once signed in, return the UserCredential
+      return await _auth.signInWithCredential(credentials);
+    } on FirebaseAuthException catch (e) {
+      throw MFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw MFirebaseAuthException(e.code).message;
+    } on FormatException catch (_) {
+      throw const MFormatException();
+    } on PlatformException catch (e) {
+      throw MPlatformException(e.code).message;
+    } catch (e) {
+      if (kDebugMode) print('Something went wrong: $e');
+      return null;
+    }
+  }
+
   /// [Logout User]
-  Future <void> logout() async{
-    try{
+  Future<void> logout() async {
+    try {
       await FirebaseAuth.instance.signOut();
       Get.offAll(() => const LoginScreen());
     } on FirebaseAuthException catch (e) {

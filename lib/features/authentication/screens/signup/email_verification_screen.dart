@@ -58,12 +58,15 @@ class EmailVerificationScreen extends StatelessWidget {
               ///Buttons
               LargeButtonNS(
                 child: const Text("Continue"),
-                onPressed: () => Get.to(() => controller.checkEmailVerificationStatus()),
+                onPressed: () =>
+                    Get.to(() => controller.checkEmailVerificationStatus()),
               ),
               const SizedBox(
                 height: MSizes.md,
               ),
-              TextButton(onPressed: () => controller.sendEmailVerification(), child: const Text("Resend Email")),
+              TextButton(
+                  onPressed: () => controller.sendEmailVerification(),
+                  child: const Text("Resend Email")),
             ])),
       ),
     );

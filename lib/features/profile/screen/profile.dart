@@ -6,9 +6,8 @@ import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/common/widgets/listed_ad_frame3.dart';
 import 'package:motodealz/data/repositories/authentication/authentication_repository.dart';
 import 'package:motodealz/features/kyc_verification/screens/kyc_landing_screen.dart';
-import 'package:motodealz/common/controller/user_controller.dart';
-import 'package:motodealz/common/model/user_details.dart';
 import 'package:motodealz/features/vehicle_listing/edit_listing/screens/vehicle_edit.dart';
+import 'package:motodealz/features/profile/controller/user_controller.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
@@ -21,8 +20,7 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final darkMode = MHelperFunctions.isDarkMode(context);
-    final UserController userController = UserController();
-    late UserModel user = userController.getUser();
+    final userController = UserController.instance;
 
     return SafeArea(
       child: Column(
@@ -36,8 +34,8 @@ class ProfileScreen extends StatelessWidget {
                     const Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                      //   ButtonContainer(
-                      //       onPressed: () {}, child: MImages.settingsIcon)
+                        //   ButtonContainer(
+                        //       onPressed: () {}, child: MImages.settingsIcon)
                       ],
                     ),
                     const Text(
@@ -52,7 +50,7 @@ class ProfileScreen extends StatelessWidget {
                         CircleAvatar(
                           radius:
                               73, // Adjust the radius according to your preference
-                          backgroundImage: AssetImage(user.profilePicture),
+                          backgroundImage: AssetImage(userController.user.value.profilePicture),
                         ),
                         Positioned(
                           bottom:
@@ -80,13 +78,13 @@ class ProfileScreen extends StatelessWidget {
                       height: MSizes.nm,
                     ),
                     Text(
-                      '${user.firstname} ${user.lastname}',
+                      userController.user.value.fullName,
                       style: MFonts.fontBH2,
                     ),
                     const SizedBox(
                       height: MSizes.sm,
                     ),
-                    if (user.isPremium) ...[
+                    if (userController.user.value.isPremium) ...[
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -111,10 +109,10 @@ class ProfileScreen extends StatelessWidget {
                     const SizedBox(
                       height: MSizes.defaultSpace,
                     ),
-                    if (!user.isVerified) ...[
+                    if (!userController.user.value.isVerified) ...[
                       GestureDetector(
                         onTap: () => MHelperFunctions.navigateToScreen(
-                                  context, const UserVerificationStartScreen()),
+                            context, const UserVerificationStartScreen()),
                         child: Container(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
@@ -160,7 +158,7 @@ class ProfileScreen extends StatelessWidget {
                         height: MSizes.defaultSpace,
                       ),
                     ],
-                    if (user.hasListedAd) ...[
+                    if (userController.user.value.hasListedAd) ...[
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -180,21 +178,23 @@ class ProfileScreen extends StatelessWidget {
                               mainAxisSpacing: MSizes.sm,
                               childAspectRatio: 378 / 155,
                             ),
-                            itemCount: user.noOfListedAd,
+                            itemCount: userController.user.value.noOfListedAd,
                             itemBuilder: (context, index) {
                               return ListedAdFrame3(
                                 onPressed: () {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => VehicleEditScreen( vehicle:user.vehicles![index],),
+                                      builder: (context) => VehicleEditScreen(
+                                        vehicle: userController.user.value.vehicles![index],
+                                      ),
                                       // VehicleVeiwScreen(
                                       //   vehicle: user.vehicles![index],
                                       // ),
                                     ),
                                   );
                                 },
-                                vehicle: user.vehicles![index],
+                                vehicle: userController.user.value.vehicles![index],
                               );
                             },
                           ),
@@ -302,7 +302,8 @@ class ProfileScreen extends StatelessWidget {
                           height: MSizes.defaultSpace,
                         ),
                         LargeButtonNS(
-                          onPressed: () => AuthenticationRepository.instance.logout(),
+                          onPressed: () =>
+                              AuthenticationRepository.instance.logout(),
                           child: const Text("Logout"),
                         ),
                         const SizedBox(
@@ -320,4 +321,3 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 }
-

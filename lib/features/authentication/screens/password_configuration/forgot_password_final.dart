@@ -76,12 +76,11 @@ import 'package:get/get.dart';
 import 'package:motodealz/common/styles/spacing_styles.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/features/authentication/controllers/forgot_password/forgot_password_controller.dart';
-import 'package:motodealz/features/authentication/screens/signup/create_acc.dart';
+import 'package:motodealz/features/authentication/screens/login/login.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
-
 
 class ForgotPasswordLastScreen extends StatelessWidget {
   const ForgotPasswordLastScreen({super.key, required this.email});
@@ -90,7 +89,6 @@ class ForgotPasswordLastScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final controller = Get.put(ForgotPasswordController());
 
     return Scaffold(
@@ -119,25 +117,21 @@ class ForgotPasswordLastScreen extends StatelessWidget {
                 height: MSizes.md,
               ),
               SizedBox(
-              height: MHelperFunctions.screenHeight() * 0.6,
-              child: Center(
-                child: SvgPicture.asset(MImages.forgotPasswordImg),
-              ),
-            ),
-              LargeButtonNS(
-                child: const Text("Send"),
-                onPressed: () => controller.sendPasswordResetEmail(),
-              ),
-              
-              const SizedBox(height: MSizes.nm),
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                const Text(
-                  "Don’t have an account? ",
-                  style: MFonts.fontCB1,
+                height: MHelperFunctions.screenHeight() * 0.6,
+                child: Center(
+                  child: SvgPicture.asset(MImages.forgotPasswordImg),
                 ),
+              ),
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                LargeButtonNS(
+                  child: const Text("Done"),
+                  onPressed: () => Get.offAll(() => const LoginScreen()),
+                ),
+                const SizedBox(height: MSizes.nm),
                 TextButton(
-                    onPressed: () => Get.to(() => const CreateAccountScreen()),
-                    child: const Text("Create Account")),
+                    onPressed: () => ForgotPasswordController.instance
+                        .resendPasswordResetEmail(email),
+                    child: const Text("Resend Email")),
               ])
             ],
           ),

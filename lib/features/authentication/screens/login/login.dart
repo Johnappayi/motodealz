@@ -4,7 +4,7 @@ import 'package:motodealz/common/styles/spacing_styles.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/common/widgets/input_field.dart';
 import 'package:motodealz/features/authentication/controllers/login/login_controller.dart';
-import 'package:motodealz/features/authentication/screens/password_configuration/forgot_password_final.dart';
+import 'package:motodealz/features/authentication/screens/password_configuration/forgot_password.dart';
 import 'package:motodealz/features/authentication/screens/signup/create_acc.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
@@ -112,7 +112,7 @@ class LoginScreen extends StatelessWidget {
                           ///Forgot Password
                           TextButton(
                               onPressed: () => Get.to(
-                                  () => const ForgotPasswordLastScreen()),
+                                  () => const ForgotPasswordScreen()),
                               child: const Text(MTexts.forgetPassword)),
                         ],
                       ),

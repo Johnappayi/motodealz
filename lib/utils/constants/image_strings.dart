@@ -225,6 +225,7 @@ class MImages {
   static String emailVerifyScreen = "assets/animations/email-verify-screen.gif";
   static String verificationScreenImage =
       "assets/animations/icons8-man-window-paper-plane-100.png";
+  static String processing = "assets/animations/processing.json";
 
   // static const String adidasLogo = "assets/icons/brands/adidas-logo.png";
   // static const String appleLogo = "assets/icons/brands/apple-logo.png";

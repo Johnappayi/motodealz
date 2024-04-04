@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:motodealz/common/styles/spacing_styles.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/common/widgets/input_field.dart';
+import 'package:motodealz/features/authentication/controllers/forgot_password/forgot_password_controller.dart';
+import 'package:motodealz/features/authentication/screens/signup/create_acc.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
 import 'package:motodealz/utils/constants/text_strings.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
+import 'package:motodealz/utils/validators/validation.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
   const ForgotPasswordScreen({super.key});
@@ -15,6 +19,8 @@ class ForgotPasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dark = MHelperFunctions.isDarkMode(context);
+
+    final controller = Get.put(ForgotPasswordController());
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -31,7 +37,9 @@ class ForgotPasswordScreen extends StatelessWidget {
                     SizedBox(
                       height: MSizes.md,
                     ),
-                    Text("We just need your registered email address and we are good to go", textAlign: TextAlign.center,
+                    Text(
+                        "We just need your registered email address and we are good to go",
+                        textAlign: TextAlign.center,
                         style: MFonts.fontCB1),
                   ],
                 ),
@@ -41,25 +49,25 @@ class ForgotPasswordScreen extends StatelessWidget {
               ),
 
               /// Form
-              const Form(
+              Form(
+                key: controller.forgetPasswordFormKey,
                 child: Padding(
-                  padding: EdgeInsets.only(top: MSizes.spaceBtwSections),
+                  padding: const EdgeInsets.only(top: MSizes.spaceBtwSections),
                   child: Column(
                     children: [
-                      
                       InputFieldWithIcon(
+                        controller: controller.email,
                         label: "Email",
                         hintText: "Enter Email",
+                        validator: MValidator.validateEmail,
                         prefixIcon: MImages.mailIcon,
                       ),
-
-                      SizedBox(height: MSizes.spaceBtwInputFields),
-
+                      const SizedBox(height: MSizes.spaceBtwInputFields),
                       LargeButtonNS(
-                        child: Text("Send"),
+                        child: const Text("Send"),
+                        onPressed: () => controller.sendPasswordResetEmail(),
                       ),
-
-                      SizedBox(height: MSizes.sm),
+                      const SizedBox(height: MSizes.sm),
                     ],
                   ),
                 ),
@@ -106,7 +114,9 @@ class ForgotPasswordScreen extends StatelessWidget {
                   "Don’t have an account? ",
                   style: MFonts.fontCB1,
                 ),
-                TextButton(onPressed: () {}, child: const Text("Create Account")),
+                TextButton(
+                    onPressed: () => Get.to(() => const CreateAccountScreen()),
+                    child: const Text("Create Account")),
               ])
             ],
           ),

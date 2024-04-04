@@ -18,7 +18,7 @@ class ForgotPasswordController extends GetxController {
 
   sendPasswordResetEmail() async {
     try {
-      //Start Loading
+      // Start Loading
       MFullScreenLoader.openLoadingDialog(
           'Processing your request.....', MImages.processing);
 

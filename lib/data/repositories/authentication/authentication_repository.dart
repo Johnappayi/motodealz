@@ -22,6 +22,9 @@ class AuthenticationRepository extends GetxController {
   // Firebase Authentication instance
   final _auth = FirebaseAuth.instance;
 
+  // Get Authenticated User Data
+  User? get authUser => _auth.currentUser;
+
   // Called from main.dart on app launch
   @override
   void onReady() {
@@ -149,7 +152,6 @@ class AuthenticationRepository extends GetxController {
   Future<void> sendPasswordResetEmail(String email) async {
     try {
       await _auth.sendPasswordResetEmail(email: email);
-
     } on FirebaseAuthException catch (e) {
       throw MFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {
@@ -162,7 +164,6 @@ class AuthenticationRepository extends GetxController {
       throw 'Something went wrong. Please try again';
     }
   }
-
 
   ///[GoogleAuthentication] - GOOGLE
   Future<UserCredential?> signInWithGoogle() async {

@@ -1,15 +1,16 @@
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:motodealz/common/model/vehicle_model.dart';
 
 /// Model class representing user data.
 class UserModel {
   final String id;
   final String username;
-  final String email;
   final String? firstname;
   final String? lastname;
+  final String email;
   String profilePicture;
   bool hasListedAd;
   bool isPremium;
@@ -51,31 +52,38 @@ class UserModel {
   static UserModel empty() => UserModel(
         id: '',
         username: '',
-        email: '',
-        profilePicture: '',
         firstname: '',
         lastname: '',
+        email: '',
+        profilePicture: '',
       );
 
   ///Convert model to JSON structure for storing data in Firebase.
   Map<String, dynamic> toJson() {
     return {
       'Username': username,
+      'FirstName': firstname,
+      'LastName': lastname,
       'Email': email,
       'ProfilePicture': profilePicture,
     };
   }
 
-  ///Factory method to create a UserModel from a Firebase document snapshot.
-// factory UserModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
-//     if (document.data() != null) {
-//       final data = document.data();
-//       return UserModel(
-//           id: document.id,
-//           username: data['Username'] ?? '',
-//           email: data['Email'] ?? '',
-//           profilePicture: data['ProfilePicture'] ?? '',
-//       );
-//     }
-// }
+  // Factory method to create a UserModel from a Firebase document snapshot.
+  factory UserModel.fromSnapshot(
+      DocumentSnapshot<Map<String, dynamic>> document) {
+    if (document.data() != null) {
+      final data = document.data()!;
+      return UserModel(
+        id: document.id,
+        username: data['Username'] ?? '',
+        firstname: data['FirstName'] ?? '',
+        lastname: data['LastName'] ?? '',
+        email: data['Email'] ?? '',
+        profilePicture: data['ProfilePicture'] ?? '',
+      );
+    } else {
+      return UserModel.empty();
+    }
+  }
 }

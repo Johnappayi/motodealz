@@ -9,7 +9,7 @@ class ChatController extends GetxController {
   // Stream of chat messages
   Stream<List<ChatItem>> getMessages() {
     return _chatCollection
-        .orderBy('timestamp')
+        .orderBy('timestamp', descending: true)
         .snapshots()
         .map((snapshot) => snapshot.docs
             .map((doc) => ChatItem.fromFirestore(doc))

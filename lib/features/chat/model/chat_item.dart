@@ -19,11 +19,11 @@ class ChatItem {
   factory ChatItem.fromFirestore(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
     return ChatItem(
-      name: doc.id, // Assuming the name is the document ID
+      name: data['fullName'], // Assuming the name is the document ID
       lastMsg: data['text'] ?? '',
       lastMsgTime: (data['timestamp'] as Timestamp).toDate().toString(),
-      unreadCount: '', // Add your logic to retrieve unread count
-      dp: '', // Add your logic to retrieve user's profile image URL
+      unreadCount: data['unread'], // Fetching unread count
+      dp: data['ProfilePicture'] ?? '', // Fetching user's profile image URL from Firestore
     );
   }
 }

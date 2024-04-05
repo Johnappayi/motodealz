@@ -7,43 +7,55 @@ class VehicleController {
   // Constructor to initialize the lists and fetch vehicles from Firestore
   VehicleController() {
     _vehicles = [];
-    _fetchVehicles();
   }
 
   // Method to fetch vehicles from Firestore
-  Future<void> _fetchVehicles() async {
+  Future<List<Vehicle>> _fetchVehicles() async {
     try {
       QuerySnapshot snapshot =
           await FirebaseFirestore.instance.collection('Vehicles').get();
 
-      _vehicles = snapshot.docs.map((doc) {
-        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-        return Vehicle(
-          brand: data['brand'],
-          model: data['model'],
-          category: data['category'],
-          transmission: data['transmission'],
-          fuelType: data['fuelType'],
-          ownershipCount: data['ownershipCount'],
-          year: data['year'],
-          mileage: data['mileage'],
-          price: data['price'].toDouble(),
-          isPremium: data['isPremium'],
-          ownerId: data['ownerId'],
-          datePosted: data['datePosted'].toDate(),
-          location: data['location'],
-          description: data['description'],
-          images: List<String>.from(data['images']),
-          id: doc.id,
-        );
+      List<Vehicle> vehicles = snapshot.docs.map((doc) {
+        Map<String, dynamic>? data = doc.data() as Map<String, dynamic>?;
+        if (data != null) {
+           // Print the data for inspection
+        print('Retrieved data for document ${doc.id}: $data');
+
+        
+          return Vehicle(
+            brand: data['Brand'] ?? '',
+            model: data['Model'] ?? '',
+            category: data['Category'] ?? '',
+            transmission: data['Transmission'] ?? '',
+            fuelType: data['FuelType'] ?? '',
+            ownershipCount: data['OwnershipCount'] ?? 0,
+            year: data['Year'] ?? 0,
+            mileage: data['Mileage'] ?? 0,
+            price: (data['Price'] ?? 0).toDouble(),
+            isPremium: data['IsPremium'] ?? false,
+            ownerId: data['OwnerId'] ?? '',
+            datePosted: (data['DatePosted'] as Timestamp?)?.toDate() ?? DateTime.now(),
+            location: data['Location'] ?? '',
+            description: data['Description'] ?? '',
+            images: List<String>.from(data['Images'] ?? []),
+            id: doc.id,
+          );
+        } else {
+          throw Exception("Data is null or does not exist.");
+        }
       }).toList();
+
+      return vehicles;
     } catch (e) {
-      print("Error fetching vehicles: $e");
+      throw Exception("Error fetching vehicles: $e");
     }
   }
 
   // Method to get all vehicles
-  List<Vehicle> getAllVehicles() {
+  Future<List<Vehicle>> getAllVehicles() async {
+    if (_vehicles.isEmpty) {
+      _vehicles = await _fetchVehicles();
+    }
     return _vehicles;
   }
 

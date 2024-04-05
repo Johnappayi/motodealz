@@ -1,31 +1,38 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class ChatItem {
-  final String sender;
-  final String text;
-  final Timestamp timestamp;
-  final Timestamp lastMsgTime;
+class ChatRoom {
+  final String buyer;
+  final String seller;
+  // List<MessageModel> messages;
+
+  final DateTime? timestamp;
+  final String? sender;
+  final String lastMsg;
+
+  final DateTime lastMsgTime;
   final String unreadCount;
   final String profilePicture;
 
-  ChatItem({
+  ChatRoom({
     required this.lastMsgTime,
     required this.unreadCount,
     required this.profilePicture,
     required this.sender,
-    required this.text,
+    required this.lastMsg,
     required this.timestamp,
+    required this.buyer,
+    required this.seller,
   });
 
-  factory ChatItem.fromFirestore(DocumentSnapshot doc) {
+  factory ChatRoom.fromFirestore(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-    return ChatItem(
+    return ChatRoom(
       sender: data['sender'],
-      text: data['text'] ?? '',
+      lastMsg: data['lastMsg'] ?? '',
       timestamp: data['timestamp'] ?? Timestamp.now(),
       lastMsgTime: data['lastMsgTime'] ?? Timestamp.now(),
       unreadCount: '',
-      profilePicture: '',
+      profilePicture: '', buyer: '', seller: '',
     );
   }
 }

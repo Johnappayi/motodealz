@@ -1,29 +1,31 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChatItem {
-  const ChatItem({
-    required this.name,
-    required this.lastMsg,
+  final String sender;
+  final String text;
+  final Timestamp timestamp;
+  final Timestamp lastMsgTime;
+  final String unreadCount;
+  final String profilePicture;
+
+  ChatItem({
     required this.lastMsgTime,
     required this.unreadCount,
-    required this.dp,
+    required this.profilePicture,
+    required this.sender,
+    required this.text,
+    required this.timestamp,
   });
 
-  final String name;
-  final String lastMsg;
-  final String lastMsgTime;
-  final String unreadCount;
-  final String dp;
-
-  // Factory method to convert Firestore snapshot to ChatMessage object
   factory ChatItem.fromFirestore(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
     return ChatItem(
-      name: data['fullName'], // Assuming the name is the document ID
-      lastMsg: data['text'] ?? '',
-      lastMsgTime: (data['timestamp'] as Timestamp).toDate().toString(),
-      unreadCount: data['unread'], // Fetching unread count
-      dp: data['ProfilePicture'] ?? '', // Fetching user's profile image URL from Firestore
+      sender: data['sender'],
+      text: data['text'] ?? '',
+      timestamp: data['timestamp'] ?? Timestamp.now(),
+      lastMsgTime: data['lastMsgTime'] ?? Timestamp.now(),
+      unreadCount: '',
+      profilePicture: '',
     );
   }
 }

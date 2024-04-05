@@ -38,7 +38,7 @@ class UserModel {
   /// Static function to split the full name
   static List<String> nameParts(fullName) => fullName.split(" ");
 
-  ///Static function to generate username from the full name.
+  /// Static function to generate username from the full name.
   static String generateUsername(fullName) {
     List<String> nameParts = fullName.split(" ");
     String firstName = nameParts[0].toLowerCase();
@@ -48,17 +48,22 @@ class UserModel {
     return camelCaseUsername;
   }
 
-  ///Static function to create an empty user model.
+  /// Static function to create an empty user model.
   static UserModel empty() => UserModel(
         id: '',
         username: '',
-        firstname: '',
-        lastname: '',
+        firstname: 'Navya',
+        lastname: 'Johnson',
         email: '',
         profilePicture: '',
+        isPremium: true,
+        isVerified: false,
+        hasListedAd: true,
+        noOfListedAd: 0,
+        vehicles: [],
       );
 
-  ///Convert model to JSON structure for storing data in Firebase.
+  /// Convert model to JSON structure for storing data in Firebase.
   Map<String, dynamic> toJson() {
     return {
       'Username': username,
@@ -66,13 +71,18 @@ class UserModel {
       'LastName': lastname,
       'Email': email,
       'ProfilePicture': profilePicture,
+      'IsPremium': isPremium,
+      'IsVerified': isVerified,
+      'HasListedAd': hasListedAd,
+      'NoOfListedAd': noOfListedAd,
+      'Vehicles': vehicles?.map((vehicle) => vehicle.toJson()).toList(),
     };
   }
 
   // Factory method to create a UserModel from a Firebase document snapshot.
   factory UserModel.fromSnapshot(
       DocumentSnapshot<Map<String, dynamic>> document) {
-    if (document.data() != null) {
+    if (document.exists) {
       final data = document.data()!;
       return UserModel(
         id: document.id,
@@ -81,6 +91,13 @@ class UserModel {
         lastname: data['LastName'] ?? '',
         email: data['Email'] ?? '',
         profilePicture: data['ProfilePicture'] ?? '',
+        isPremium: data['IsPremium'] ?? false,
+        isVerified: data['IsVerified'] ?? false,
+        hasListedAd: data['HasListedAd'] ?? false,
+        noOfListedAd: data['NoOfListedAd'] ?? 0,
+        vehicles: (data['Vehicles'] as List<dynamic>?)
+            ?.map((vehicle) => Vehicle.fromJson(vehicle))
+            .toList(),
       );
     } else {
       return UserModel.empty();

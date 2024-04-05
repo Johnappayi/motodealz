@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:motodealz/common/controller/vehicle_controller.dart';
 import 'package:motodealz/common/model/user_details.dart';
 import 'package:motodealz/data/repositories/user/user_repository.dart';
 import 'package:motodealz/utils/popups/loader.dart';
@@ -11,7 +10,6 @@ class UserController extends GetxController {
   final profileLoading = false.obs;
   Rx<UserModel> user = UserModel.empty().obs;
   final userRepository = Get.put(UserRepository());
-  final VehicleController _vehicleController = VehicleController();
 
   @override
   void onInit() {

@@ -34,4 +34,66 @@ class Vehicle {
     required this.description,
     required this.images,
   });
+
+  static Vehicle empty() => Vehicle(
+        id: '',
+        brand: '',
+        model: '',
+        category: '',
+        transmission: '',
+        fuelType: '',
+        ownershipCount: 0,
+        year: 0,
+        mileage: 0,
+        price: 0,
+        isPremium: false,
+        ownerId: '',
+        datePosted: DateTime.now(),
+        location: '',
+        description: '',
+        images: [],
+      );
+
+  Map<String, dynamic> toJson() {
+    return {
+      'Id': id,
+      'Brand': brand,
+      'Model': model,
+      'Category': category,
+      'Transmission': transmission,
+      'FuelType': fuelType,
+      'OwnershipCount': ownershipCount,
+      'Year': year,
+      'Mileage': mileage,
+      'Price': price,
+      'IsPremium': isPremium,
+      'OwnerId': ownerId,
+      'DatePosted': datePosted,
+      'Location': location,
+      'Description': description,
+      'Images': images,
+    };
+  }
+
+  // Factory method to create a Vehicle from a JSON map.
+  factory Vehicle.fromJson(Map<String, dynamic> json) {
+    return Vehicle(
+      id: json['id'],
+      brand: json['brand'],
+      model: json['model'],
+      category: json['category'],
+      transmission: json['transmission'],
+      fuelType: json['fuelType'],
+      ownershipCount: json['ownershipCount'],
+      year: json['year'],
+      mileage: json['mileage'],
+      price: json['price'],
+      isPremium: json['isPremium'],
+      ownerId: json['ownerId'],
+      datePosted: json['datePosted'],
+      location: json['location'],
+      description: json['description'],
+      images: List<String>.from(json['images']),
+    );
+  }
 }

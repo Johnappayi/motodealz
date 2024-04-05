@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:motodealz/common/styles/svg_styles.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/common/widgets/listed_ad_frame3.dart';
@@ -20,7 +21,7 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final darkMode = MHelperFunctions.isDarkMode(context);
-    final userController = UserController.instance;
+    final userController = Get.put(UserController());
 
     return SafeArea(
       child: Column(
@@ -47,10 +48,10 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     Stack(
                       children: [
-                        CircleAvatar(
+                        const CircleAvatar(
                           radius:
                               73, // Adjust the radius according to your preference
-                          backgroundImage: AssetImage(userController.user.value.profilePicture),
+                          backgroundImage: AssetImage(MImages.sampleUser1),
                         ),
                         Positioned(
                           bottom:

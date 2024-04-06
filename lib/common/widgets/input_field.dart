@@ -11,10 +11,12 @@ class InputField extends StatelessWidget {
     super.key,
     required this.hintText,
     required this.label,
+    this.validator,
     this.isEnabled
   });
   final String hintText;
   final String label;
+  final String? Function(String?)? validator;
   final bool? isEnabled;
   
 
@@ -33,6 +35,7 @@ class InputField extends StatelessWidget {
         ),
         TextFormField(
           enabled: isEnabled ?? true,
+          validator: validator,
           decoration: InputDecoration(hintText: hintText),
         ),
       ],

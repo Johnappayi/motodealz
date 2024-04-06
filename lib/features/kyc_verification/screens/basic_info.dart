@@ -10,6 +10,7 @@ import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
 import 'package:motodealz/utils/constants/text_strings.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
+import 'package:motodealz/utils/validators/validation.dart';
 
 class UserVerificationInfoScreen extends StatelessWidget {
   const UserVerificationInfoScreen({super.key});
@@ -51,41 +52,46 @@ class UserVerificationInfoScreen extends StatelessWidget {
               const SizedBox(
                 height: MSizes.nm,
               ),
-               const Form(
+              Form(
                 child: Column(
                   children: [
                     InputField(
                       label: MTexts.firstName,
                       hintText: "Enter first name",
+                      validator: (value) => MValidator.validateEmptyText('First Name', value),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: MSizes.spaceBtwInputFields,
                     ),
                     InputField(
                       label: MTexts.lastName,
                       hintText: "Enter last name",
+                      validator: (value) => MValidator.validateEmptyText('Last Name', value),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: MSizes.spaceBtwInputFields,
                     ),
                     InputFieldWithIcon(
                       label: "Date of Birth",
                       hintText: "DD/MM/YYYY",
                       suffixIcon: MImages.calenderIcon,
+                      validator: (value) => MValidator.validateDate(value),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: MSizes.spaceBtwInputFields,
                     ),
                     InputField(
                       label: "Residential Address",
                       hintText: "Enter permanent address",
+                      validator: (value) => MValidator.validateEmptyText('Residential Address', value),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: MSizes.spaceBtwInputFields,
                     ),
                     InputField(
                       label: "Postal Code",
                       hintText: "Enter postal code",
+                      validator: (value) => MValidator.validateEmptyText('Postal Code', value),
                     ),
                   ],
                 ),

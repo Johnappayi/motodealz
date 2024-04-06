@@ -28,8 +28,8 @@ class UserVerificationInfoScreenState
 
   @override
   Widget build(BuildContext context) {
-    final bool darkMode =MHelperFunctions.isDarkMode(context);
-    return  Scaffold(
+    final bool darkMode = MHelperFunctions.isDarkMode(context);
+    return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(

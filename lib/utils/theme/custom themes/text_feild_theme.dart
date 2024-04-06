@@ -8,7 +8,6 @@ class MTextFormFieldTheme {
   static InputDecorationTheme lightInputDecorationTheme = InputDecorationTheme(
     filled: true,
     fillColor: MColors.card,
-    errorMaxLines: 3,
     prefixIconColor: MColors.darkGrey,
     suffixIconColor: MColors.darkGrey,
     constraints: const BoxConstraints.expand(height: MSizes.inputFieldHeight),
@@ -41,7 +40,6 @@ class MTextFormFieldTheme {
   static InputDecorationTheme darkInputDecorationTheme = InputDecorationTheme(
     filled: true,
     fillColor: MColors.cardDark,
-    errorMaxLines: 3,
     prefixIconColor: MColors.darkGrey,
     suffixIconColor: MColors.darkGrey,
     constraints: const BoxConstraints.expand(height: MSizes.inputFieldHeight),

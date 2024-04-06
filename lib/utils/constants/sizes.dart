@@ -50,7 +50,7 @@ class MSizes {
   static const double productItemHeight = 160.0;
 
   // Input field
-  static const double inputFieldHeight = 55;
+  static const double inputFieldHeight = 80;
   static const double inputFieldHeight2 = 150;
   static const double inputFieldRadius = 12.0;
   static const double spaceBtwInputFields = 26.0;

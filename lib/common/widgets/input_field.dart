@@ -12,17 +12,16 @@ class InputField extends StatelessWidget {
     required this.hintText,
     required this.label,
     this.validator,
-    this.isEnabled
+    this.isEnabled,
   });
+
   final String hintText;
   final String label;
   final String? Function(String?)? validator;
   final bool? isEnabled;
-  
 
   @override
   Widget build(BuildContext context) {
-    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -36,7 +35,15 @@ class InputField extends StatelessWidget {
         TextFormField(
           enabled: isEnabled ?? true,
           validator: validator,
-          decoration: InputDecoration(hintText: hintText),
+          decoration: InputDecoration(
+            hintText: hintText,
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: MSizes.lg,
+              vertical: MSizes.nm,
+            ), // Adjust the content padding as needed
+            errorStyle:
+                const TextStyle(height: 0), // Hide the error message inline
+          ),
         ),
       ],
     );
@@ -48,13 +55,14 @@ class SearchField extends StatelessWidget {
     super.key,
     required this.hintText,
     this.prefixIcon,
-    this.suffixIcon, this.onChanged,
+    this.suffixIcon,
+    this.onChanged,
   });
 
   final String hintText;
   final String? prefixIcon;
   final String? suffixIcon;
-  final ValueChanged<String>? onChanged; 
+  final ValueChanged<String>? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +71,7 @@ class SearchField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TextFormField(
-           onChanged: onChanged, 
+          onChanged: onChanged,
           decoration: InputDecoration(
             hintText: hintText,
             enabledBorder: const OutlineInputBorder().copyWith(
@@ -134,10 +142,15 @@ class InputFieldWithIcon extends StatelessWidget {
           height: MSizes.sm,
         ),
         TextFormField(
+          
           validator: validator,
           controller: controller,
-          obscureText: finalObscureText ,
+          obscureText: finalObscureText,
           decoration: InputDecoration(
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: MSizes.lg,
+              vertical: MSizes.nm,
+            ), // Ad
             enabled: true,
             hintText: hintText,
             suffixIcon: suffixIcon != null

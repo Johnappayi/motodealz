@@ -240,20 +240,24 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 itemCount: _vehicles.length,
                                 itemBuilder: (context, index) {
-                                  return ListedAdFrame1(
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              VehicleVeiwScreen(
-                                            vehicle: _vehicles[index],
+                                  if (_vehicles.isEmpty) {
+                                    return const CircularProgressIndicator(); // or any other loading indicator
+                                  } else {
+                                    return ListedAdFrame1(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                VehicleVeiwScreen(
+                                              vehicle: _vehicles[index],
+                                            ),
                                           ),
-                                        ),
-                                      );
-                                    },
-                                    vehicle: _vehicles[index],
-                                  );
+                                        );
+                                      },
+                                      vehicle: _vehicles[index],
+                                    );
+                                  }
                                 },
                               )
                             ],

@@ -1,13 +1,10 @@
 import 'package:motodealz/common/model/user_details.dart';
 import 'package:motodealz/common/controller/vehicle_controller.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
-import 'package:get/get.dart';
 
 final VehicleController _vehicleController = VehicleController();
 
-class UserController extends GetxController {
-  static UserController get instance => Get.find();
-
+class UserController {
   UserModel user = UserModel(
       id: "123456",
       username: "navyajohnson",

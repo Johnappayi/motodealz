@@ -9,7 +9,6 @@ class UserController extends GetxController {
 
   final profileLoading = false.obs;
   Rx<UserModel> user = UserModel.empty().obs;
-
   final userRepository = Get.put(UserRepository());
 
   @override
@@ -48,30 +47,24 @@ class UserController extends GetxController {
   /// Save user Record from any Registration provider
   Future<void> saveUserRecord(UserCredential? userCredentials) async {
     try {
-      // First update the Rx User and then check if the user data is already stored. If not, store new data
-      await fetchUserRecord();
+      if (userCredentials != null) {
+        final nameParts =
+            UserModel.nameParts(userCredentials.user!.displayName ?? '');
+        final username =
+            UserModel.generateUsername(userCredentials.user!.displayName ?? '');
 
-      // If no record already stored,
-      if (user.value.id.isEmpty) {
-        if (userCredentials != null) {
-          final nameParts =
-              UserModel.nameParts(userCredentials.user!.displayName ?? '');
-          final username = UserModel.generateUsername(
-              userCredentials.user!.displayName ?? '');
+        //Map Data
+        final user = UserModel(
+            id: userCredentials.user!.uid,
+            username: username,
+            firstname: nameParts[0],
+            lastname:
+                nameParts.length > 1 ? nameParts.sublist(1).join(' ') : '',
+            email: userCredentials.user!.email ?? '',
+            profilePicture: userCredentials.user!.photoURL ?? '');
 
-          //Map Data
-          final user = UserModel(
-              id: userCredentials.user!.uid,
-              username: username,
-              firstname: nameParts[0],
-              lastname:
-                  nameParts.length > 1 ? nameParts.sublist(1).join(' ') : '',
-              email: userCredentials.user!.email ?? '',
-              profilePicture: userCredentials.user!.photoURL ?? '');
-
-          // Save user data
-          await userRepository.saveUserRecord(user);
-        }
+        // Save user data
+        await userRepository.saveUserRecord(user);
       }
     } catch (e) {
       MLoaders.warningSnackBar(

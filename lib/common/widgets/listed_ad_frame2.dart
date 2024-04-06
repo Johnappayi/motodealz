@@ -10,10 +10,10 @@ import 'package:motodealz/utils/formatters/formatter.dart';
 
 class ListedAdFrame2 extends StatelessWidget {
   const ListedAdFrame2({
-    Key? key,
+    super.key,
     required this.vehicle,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   final Vehicle vehicle;
   final VoidCallback onPressed;

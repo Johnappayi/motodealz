@@ -52,7 +52,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '946874732653',
     projectId: 'motodealz-7badd',
     authDomain: 'motodealz-7badd.firebaseapp.com',
-    storageBucket: 'motodealz-7badd.appspot.com',
+    storageBucket: 'gs://motodealz-7badd.appspot.com',
     measurementId: 'G-TTVXVBSC3P',
   );
 
@@ -61,7 +61,7 @@ class DefaultFirebaseOptions {
     appId: '1:946874732653:android:3ef33dedc562e75e576f64',
     messagingSenderId: '946874732653',
     projectId: 'motodealz-7badd',
-    storageBucket: 'motodealz-7badd.appspot.com',
+    storageBucket: 'gs://motodealz-7badd.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
@@ -69,7 +69,7 @@ class DefaultFirebaseOptions {
     appId: '1:946874732653:ios:d8f2b071a5471cc2576f64',
     messagingSenderId: '946874732653',
     projectId: 'motodealz-7badd',
-    storageBucket: 'motodealz-7badd.appspot.com',
+    storageBucket: 'gs://motodealz-7badd.appspot.com',
     androidClientId: '946874732653-d1ktgc13tip964ugbrvggvn8v38ht5kq.apps.googleusercontent.com',
     iosClientId: '946874732653-o1jahlb3ejkdfjnjtc9ft1qb6s82s05r.apps.googleusercontent.com',
     iosBundleId: 'com.example.motodealz',

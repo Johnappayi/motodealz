@@ -14,10 +14,7 @@ class VehicleController extends GetxController {
 
       List<Vehicle> vehicles = snapshot.docs.map((doc) {
         Map<String, dynamic>? data = doc.data() as Map<String, dynamic>?;
-        if (data != null) {
-          // Print the data for inspection
-          print('Retrieved data for document ${doc.id}: $data');
-
+        if (data != null) {      
           return Vehicle(
             brand: data['Brand'] ?? '',
             model: data['Model'] ?? '',
@@ -47,7 +44,7 @@ class VehicleController extends GetxController {
       throw Exception("Error fetching vehicles: $e");
     }
   }
-
+ 
   // Method to get all vehicles
   Future<List<Vehicle>> getAllVehicles() async {
     if (_vehicles.isEmpty) {

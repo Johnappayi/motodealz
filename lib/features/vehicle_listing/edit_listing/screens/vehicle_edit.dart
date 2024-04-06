@@ -15,7 +15,7 @@ import 'package:motodealz/utils/helpers/helper_functions.dart';
 import 'vehicle_details_edit_ui.dart';
 
 class VehicleEditScreen extends StatefulWidget {
-  const VehicleEditScreen({Key? key, required this.vehicle}) : super(key: key);
+  const VehicleEditScreen({super.key, required this.vehicle});
 
   final Vehicle vehicle;
   

@@ -92,5 +92,39 @@ class MValidator {
     return null;
   }
 
+  static String? validateDate (String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your date of birth';
+    }
+    // Check date format (DD/MM/YYYY)
+    final RegExp dateRegex = RegExp(r'^\d{2}/\d{2}/\d{4}$');
+    if (!dateRegex.hasMatch(value)) {
+      return 'Please enter a valid date format (DD/MM/YYYY)';
+    }
+    // Parse the entered date
+    final List<String> parts = value.split('/');
+    final int? day = int.tryParse(parts[0]);
+    final int? month = int.tryParse(parts[1]);
+    final int? year = int.tryParse(parts[2]);
+    final DateTime enteredDate = DateTime(year!, month!, day!);
+
+    // Check if the entered date is in the future
+    if (enteredDate.isAfter(DateTime.now())) {
+      return 'Please enter a date before today';
+    }
+
+    // Calculate age based on the entered date
+    final Duration ageDifference = DateTime.now().difference(enteredDate);
+    final int age = (ageDifference.inDays / 365).floor();
+
+    // Check minimum age requirement (e.g., 18 years old)
+    const int minimumAge = 18;
+    if (age < minimumAge) {
+      return 'You must be at least $minimumAge years old. You are ineligible to list your Ad.';
+    }
+
+    return null; // Return null if validation passes
+  }
+  
 // Add more custom validators as needed for your specific requirements.
 }

@@ -10,14 +10,15 @@ import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
 import 'package:motodealz/utils/constants/text_strings.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
+import 'package:motodealz/utils/validators/validation.dart';
 
 class UserVerificationInfoScreen extends StatelessWidget {
   const UserVerificationInfoScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final bool darkMode =MHelperFunctions.isDarkMode(context);
-    return  Scaffold(
+    final bool darkMode = MHelperFunctions.isDarkMode(context);
+    return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
             child: Padding(
@@ -39,11 +40,13 @@ class UserVerificationInfoScreen extends StatelessWidget {
               const SizedBox(
                 height: MSizes.spaceBtwSections,
               ),
-              SvgPicture.asset(MImages.progressBar1,colorFilter: MSvgStyle.svgStyle3(darkMode),),
+              SvgPicture.asset(
+                MImages.progressBar1,
+                colorFilter: MSvgStyle.svgStyle3(darkMode),
+              ),
               const SizedBox(
                 height: MSizes.defaultSpace,
               ),
-      
               const Text(
                 "Basic Info",
                 style: MFonts.fontBH1,
@@ -51,41 +54,48 @@ class UserVerificationInfoScreen extends StatelessWidget {
               const SizedBox(
                 height: MSizes.nm,
               ),
-               const Form(
+              Form(
                 child: Column(
                   children: [
                     InputField(
                       label: MTexts.firstName,
                       hintText: "Enter first name",
+                      validator: (value) =>
+                          MValidator.validateEmptyText('First Name', value),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: MSizes.spaceBtwInputFields,
                     ),
                     InputField(
                       label: MTexts.lastName,
                       hintText: "Enter last name",
+                      validator: (value) =>
+                          MValidator.validateEmptyText('First Name', value),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: MSizes.spaceBtwInputFields,
                     ),
                     InputFieldWithIcon(
                       label: "Date of Birth",
                       hintText: "DD/MM/YYYY",
+                      validator: (value) => MValidator.validateDate(value),
                       suffixIcon: MImages.calenderIcon,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: MSizes.spaceBtwInputFields,
                     ),
                     InputField(
                       label: "Residential Address",
                       hintText: "Enter permanent address",
+                      validator: (value) => MValidator.validateEmptyText('Resedential Address', value),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: MSizes.spaceBtwInputFields,
                     ),
                     InputField(
                       label: "Postal Code",
                       hintText: "Enter postal code",
+                      validator: (value) => MValidator.validateEmptyText('Postal Code', value),
                     ),
                   ],
                 ),
@@ -93,7 +103,10 @@ class UserVerificationInfoScreen extends StatelessWidget {
               const SizedBox(
                 height: MSizes.spaceBtwSections,
               ),
-              LargeButtonNS(onPressed: () => MHelperFunctions.navigateToScreen(context, const UserVerificationSelfieScreen()), child: const Text("Continue"))
+              LargeButtonNS(
+                  onPressed: () => MHelperFunctions.navigateToScreen(
+                      context, const UserVerificationSelfieScreen()),
+                  child: const Text("Continue"))
             ],
           ),
         )),

@@ -1,13 +1,10 @@
 import 'package:motodealz/common/model/vehicle_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get.dart';
 
-class VehicleController {
+class VehicleController extends GetxController {
+  static VehicleController get instance => Get.find();
   late List<Vehicle> _vehicles;
-
-  // Constructor to initialize the lists and fetch vehicles from Firestore
-  VehicleController() {
-    _vehicles = [];
-  }
 
   // Method to fetch vehicles from Firestore
   Future<List<Vehicle>> _fetchVehicles() async {
@@ -18,10 +15,9 @@ class VehicleController {
       List<Vehicle> vehicles = snapshot.docs.map((doc) {
         Map<String, dynamic>? data = doc.data() as Map<String, dynamic>?;
         if (data != null) {
-           // Print the data for inspection
-        print('Retrieved data for document ${doc.id}: $data');
+          // Print the data for inspection
+          print('Retrieved data for document ${doc.id}: $data');
 
-        
           return Vehicle(
             brand: data['Brand'] ?? '',
             model: data['Model'] ?? '',
@@ -34,7 +30,8 @@ class VehicleController {
             price: (data['Price'] ?? 0).toDouble(),
             isPremium: data['IsPremium'] ?? false,
             ownerId: data['OwnerId'] ?? '',
-            datePosted: (data['DatePosted'] as Timestamp?)?.toDate() ?? DateTime.now(),
+            datePosted:
+                (data['DatePosted'] as Timestamp?)?.toDate() ?? DateTime.now(),
             location: data['Location'] ?? '',
             description: data['Description'] ?? '',
             images: List<String>.from(data['Images'] ?? []),
@@ -62,7 +59,9 @@ class VehicleController {
   // Method to search vehicles by brand
   List<Vehicle> searchVehiclesByBrand(String query) {
     var lowercaseQuery = query.toLowerCase();
-    return _vehicles.where((vehicle) => vehicle.brand.toLowerCase() == lowercaseQuery).toList();
+    return _vehicles
+        .where((vehicle) => vehicle.brand.toLowerCase() == lowercaseQuery)
+        .toList();
   }
 
   // Method to filter vehicles by category
@@ -71,7 +70,9 @@ class VehicleController {
   }
 
   List<Vehicle> getVehiclesByBrand(String brand) {
-    return _vehicles.where((vehicle) => vehicle.brand.toLowerCase() == brand.toLowerCase()).toList();
+    return _vehicles
+        .where((vehicle) => vehicle.brand.toLowerCase() == brand.toLowerCase())
+        .toList();
   }
 
   List<Vehicle> getVehiclesByOwnerId(String ownerId) {
@@ -93,7 +94,8 @@ class VehicleController {
     return _vehicles.where((vehicle) {
       var matchesBrand = vehicle.brand.toLowerCase().contains(lowercaseQuery);
       var matchesModel = vehicle.model.toLowerCase().contains(lowercaseQuery);
-      var matchesCategory = vehicle.category.toLowerCase().contains(lowercaseQuery);
+      var matchesCategory =
+          vehicle.category.toLowerCase().contains(lowercaseQuery);
 
       // Return true if any of the criteria matches
       return matchesBrand || matchesModel || matchesCategory;

@@ -7,20 +7,19 @@ import 'package:motodealz/utils/constants/sizes.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
 
 class InputField extends StatelessWidget {
-  const InputField({
-    super.key,
-    required this.hintText,
-    required this.label,
-    this.isEnabled
-  });
+  const InputField(
+      {super.key,
+      required this.hintText,
+      required this.label,
+      this.validator,
+      this.isEnabled});
   final String hintText;
   final String label;
   final bool? isEnabled;
-  
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
-    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -45,13 +44,14 @@ class SearchField extends StatelessWidget {
     Key? key,
     required this.hintText,
     this.prefixIcon,
-    this.suffixIcon, this.onChanged,
+    this.suffixIcon,
+    this.onChanged,
   }) : super(key: key);
 
   final String hintText;
   final String? prefixIcon;
   final String? suffixIcon;
-  final ValueChanged<String>? onChanged; 
+  final ValueChanged<String>? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +60,7 @@ class SearchField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TextFormField(
-           onChanged: onChanged, 
+          onChanged: onChanged,
           decoration: InputDecoration(
             hintText: hintText,
             enabledBorder: const OutlineInputBorder().copyWith(
@@ -133,7 +133,7 @@ class InputFieldWithIcon extends StatelessWidget {
         TextFormField(
           validator: validator,
           controller: controller,
-          obscureText: finalObscureText ,
+          obscureText: finalObscureText,
           decoration: InputDecoration(
             enabled: true,
             hintText: hintText,

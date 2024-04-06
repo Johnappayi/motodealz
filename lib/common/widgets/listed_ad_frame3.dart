@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:motodealz/common/styles/svg_styles.dart';
 import 'package:motodealz/common/model/vehicle_model.dart';
@@ -8,6 +7,7 @@ import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
+import 'package:motodealz/utils/http/http_client.dart';
 
 class ListedAdFrame3 extends StatelessWidget {
   const ListedAdFrame3({
@@ -35,12 +35,30 @@ class ListedAdFrame3 extends StatelessWidget {
             // ignore: sized_box_for_whitespace
             child: Stack(
               children: [
-                Image.asset(
-                 vehicle.images[0],
-                  height: MHelperFunctions.screenHeight() * 0.17,
-                  width: MHelperFunctions.screenWidth(),
-                  fit: BoxFit.cover,
-                ),
+               FutureBuilder<String>(
+                        future: MHttpHelper.convertGCSUrlToHttps(
+                            vehicle.images.isNotEmpty ? vehicle.images[0] : ''),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return SizedBox(
+                              width: MHelperFunctions.screenWidth(),
+                              height: MHelperFunctions.screenHeight() * 0.17,
+                              child: const CircularProgressIndicator(),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          } else {
+                            return Image.network(
+                              snapshot.data ?? '',
+                              width: MHelperFunctions.screenWidth(),
+                              height: MHelperFunctions.screenHeight() * 0.17,
+                              fit: BoxFit.cover,
+                            );
+                          }
+                        },
+                      ),
+                     
                 Positioned(
                   bottom: 0,
                   top: 0,

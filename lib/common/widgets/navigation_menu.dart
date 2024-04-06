@@ -77,7 +77,7 @@ class NavigationController extends GetxController {
     const HomeScreen(),
     const InboxScreen(),
     const SizedBox(),
-    // const SearchScreen(),
+    const SearchScreen(),
     const ProfileScreen(),
   ];
 }

@@ -26,18 +26,6 @@ Future<void> main() async {
   Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform).then(
     (FirebaseApp value) => Get.put(AuthenticationRepository()),
   );
-
-  String result = appendAndSortStrings(
-      "CWDM5Lt0jNbHUQRHT8apEh8DRxT2", "TWe73xWB95eW3C56jNPtbnXGGbG2");
-  print("unique id:\n");
-  print(result); // Output: dehllloorw
-
   runApp(const MyApp());
 }
 
-String appendAndSortStrings(String str1, String str2) {
-  String appendedString = str1 + str2;
-  List<String> characters = appendedString.split('');
-  characters.sort();
-  return characters.join();
-}

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:motodealz/common/model/vehicle_model.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
@@ -22,7 +21,6 @@ class ListedAdFrame1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final darkMode = MHelperFunctions.isDarkMode(context);
-
     return GestureDetector(
       onTap: onPressed,
       child: Column(

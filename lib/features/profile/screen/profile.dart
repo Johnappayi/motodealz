@@ -85,7 +85,9 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: MSizes.nm),
                       Text(
-                        user.fullName,
+                        user.fullName.isNotEmpty
+                            ? user.fullName
+                            : "Anonymous User",
                         style: MFonts.fontBH2,
                       ),
                       const SizedBox(height: MSizes.sm),

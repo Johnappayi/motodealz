@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:motodealz/common/model/user_details.dart';
 import 'package:motodealz/data/repositories/user/user_repository.dart';
 import 'package:motodealz/utils/popups/loader.dart';
+
 class UserController extends GetxController {
   static UserController get instance => Get.find();
 
@@ -29,7 +30,8 @@ class UserController extends GetxController {
       user.value = fetchedUser; // Update user details
     } catch (e) {
       // Print error if fetching fails
-      user.value = UserModel.empty(); // Set user to empty UserModel in case of error
+      user.value =
+          UserModel.empty(); // Set user to empty UserModel in case of error
     } finally {
       profileLoading.value = false;
       // Add print statement after fetching

@@ -62,7 +62,7 @@ class CreateAccountScreen extends StatelessWidget {
                             MValidator.validateUsername(value),
                       ),
 
-                      const SizedBox(height: MSizes.spaceBtwInputFields),
+                      const SizedBox(height: MSizes.xs),
 
                       InputFieldWithIcon(
                         label: "Email",
@@ -72,7 +72,7 @@ class CreateAccountScreen extends StatelessWidget {
                         validator: (value) => MValidator.validateEmail(value),
                       ),
 
-                      const SizedBox(height: MSizes.spaceBtwInputFields),
+                      const SizedBox(height: MSizes.xs),
 
                       /// Password
                       Obx(
@@ -97,7 +97,7 @@ class CreateAccountScreen extends StatelessWidget {
                         ),
                       ),
 
-                      const SizedBox(height: MSizes.spaceBtwInputFields),
+                      const SizedBox(height: MSizes.xs),
 
                       LargeButtonNS(
                         child: const Text("Create account"),

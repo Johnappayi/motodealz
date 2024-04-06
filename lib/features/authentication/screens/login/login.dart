@@ -65,7 +65,7 @@ class LoginScreen extends StatelessWidget {
                         validator: (value) => MValidator.validateEmail(value),
                       ),
 
-                      const SizedBox(height: MSizes.spaceBtwInputFields),
+                      const SizedBox(height: MSizes.xs),
 
                       /// Password
                       Obx(
@@ -117,7 +117,7 @@ class LoginScreen extends StatelessWidget {
                         ],
                       ),
 
-                      const SizedBox(height: MSizes.spaceBtwInputFields),
+                      const SizedBox(height: MSizes.xs),
 
                       LargeButtonNS(
                         child: const Text("Login"),

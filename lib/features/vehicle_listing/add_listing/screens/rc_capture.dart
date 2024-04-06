@@ -14,7 +14,7 @@ import 'package:motodealz/utils/helpers/helper_functions.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class VehicleVerificationIdCaptureScreen extends StatefulWidget {
-  const VehicleVerificationIdCaptureScreen({super.key});
+  const VehicleVerificationIdCaptureScreen({Key? key}) : super(key: key);
 
   @override
   State<VehicleVerificationIdCaptureScreen> createState() =>

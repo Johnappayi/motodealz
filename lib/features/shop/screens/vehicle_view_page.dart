@@ -15,7 +15,7 @@ import 'package:motodealz/utils/helpers/helper_functions.dart';
 import 'package:motodealz/common/widgets/image_carousel.dart';
 
 class VehicleVeiwScreen extends StatefulWidget {
-  const VehicleVeiwScreen({super.key, required this.vehicle});
+  const VehicleVeiwScreen({Key? key, required this.vehicle}) : super(key: key);
 
   final Vehicle vehicle;
 

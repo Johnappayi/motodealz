@@ -5,12 +5,12 @@ import 'package:motodealz/utils/constants/fonts.dart';
 
 class CarCategoryItem extends StatelessWidget {
   const CarCategoryItem({
-    super.key,
+    Key? key,
     required this.darkMode,
     required this.icon,
     required this.type,
     required this.onPressed,
-  });
+  }) : super(key: key);
 
   final bool darkMode;
   final String icon;

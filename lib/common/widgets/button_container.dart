@@ -7,10 +7,10 @@ import 'package:motodealz/utils/helpers/helper_functions.dart';
 
 class ButtonContainer extends StatelessWidget {
   const ButtonContainer({
-    super.key,
+    Key? key,
     required this.child,
     required this.onPressed,
-  });
+  }) : super(key: key);
 
   final String child;
   final VoidCallback onPressed;

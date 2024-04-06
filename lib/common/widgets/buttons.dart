@@ -7,7 +7,7 @@ class SmallButton extends StatelessWidget {
   final VoidCallback onPressed;
   final Widget child;
   //   required this.onPressed-add later
-  const SmallButton({super.key, required this.child, required this.onPressed});
+  const SmallButton({Key? key, required this.child, required this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class LargeButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final Widget child;
 
-  const LargeButton({super.key, required this.child, this.onPressed});
+  const LargeButton({Key? key, required this.child, this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class LargeButtonNS extends StatelessWidget {
   final VoidCallback? onPressed;
   final Widget child;
 
-  const LargeButtonNS({super.key, required this.child, this.onPressed});
+  const LargeButtonNS({Key? key, required this.child, this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +61,8 @@ class LargeSecButtonWithIcon extends StatelessWidget {
   final String icon;
 
   const LargeSecButtonWithIcon(
-      {super.key, required this.child, required this.icon, this.onPressed});
+      {Key? key, required this.child, required this.icon, this.onPressed})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +85,7 @@ class LargeSecButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final Widget child;
 
-  const LargeSecButton({super.key, required this.child,  this.onPressed});
+  const LargeSecButton({Key? key, required this.child,  this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +102,7 @@ class SmallSecButton extends StatelessWidget {
   final VoidCallback onPressed;
   final Widget child;
   //   required this.onPressed-add later
-  const SmallSecButton({super.key, required this.child, required this.onPressed});
+  const SmallSecButton({Key? key, required this.child, required this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

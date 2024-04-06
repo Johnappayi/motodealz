@@ -13,7 +13,7 @@ import 'package:motodealz/utils/helpers/helper_functions.dart';
 
 class InboxScreen extends StatefulWidget {
   // final ChatController chatController = Get.put(ChatController());
-  const InboxScreen({super.key});
+  const InboxScreen({Key? key}) : super(key: key);
 
   @override
   InboxScreenState createState() => InboxScreenState();

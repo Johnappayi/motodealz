@@ -4,7 +4,8 @@ import 'package:motodealz/utils/constants/sizes.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
 
 class SelectedImageGallery extends StatefulWidget {
-  const SelectedImageGallery({super.key, required this.images, required this.onImageRemoved});
+  const SelectedImageGallery({Key? key, required this.images, required this.onImageRemoved})
+      : super(key: key);
   final List<String> images;
   final Function(int) onImageRemoved; // Callback to notify when an image is removed
   @override

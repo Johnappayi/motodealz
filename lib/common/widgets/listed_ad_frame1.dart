@@ -10,10 +10,10 @@ import 'package:motodealz/utils/http/http_client.dart';
 
 class ListedAdFrame1 extends StatelessWidget {
   const ListedAdFrame1({
-    super.key,
+    Key? key,
     required this.vehicle,
     required this.onPressed,
-  });
+  }) : super(key: key);
 
   final Vehicle vehicle;
   final VoidCallback onPressed;

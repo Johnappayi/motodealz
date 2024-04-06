@@ -5,7 +5,7 @@ import 'package:motodealz/features/chat/controller/chat_room_controller.dart';
 import 'package:motodealz/features/chat/model/message_model.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
 class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key, required this.receiverUserId});
+  const ChatScreen({Key? key, required this.receiverUserId}) : super(key: key);
 
   final String receiverUserId;
 

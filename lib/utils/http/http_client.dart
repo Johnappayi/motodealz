@@ -49,9 +49,9 @@ class MHttpHelper {
   }
 
 // Function to convert 'gs' URL to HTTPS URL
-   static Future<String> convertGCSUrlToHttps(String gsUrl) async {
+  static Future<String> convertGCSUrlToHttps(String gsUrl) async {
     // Create a FirebaseStorage instance
-    final storage = FirebaseStorage.instance;
+    FirebaseStorage storage = FirebaseStorage.instance;
     // Get the download URL for the referenced image
     String downloadUrl = await storage.ref(gsUrl).getDownloadURL();
     return downloadUrl;

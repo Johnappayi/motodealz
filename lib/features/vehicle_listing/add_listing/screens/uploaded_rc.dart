@@ -10,7 +10,7 @@ import 'package:motodealz/utils/constants/sizes.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
 
 class UploadedRCScreen extends StatelessWidget {
-  const UploadedRCScreen({super.key, required this.imagePath});
+  const UploadedRCScreen({Key? key, required this.imagePath}) : super(key: key);
   final String imagePath;
 
   @override

@@ -9,7 +9,7 @@ import 'package:motodealz/utils/helpers/helper_functions.dart';
 class MAppBar extends StatelessWidget {
   final VoidCallback onMenuPressed;
 
-  const MAppBar({super.key, required this.onMenuPressed});
+  const MAppBar({Key? key, required this.onMenuPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

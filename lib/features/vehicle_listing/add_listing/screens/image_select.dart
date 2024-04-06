@@ -15,7 +15,7 @@ import 'package:motodealz/utils/helpers/helper_functions.dart';
 import '../../../../common/widgets/selected_image_gallery.dart';
 
 class VehicleImageSelectScreen extends StatefulWidget {
-  const VehicleImageSelectScreen({super.key});
+  const VehicleImageSelectScreen({Key? key}) : super(key: key);
 
   @override
   VehicleImageSelectScreenState createState() =>

@@ -11,10 +11,10 @@ import 'package:motodealz/utils/helpers/helper_functions.dart';
 
 class ListedAdFrame3 extends StatelessWidget {
   const ListedAdFrame3({
-    super.key,
+    Key? key,
     required this.vehicle,
     required this.onPressed,
-  });
+  }) : super(key: key);
 
 
 

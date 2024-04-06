@@ -6,8 +6,6 @@ import 'package:motodealz/common/widgets/draggable_sheet.dart';
 import 'package:motodealz/common/widgets/image_carousel.dart';
 import 'package:motodealz/common/widgets/vehicle_details_ui.dart';
 import 'package:motodealz/features/shop/screens/vehicle_image_veiw_page.dart';
-import 'package:motodealz/features/vehicle_listing/add_listing/controller/ad_controller.dart';
-import 'package:motodealz/features/vehicle_listing/add_listing/model/ad_model.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
@@ -18,7 +16,6 @@ class VehicleEditScreen extends StatefulWidget {
   const VehicleEditScreen({super.key, required this.vehicle});
 
   final Vehicle vehicle;
-  
 
   @override
   State<VehicleEditScreen> createState() => _VehicleEditScreenState();
@@ -26,13 +23,10 @@ class VehicleEditScreen extends StatefulWidget {
 
 class _VehicleEditScreenState extends State<VehicleEditScreen> {
   bool _hasNavigatedToImageViewScreen = false;
-  
 
   @override
   Widget build(BuildContext context) {
     final bool darkMode = MHelperFunctions.isDarkMode(context);
-    AdListed adListed = AdController().getAdDetailsByVehicleId(widget.vehicle.id);
-
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -47,9 +41,7 @@ class _VehicleEditScreenState extends State<VehicleEditScreen> {
             MyDraggableSheet(
               child: Column(
                 children: [
-                  VehicleDetailsUI(
-                    vehicle: widget.vehicle, adListed: adListed,
-                  ),
+                  VehicleDetailsUI(vehicle: widget.vehicle),
                   const SizedBox(
                     height: 90,
                   ) //Dont remove this
@@ -108,7 +100,7 @@ class _VehicleEditScreenState extends State<VehicleEditScreen> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => VehicleImageViewScreen(vehicle: widget.vehicle),
+          builder: (context) => VehicleImageViewScreen(vehicleImages: widget.vehicle.images),
         ),
       ).then((_) {
         // Reset the flag when the navigation is completed

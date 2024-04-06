@@ -14,6 +14,7 @@ class Vehicle {
   DateTime datePosted;
   String location;
   String description;
+  String title;
   List<String> images;
 
   Vehicle({
@@ -32,6 +33,7 @@ class Vehicle {
     required this.datePosted,
     required this.location,
     required this.description,
+    required this.title,
     required this.images,
   });
 
@@ -52,6 +54,7 @@ class Vehicle {
         location: '',
         description: '',
         images: [],
+        title: '',
       );
 
   Map<String, dynamic> toJson() {
@@ -72,6 +75,7 @@ class Vehicle {
       'Location': location,
       'Description': description,
       'Images': images,
+      'Title': title,
     };
   }
 
@@ -94,6 +98,7 @@ class Vehicle {
       location: json['location'],
       description: json['description'],
       images: List<String>.from(json['images']),
+       title: json['description'],
     );
   }
 }

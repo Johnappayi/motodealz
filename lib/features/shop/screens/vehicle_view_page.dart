@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:motodealz/common/model/vehicle_model.dart';
 import 'package:motodealz/common/widgets/back_button.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/common/widgets/draggable_sheet.dart';
+import 'package:motodealz/common/widgets/image_carousel.dart';
 import 'package:motodealz/common/widgets/vehicle_details_ui.dart';
-import 'package:motodealz/common/model/vehicle_model.dart';
 import 'package:motodealz/features/shop/screens/vehicle_image_veiw_page.dart';
-import 'package:motodealz/features/vehicle_listing/add_listing/controller/ad_controller.dart';
-import 'package:motodealz/features/vehicle_listing/add_listing/model/ad_model.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
+import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
 import 'package:motodealz/utils/formatters/formatter.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
-import 'package:motodealz/common/widgets/image_carousel.dart';
+import 'package:motodealz/utils/http/http_client.dart';
 
 class VehicleVeiwScreen extends StatefulWidget {
-  const VehicleVeiwScreen({super.key, required this.vehicle});
+  const VehicleVeiwScreen({
+    super.key,
+    required this.vehicle,
+  });
 
   final Vehicle vehicle;
 
@@ -25,28 +28,55 @@ class VehicleVeiwScreen extends StatefulWidget {
 
 class VehicleVeiwScreenState extends State<VehicleVeiwScreen> {
   bool _hasNavigatedToImageViewScreen = false;
+  final List<String> _imageUrls = [];
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  Future<List<String>> _fetchImages() async {
+    for (String imageUrl in widget.vehicle.images) {
+      String httpsUrl = await MHttpHelper.convertGCSUrlToHttps(imageUrl);
+      _imageUrls.add(httpsUrl);
+    }
+    return _imageUrls;
+  }
 
   @override
   Widget build(BuildContext context) {
     final bool darkMode = MHelperFunctions.isDarkMode(context);
-
-    AdListed adListed = AdController().getAdDetailsByVehicleId(widget.vehicle.id);
 
     return SafeArea(
       child: Scaffold(
         body: Stack(
           children: [
             GestureDetector(
-              onTap: () {
-                _navigateToImageViewScreen(context);
-              },
-              child: MImageCarousel1(images: widget.vehicle.images),
+              onTap: () => _navigateToImageViewScreen(context),
+              child: FutureBuilder<List<String>>(
+                future: _fetchImages(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    // Show a loading indicator while fetching images
+                    return Image.asset(
+                      darkMode ? MImages.sampleCarDarkMode : MImages.sampleCar ,
+                      height: MHelperFunctions.screenHeight() * 0.45,
+                      fit: BoxFit.cover,
+                    );
+                  } else if (snapshot.hasError) {
+                    // Show an error message if fetching images fails
+                    return const Center(child: Text('Error fetching images'));
+                  } else {
+                    // Build MImageCarousel1 with fetched images
+                    return MImageCarousel1(images: snapshot.data!);
+                  }
+                },
+              ),
             ),
             MyDraggableSheet(
               child: Column(
                 children: [
-                  VehicleDetailsUI(vehicle: widget.vehicle,
-                  adListed:adListed ),
+                  VehicleDetailsUI(vehicle: widget.vehicle),
                   const SizedBox(
                     height: 90,
                   ) //Dont remove this
@@ -78,8 +108,7 @@ class VehicleVeiwScreenState extends State<VehicleVeiwScreen> {
                       MFormatter.formatCurrency(widget.vehicle.price),
                       style: MFonts.fontCH1,
                     ),
-                     SmallButton(onPressed: () {  },
-                    child: const Text("Chat"))
+                    SmallButton(onPressed: () {}, child: const Text("Chat"))
                   ],
                 ),
               ),
@@ -91,12 +120,14 @@ class VehicleVeiwScreenState extends State<VehicleVeiwScreen> {
   }
 
   void _navigateToImageViewScreen(BuildContext context) {
-    if (!_hasNavigatedToImageViewScreen) {
+    // ignore: unnecessary_null_comparison
+    if (!_hasNavigatedToImageViewScreen && _imageUrls != null) {
       _hasNavigatedToImageViewScreen = true;
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => VehicleImageViewScreen(vehicle: widget.vehicle),
+          builder: (context) =>
+              VehicleImageViewScreen(vehicleImages: _imageUrls),
         ),
       ).then((_) {
         // Reset the flag when the navigation is completed

@@ -8,7 +8,6 @@ import 'package:motodealz/common/widgets/popular_brand_container.dart';
 import 'package:motodealz/common/widgets/side_bar.dart';
 import 'package:motodealz/common/controller/vehicle_controller.dart';
 import 'package:motodealz/common/model/vehicle_model.dart';
-import 'package:motodealz/features/shop/screens/vehicle_view_page.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
@@ -379,15 +378,15 @@ class _SearchScreenState extends State<SearchScreen> {
                                 itemBuilder: (context, index) {
                                   return ListedAdFrame2(
                                     onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              VehicleVeiwScreen(
-                                            vehicle: _vehicles[index],
-                                          ),
-                                        ),
-                                      );
+                                      // Navigator.push(
+                                      //   context,
+                                      //   MaterialPageRoute(
+                                      //     builder: (context) =>
+                                      //         // const VehicleVeiwScreen(
+                                      //       // vehicle: _vehicles[index],
+                                      //     ),
+                                      //   ),
+                                      // );
                                     },
                                     vehicle: _vehicles[index],
                                   );

@@ -34,7 +34,8 @@ class VehicleController {
             location: data['Location'] ?? '',
             description: data['Description'] ?? '',
             images: List<String>.from(data['Images'] ?? []),
-            id: doc.id,
+            title:data['Title'] ?? '',
+            id: doc.id, 
           );
         } else {
           throw Exception("Data is null or does not exist.");

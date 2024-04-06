@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:motodealz/common/widgets/button_container.dart';
 import 'package:motodealz/common/widgets/image_carousel.dart';
-import 'package:motodealz/common/model/vehicle_model.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
 
 class VehicleImageViewScreen extends StatelessWidget {
-  const VehicleImageViewScreen({super.key, required this.vehicle});
-  final Vehicle vehicle;
+  const VehicleImageViewScreen({super.key, required this.vehicleImages});
+  final List<String> vehicleImages;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +30,7 @@ class VehicleImageViewScreen extends StatelessWidget {
             const SizedBox(
               height: MSizes.defaultSpace,
             ),
-            Expanded(child: MImageCarousel2(images: vehicle.images)),
+            Expanded(child: MImageCarousel2(images: vehicleImages)),
           ],
         ),
       ),

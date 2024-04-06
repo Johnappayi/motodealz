@@ -31,7 +31,8 @@ class _MImageCarousel1State extends State<MImageCarousel1> {
           items: widget.images.map((image) {
             return Builder(
               builder: (BuildContext context) {
-                return Image.asset(
+                return 
+                Image.network(
                   image,
                   fit: BoxFit.cover,
                 );
@@ -106,7 +107,7 @@ class _MImageCarousel2State extends State<MImageCarousel2> {
           items: widget.images.map((image) {
             return Builder(
               builder: (BuildContext context) {
-                return Image.asset(
+                return Image.network(
                   image,
                   fit: BoxFit.fitWidth,
                 );

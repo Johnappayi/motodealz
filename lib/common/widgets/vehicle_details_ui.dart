@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:motodealz/common/styles/svg_styles.dart';
 import 'package:motodealz/common/model/vehicle_model.dart';
-import 'package:motodealz/features/vehicle_listing/add_listing/model/ad_model.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
@@ -13,11 +12,10 @@ import 'package:motodealz/utils/helpers/helper_functions.dart';
 class VehicleDetailsUI extends StatelessWidget {
   const VehicleDetailsUI({
     super.key,
-    required this.vehicle, required this.adListed,
+    required this.vehicle,
   });
 
   final Vehicle vehicle;
-  final AdListed adListed;
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +100,7 @@ class VehicleDetailsUI extends StatelessWidget {
             children: [
               Text('Posted on ${MFormatter.formatDate(vehicle.datePosted)}',
                   style: MFonts.fontCB3.copyWith(color: MColors.lightGrey)),
-              Text("Ad ID: ${adListed.ownerId}",
+              Text("Ad ID: ${vehicle.id.substring(0,6)}",
                   style: MFonts.fontCB3.copyWith(color: MColors.lightGrey)),
             ],
           ),
@@ -130,14 +128,14 @@ class VehicleDetailsUI extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  adListed.title, //include title later
+                  vehicle.title, //include title later
                   style: MFonts.fontCB2b,
                 ),
                 const SizedBox(
                   height: MSizes.sm,
                 ),
                 Text(
-                  adListed.description,
+                  vehicle.description,
                   style: MFonts.fontCB2,
                 )
               ],

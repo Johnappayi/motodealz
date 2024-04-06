@@ -74,6 +74,8 @@ class MImages {
   static const String progressBar3 = "assets/images/progress bar 3.svg";
 
   // -- Sample Car Images
+  static const String sampleCar = "assets/images/no-image.png";
+  static const String sampleCarDarkMode = "assets/images/no-image 1.png";
   static const String sampleCar1a =
       "assets/images/Sample car/Toyota corolla/img1.jpg";
   static const String sampleCar1b =

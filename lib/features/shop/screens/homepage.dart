@@ -244,17 +244,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                     return const CircularProgressIndicator(); // or any other loading indicator
                                   } else {
                                     return ListedAdFrame1(
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                VehicleVeiwScreen(
-                                              vehicle: _vehicles[index],
-                                            ),
-                                          ),
-                                        );
-                                      },
+                                      onPressed: () =>
+                                          MHelperFunctions.navigateToScreen(
+                                        context,
+                                        VehicleVeiwScreen(
+                                            vehicle: _vehicles[index]),
+                                      ),
                                       vehicle: _vehicles[index],
                                     );
                                   }

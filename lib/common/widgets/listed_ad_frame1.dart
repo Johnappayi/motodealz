@@ -53,16 +53,20 @@ class ListedAdFrame1 extends StatelessWidget {
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
-                              return SizedBox(
+                              return Image.asset(
+                                darkMode
+                                    ? MImages.sampleCarDarkMode
+                                    : MImages.sampleCar,
                                 width: MHelperFunctions.screenWidth() * 0.42,
                                 height: MHelperFunctions.screenHeight() * 0.15,
-                                child: const CircularProgressIndicator(),
+                                fit: BoxFit.cover,
                               );
                             } else if (snapshot.hasError) {
                               return Text('Error: ${snapshot.error}');
                             } else {
                               return Image.network(
                                 snapshot.data ?? '',
+                                width: MHelperFunctions.screenWidth() * 0.42,
                                 height: MHelperFunctions.screenHeight() * 0.15,
                                 fit: BoxFit.cover,
                               );

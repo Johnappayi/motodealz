@@ -33,11 +33,12 @@ class UserVerificationInfoScreenState
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: MSizes.defaultSpace,
-              vertical: MSizes.nm,
-            ),
-            child: Column(
+             padding: const EdgeInsets.only(
+              left: MSizes.defaultSpace,
+              right: MSizes.defaultSpace,
+              top: MSizes.nm,
+              bottom: MSizes.defaultSpace),
+          child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const Row(

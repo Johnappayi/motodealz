@@ -9,7 +9,7 @@ import 'package:motodealz/utils/helpers/helper_functions.dart'; // Import the Ch
 class InboxItem extends StatelessWidget {
   final ChatRoom chatItem; // Receive ChatItem as a parameter
 
-  const InboxItem({Key? key, required this.chatItem}) : super(key: key);
+  const InboxItem({super.key, required this.chatItem});
 
   @override
   Widget build(BuildContext context) {

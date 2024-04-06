@@ -11,7 +11,7 @@ import 'package:motodealz/utils/helpers/helper_functions.dart';
 class MSideBar extends StatelessWidget {
   final VoidCallback onClose;
 
-  const MSideBar({Key? key, required this.onClose}) : super(key: key);
+  const MSideBar({super.key, required this.onClose});
 
   @override
   Widget build(BuildContext context) {

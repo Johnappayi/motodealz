@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:motodealz/common/model/vehicle_model.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
@@ -11,10 +10,10 @@ import 'package:motodealz/utils/http/http_client.dart';
 
 class ListedAdFrame1 extends StatelessWidget {
   const ListedAdFrame1({
-    Key? key,
+    super.key,
     required this.vehicle,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   final Vehicle vehicle;
   final VoidCallback onPressed;

@@ -15,7 +15,7 @@ import 'package:motodealz/utils/constants/sizes.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();

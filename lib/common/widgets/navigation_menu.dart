@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:motodealz/common/styles/svg_styles.dart';
 import 'package:motodealz/features/chat/screens/inbox_screen.dart';
 import 'package:motodealz/features/profile/screen/profile.dart';
-import 'package:motodealz/features/search/screens/search_screen.dart';
 import 'package:motodealz/features/shop/screens/homepage.dart';
 import 'package:motodealz/features/vehicle_listing/add_listing/screens/rc_capture.dart';
 import 'package:motodealz/utils/constants/colors.dart';

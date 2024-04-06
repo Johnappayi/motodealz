@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 
 class OwnMessageCard extends StatelessWidget {
   const OwnMessageCard(
-      { Key? key, required this.message, required this.time})
-      : super(key: key);
+      { super.key, required this.message, required this.time});
   final String message;
   final String time;
 

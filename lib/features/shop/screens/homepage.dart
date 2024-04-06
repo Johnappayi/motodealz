@@ -24,6 +24,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   bool _isSideBarOpen = false;
   final VehicleController _vehicleController = VehicleController();
+  late List<Vehicle> _vehicles = [];
 
   void _toggleSideBar() {
     setState(() {
@@ -34,6 +35,19 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    _loadVehicles();
+  }
+
+  // Method to load vehicles asynchronously
+  void _loadVehicles() async {
+    try {
+      List<Vehicle> vehicles = await _vehicleController.getAllVehicles();
+      setState(() {
+        _vehicles = vehicles; // Update _vehicles when data is fetched
+      });
+    } catch (error) {
+      // print("Error loading vehicles: $error");
+    }
   }
 
   @override
@@ -88,6 +102,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                           onPressed: () {
                                             setState(() {
                                               // Update the list of vehicles based on the selected category
+                                              _vehicles = _vehicleController
+                                                  .getVehiclesByCategory(
+                                                      'Sedan');
                                             });
                                           },
                                         ),
@@ -101,6 +118,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                           onPressed: () {
                                             setState(() {
                                               // Update the list of vehicles based on the selected category
+                                              _vehicles = _vehicleController
+                                                  .getVehiclesByCategory(
+                                                      'Hatchback');
                                             });
                                           },
                                         )
@@ -118,6 +138,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                           onPressed: () {
                                             setState(() {
                                               // Update the list of vehicles based on the selected category
+                                              _vehicles = _vehicleController
+                                                  .getVehiclesByCategory('SUV');
                                             });
                                           },
                                         ),
@@ -131,6 +153,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                           onPressed: () {
                                             setState(() {
                                               // Update the list of vehicles based on the selected category
+                                              _vehicles = _vehicleController
+                                                  .getVehiclesByCategory('MUV');
                                             });
                                           },
                                         )
@@ -148,6 +172,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                           onPressed: () {
                                             setState(() {
                                               // Update the list of vehicles based on the selected category
+                                              _vehicles = _vehicleController
+                                                  .getVehiclesByCategory(
+                                                      'Coupe');
                                             });
                                           },
                                         ),
@@ -161,6 +188,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                           onPressed: () {
                                             setState(() {
                                               // Update the list of vehicles based on the selected category
+                                              _vehicles = _vehicleController
+                                                  .getVehiclesByCategory(
+                                                      'Pickup');
                                             });
                                           },
                                         )
@@ -198,53 +228,32 @@ class _HomeScreenState extends State<HomeScreen> {
                               const SizedBox(
                                 height: MSizes.md,
                               ),
-                              FutureBuilder<List<Vehicle>>(
-                                future: _vehicleController.getAllVehicles(),
-                                builder: (context, snapshot) {
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.waiting) {
-                                    return const Center(
-                                      child: CircularProgressIndicator(),
-                                    );
-                                  } else if (snapshot.hasError) {
-                                    return Center(
-                                      child: Text(
-                                          'Error: ${snapshot.error.toString()}'),
-                                    );
-                                  } else if (snapshot.hasData) {
-                                    final vehicles = snapshot.data!;
-                                    return GridView.builder(
-                                      shrinkWrap: true,
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      gridDelegate:
-                                          const SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 2, // Number of columns
-                                        crossAxisSpacing: MSizes.sm,
-                                        mainAxisSpacing: MSizes.sm,
-                                        childAspectRatio: 3 / 3.5,
-                                      ),
-                                      itemCount: vehicles.length,
-                                      itemBuilder: (context, index) {
-                                        return ListedAdFrame1(
-                                          onPressed: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    VehicleVeiwScreen(
-                                                  vehicle: vehicles[index],
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                          vehicle: vehicles[index],
-                                        );
-                                      },
-                                    );
-                                  } else {
-                                    return const SizedBox();
-                                  }
+                              GridView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2, // Number of columns
+                                  crossAxisSpacing: MSizes.sm,
+                                  mainAxisSpacing: MSizes.sm,
+                                  childAspectRatio: 3 / 3.5,
+                                ),
+                                itemCount: _vehicles.length,
+                                itemBuilder: (context, index) {
+                                  return ListedAdFrame1(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              VehicleVeiwScreen(
+                                            vehicle: _vehicles[index],
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    vehicle: _vehicles[index],
+                                  );
                                 },
                               ),
                             ],

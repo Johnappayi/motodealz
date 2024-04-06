@@ -1,36 +1,86 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
 import 'package:motodealz/common/model/user_details.dart';
-import 'package:motodealz/common/controller/vehicle_controller.dart';
-import 'package:motodealz/utils/constants/image_strings.dart';
+import 'package:motodealz/data/repositories/user/user_repository.dart';
+import 'package:motodealz/utils/popups/loader.dart';
+class UserController extends GetxController {
+  static UserController get instance => Get.find();
 
-final VehicleController _vehicleController = VehicleController();
+  final profileLoading = false.obs;
+  Rx<UserModel?> user = Rx<UserModel?>(null); // Changed to nullable UserModel
+  final userRepository = Get.put(UserRepository());
 
-class UserController {
-  UserModel user = UserModel(
-      id: "123456",
-      username: "navyajohnson",
-      email: "navyajohnson@gmail.com",
-      profilePicture: MImages.sampleUser1,
-      firstname: 'Navya',
-      lastname: 'Johnson',
-      isPremium: true,
-      isVerified: false,
-      hasListedAd: true,
-      noOfListedAd: _vehicleController.getVehiclesByOwnerId("123456").length,
-      vehicles: _vehicleController.getVehiclesByOwnerId("123456"));
+  UserModel? get currentUser => user.value;
 
-      
+  @override
+  void onInit() {
+    super.onInit();
+    // Add print statement for initialization
+    fetchUserRecord();
+  }
+
+  /// Fetch User Record
+  Future<void> fetchUserRecord() async {
+    try {
+      // Add print statement before fetching user details
+      profileLoading.value = true;
+      final fetchedUser = await userRepository.fetchUserDetails();
+      // Print fetched user details
+      user.value = fetchedUser; // Update user details
+    } catch (e) {
+      // Print error if fetching fails
+      user.value = UserModel.empty(); // Set user to empty UserModel in case of error
+    } finally {
+      profileLoading.value = false;
+      // Add print statement after fetching
+    }
+  }
+
   // Method to update hasListedAd
   void updateHasListedAd(bool newValue) {
-    user.hasListedAd = newValue;
+    user.update((val) {
+      val!.hasListedAd = newValue;
+    });
+    // Add print statement for updating hasListedAd
   }
 
   // Method to update noOfListedAd
   void updateNoOfListedAd(int newValue) {
-    user.noOfListedAd = newValue;
+    user.update((val) {
+      val!.noOfListedAd = newValue;
+    });
+    // Add print statement for updating noOfListedAd
   }
 
-  UserModel getUser() {
-    return user;
+  /// Save user Record from any Registration provider
+  Future<void> saveUserRecord(UserCredential? userCredentials) async {
+    try {
+      if (userCredentials != null) {
+        final nameParts =
+            UserModel.nameParts(userCredentials.user!.displayName ?? '');
+        final username =
+            UserModel.generateUsername(userCredentials.user!.displayName ?? '');
+
+        //Map Data
+        final user = UserModel(
+            id: userCredentials.user!.uid,
+            username: username,
+            firstname: nameParts[0],
+            lastname:
+                nameParts.length > 1 ? nameParts.sublist(1).join(' ') : '',
+            email: userCredentials.user!.email ?? '',
+            profilePicture: userCredentials.user!.photoURL ?? '');
+
+        // Save user data
+        await userRepository.saveUserRecord(user);
+        // Print saved user data
+      }
+    } catch (e) {
+      // Print error if saving fails
+      MLoaders.warningSnackBar(
+          title: 'Data not stored.',
+          message:
+              'Something went wrong while saving your information. You can re-save your data in your Profile.');
+    }
   }
 }
- 

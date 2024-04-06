@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:motodealz/common/controller/vehicle_controller.dart';
 import 'package:motodealz/common/model/vehicle_model.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
@@ -11,8 +12,6 @@ import 'package:motodealz/utils/constants/sizes.dart';
 
 class VehicleDetailsEditUI extends StatefulWidget {
   final String vehicleId;
-  // final Vehicle vehicle;
-
   const VehicleDetailsEditUI({
     super.key,
     // required this.vehicle,
@@ -28,11 +27,11 @@ class VehicleDetailsEditUIState extends State<VehicleDetailsEditUI> {
   late AdListed adDetails;
   late TextEditingController _adTitleController;
   late TextEditingController _adDescriptionController;
-
+  final _vehicleController = Get.put(VehicleController());
   @override
   void initState() {
     super.initState();
-    vehicle = VehicleController().getVehicleById(widget.vehicleId);
+    vehicle = _vehicleController.getVehicleById(widget.vehicleId);
     adDetails = AdController().getAdDetailsByVehicleId(widget.vehicleId);
 
     _adTitleController = TextEditingController(text: adDetails.title);
@@ -116,7 +115,7 @@ class VehicleDetailsEditUIState extends State<VehicleDetailsEditUI> {
           height:
               MSizes.inputFieldHeight, // Set a fixed height for the TextField
           child: TextField(
-            controller: controller,// Allow unlimited lines
+            controller: controller, // Allow unlimited lines
             textAlignVertical: TextAlignVertical.center,
             onChanged: (value) => _onFieldChanged(label, value),
           ),

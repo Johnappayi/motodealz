@@ -79,7 +79,7 @@ class MImages {
  
 
   // -- Sample user Images
-  static const String sampleUser1 = "assets/images/userImage.png";
+  static const String sampleUser1 = "assets/images/userHolder.png";
 
   // -- Verfication Illustration Images
   static const String forgotPasswordImg =

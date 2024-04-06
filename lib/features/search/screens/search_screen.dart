@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:motodealz/common/widgets/app_bar.dart';
 import 'package:motodealz/common/widgets/car_category_item.dart';
 import 'package:motodealz/common/widgets/input_field.dart';
@@ -24,7 +25,7 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   bool _isSideBarOpen = false;
-  final VehicleController _vehicleController = VehicleController();
+  final _vehicleController = Get.put(VehicleController());
   bool _showResults = false;
   late List<Vehicle> _vehicles = [];
 

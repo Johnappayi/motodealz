@@ -1,7 +1,9 @@
+import 'package:get/get.dart';
 import 'package:motodealz/common/model/vehicle_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class VehicleController {
+class VehicleController extends GetxController{
+  static VehicleController get instance => Get.find();
   late List<Vehicle> _vehicles;
 
   // Constructor to initialize the lists and fetch vehicles from Firestore
@@ -105,4 +107,5 @@ class VehicleController {
       return matchesBrand || matchesModel || matchesCategory;
     }).toList();
   }
+  
 }

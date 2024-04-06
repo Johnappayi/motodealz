@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:motodealz/data/repositories/authentication/authentication_repository.dart';
-import 'package:motodealz/features/profile/controller/user_controller.dart';
+import 'package:motodealz/common/controller/user_controller.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/helpers/network_manager.dart';
 import 'package:motodealz/utils/popups/full_screen_loader.dart';

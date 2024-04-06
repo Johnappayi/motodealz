@@ -45,11 +45,11 @@ class InputField extends StatelessWidget {
 
 class SearchField extends StatelessWidget {
   const SearchField({
-    Key? key,
+    super.key,
     required this.hintText,
     this.prefixIcon,
     this.suffixIcon, this.onChanged,
-  }) : super(key: key);
+  });
 
   final String hintText;
   final String? prefixIcon;
@@ -98,7 +98,7 @@ class SearchField extends StatelessWidget {
 
 class InputFieldWithIcon extends StatelessWidget {
   const InputFieldWithIcon({
-    Key? key,
+    super.key,
     this.hintText,
     this.prefixIcon,
     this.suffixIcon,
@@ -107,7 +107,7 @@ class InputFieldWithIcon extends StatelessWidget {
     this.validator,
     this.obscureText,
     this.onSuffixIconPressed,
-  }) : super(key: key);
+  });
 
   final String? hintText;
   final String? prefixIcon;

@@ -15,7 +15,7 @@ import 'package:motodealz/utils/helpers/helper_functions.dart';
 import 'package:motodealz/common/widgets/image_carousel.dart';
 
 class VehicleVeiwScreen extends StatefulWidget {
-  const VehicleVeiwScreen({Key? key, required this.vehicle}) : super(key: key);
+  const VehicleVeiwScreen({super.key, required this.vehicle});
 
   final Vehicle vehicle;
 
@@ -29,6 +29,7 @@ class VehicleVeiwScreenState extends State<VehicleVeiwScreen> {
   @override
   Widget build(BuildContext context) {
     final bool darkMode = MHelperFunctions.isDarkMode(context);
+
     AdListed adListed = AdController().getAdDetailsByVehicleId(widget.vehicle.id);
 
     return SafeArea(

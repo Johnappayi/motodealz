@@ -14,10 +14,10 @@ class VehicleDetailsEditUI extends StatefulWidget {
   // final Vehicle vehicle;
 
   const VehicleDetailsEditUI({
-    Key? key,
+    super.key,
     // required this.vehicle,
     required this.vehicleId,
-  }) : super(key: key);
+  });
 
   @override
   VehicleDetailsEditUIState createState() => VehicleDetailsEditUIState();

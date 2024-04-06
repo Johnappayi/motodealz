@@ -61,7 +61,7 @@ class _MImageCarousel1State extends State<MImageCarousel1> {
           child: Center(
             child: DotsIndicator(
               dotsCount: widget.images.length,
-              position: currentIndex.toDouble(),
+              position: currentIndex.toInt(),
               decorator: DotsDecorator(
                 spacing: const EdgeInsets.all(MSizes.xs),
                 size: const Size.square(MSizes.sm),
@@ -136,7 +136,7 @@ class _MImageCarousel2State extends State<MImageCarousel2> {
           child: Center(
             child: DotsIndicator(
               dotsCount: widget.images.length,
-              position: currentIndex.toDouble(),
+              position: currentIndex.toInt(),
               decorator: DotsDecorator(
                 spacing: const EdgeInsets.all(MSizes.xs),
                 size: const Size.square(MSizes.sm),

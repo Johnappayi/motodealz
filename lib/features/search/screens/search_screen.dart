@@ -17,7 +17,7 @@ import 'package:motodealz/utils/device/device_utility.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
 
 class SearchScreen extends StatefulWidget {
-  const SearchScreen({Key? key}) : super(key: key);
+  const SearchScreen({super.key});
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();

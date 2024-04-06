@@ -52,6 +52,15 @@ class VehicleController {
     if (_vehicles.isEmpty) {
       _vehicles = await _fetchVehicles();
     }
+     _vehicles.sort((a, b) {
+    if (a.isPremium && !b.isPremium) {
+      return -1; // a should come before b
+    } else if (!a.isPremium && b.isPremium) {
+      return 1; // b should come before a
+    } else {
+      return 0; // order doesn't matter
+    }
+  });
     return _vehicles;
   }
 

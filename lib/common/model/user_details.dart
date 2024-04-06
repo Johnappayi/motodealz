@@ -41,19 +41,19 @@ class UserModel {
   /// Static function to generate username from the full name.
   static String generateUsername(fullName) {
     List<String> nameParts = fullName.split(" ");
-    String firstName = nameParts[0].toLowerCase();
-    String lastName = nameParts.length > 1 ? nameParts[1].toLowerCase() : "";
+    String firstName = nameParts[0];
+    String lastName = nameParts.length > 1 ? nameParts[1] : "";
 
-    String camelCaseUsername = "$firstName$lastName";
-    return camelCaseUsername;
+    String newUsername = "$firstName $lastName";
+    return newUsername;
   }
 
   /// Static function to create an empty user model.
   static UserModel empty() => UserModel(
         id: '',
         username: '',
-        firstname: 'Navya',
-        lastname: 'Johnson',
+        firstname: 'Anonymous',
+        lastname: 'User',
         email: '',
         profilePicture: '',
         isPremium: true,

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:motodealz/common/styles/spacing_styles.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/common/widgets/input_field.dart';
+import 'package:motodealz/features/authentication/controllers/login/login_controller.dart';
 import 'package:motodealz/features/authentication/controllers/signup/signup_controller.dart';
 import 'package:motodealz/features/authentication/screens/login/login.dart';
 import 'package:motodealz/utils/constants/colors.dart';
@@ -20,6 +21,7 @@ class CreateAccountScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final dark = MHelperFunctions.isDarkMode(context);
     final signUpController = Get.put(SignUpController()); // Bind the controller
+    final loginController = Get.put(LoginController());
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -52,18 +54,7 @@ class CreateAccountScreen extends StatelessWidget {
                   padding: const EdgeInsets.only(top: MSizes.spaceBtwSections),
                   child: Column(
                     children: [
-                      /// Username
-                      InputFieldWithIcon(
-                        label: "Username",
-                        hintText: "Enter Username",
-                        prefixIcon: MImages.profileIcon,
-                        controller: signUpController.username,
-                        validator: (value) =>
-                            MValidator.validateUsername(value),
-                      ),
-
-                      const SizedBox(height: MSizes.xs),
-
+                      /// Email
                       InputFieldWithIcon(
                         label: "Email",
                         hintText: "Enter Email",
@@ -87,6 +78,32 @@ class CreateAccountScreen extends StatelessWidget {
                           obscureText: signUpController.hidePassword.value,
                           validator: (value) =>
                               MValidator.validatePassword(value),
+                          onSuffixIconPressed: () {
+                            // Perform your action here
+                            signUpController.hidePassword.value =
+                                !signUpController.hidePassword.value;
+                            // print('Suffix icon pressed');
+                            // print(signUpController.hidePassword.value);
+                          },
+                        ),
+                      ),
+
+                      const SizedBox(height: MSizes.xs),
+
+                      /// Confirm Password
+                      Obx(
+                        () => InputFieldWithIcon(
+                          hintText: "Re-enter password",
+                          label: "Confirm Password",
+                          prefixIcon: MImages.passwordIcon,
+                          suffixIcon: signUpController.hidePassword.value
+                              ? MImages.eyeIcon
+                              : MImages.eyeClosedIcon,
+                          controller: signUpController.confirmPassword,
+                          obscureText: signUpController.hidePassword.value,
+                          validator: (value) =>
+                              MValidator.validateConfirmPassword(
+                                  signUpController.password.text, value),
                           onSuffixIconPressed: () {
                             // Perform your action here
                             signUpController.hidePassword.value =
@@ -136,12 +153,13 @@ class CreateAccountScreen extends StatelessWidget {
 
               const SizedBox(height: MSizes.spaceBtwSections),
 
-              const LargeSecButtonWithIcon(
+              LargeSecButtonWithIcon(
                 icon: MImages.google,
-                child: Text(
+                child: const Text(
                   "Continue with google",
                   style: MFonts.fontCB1,
                 ),
+                onPressed: () => loginController.googleSignIn(),
               ),
 
               const SizedBox(height: MSizes.nm),

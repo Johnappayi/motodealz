@@ -16,9 +16,10 @@ class SignUpController extends GetxController {
   static SignUpController get instance => Get.find();
 
   //Variables
-  final username = TextEditingController();
   final email = TextEditingController();
   final password = TextEditingController();
+  final confirmPassword = TextEditingController();
+
   final hidePassword = true.obs;
   GlobalKey<FormState> signUpFormKey = GlobalKey<FormState>();
 
@@ -26,8 +27,7 @@ class SignUpController extends GetxController {
     try {
       // Start Loading
       MFullScreenLoader.openLoadingDialog(
-          'We are processing your information...',
-          MImages.processing);
+          'We are processing your information...', MImages.processing);
 
       //Check Internet Connectivity
       final isConnected = await NetworkManager.instance.isConnected();
@@ -52,7 +52,6 @@ class SignUpController extends GetxController {
       //Save authenticated user data in the Firebase Firestore
       final newUser = UserModel(
           id: userCredential.user!.uid,
-          username: username.text.trim(),
           email: email.text.trim(),
           profilePicture: "");
 

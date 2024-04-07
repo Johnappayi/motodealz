@@ -1,13 +1,9 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:motodealz/common/model/vehicle_model.dart';
 
 /// Model class representing user data.
 class UserModel {
   final String id;
-  final String username;
   final String? firstname;
   final String? lastname;
   final String email;
@@ -27,7 +23,6 @@ class UserModel {
     this.isVerified = false,
     this.vehicles,
     required this.id,
-    required this.username,
     required this.email,
     required this.profilePicture,
   });
@@ -51,7 +46,6 @@ class UserModel {
   /// Static function to create an empty user model.
   static UserModel empty() => UserModel(
         id: '',
-        username: '',
         firstname: 'Anonymous',
         lastname: 'User',
         email: '',
@@ -66,7 +60,6 @@ class UserModel {
   /// Convert model to JSON structure for storing data in Firebase.
   Map<String, dynamic> toJson() {
     return {
-      'Username': username,
       'FirstName': firstname,
       'LastName': lastname,
       'Email': email,
@@ -86,7 +79,6 @@ class UserModel {
       final data = document.data()!;
       return UserModel(
         id: document.id,
-        username: data['Username'] ?? '',
         firstname: data['FirstName'] ?? '',
         lastname: data['LastName'] ?? '',
         email: data['Email'] ?? '',

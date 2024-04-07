@@ -10,7 +10,7 @@ class MFullScreenLoader {
       context: Get.overlayContext!,
       barrierDismissible: false,
       builder: (_) => PopScope(
-        canPop: false,
+        canPop: true,
         child: Container(
             color: MHelperFunctions.isDarkMode(Get.context!)
                 ? MColors.dark

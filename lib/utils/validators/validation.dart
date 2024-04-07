@@ -7,32 +7,6 @@ class MValidator {
     return null;
   }
 
-  ///Username Validation
-  static String? validateUsername(String? username) {
-    if (username == null || username.isEmpty) {
-      return 'Username is required.';
-    }
-
-    const pattern = r'^[a-zA-Z0-9_*]{3,20}$';
-
-    final regex = RegExp(pattern);
-
-    bool isValid = regex.hasMatch(username);
-
-    if (isValid) {
-      isValid = !username.startsWith('_') &&
-          !username.startsWith('-') &&
-          !username.endsWith('-') &&
-          !username.endsWith('_');
-    }
-
-    if (!isValid) {
-      return 'Username is invalid';
-    }
-
-    return null;
-  }
-
   ///Email Validation
   static String? validateEmail(String? value) {
     if (value == null || value.isEmpty) {
@@ -49,6 +23,7 @@ class MValidator {
     return null;
   }
 
+  /// Password Validation
   static String? validatePassword(String? value) {
     if (value == null || value.isEmpty) {
       return 'Password is required.';
@@ -77,6 +52,21 @@ class MValidator {
     return null;
   }
 
+  /// Confirm Password Validation
+  static String? validateConfirmPassword(
+      String? password, String? confirmPassword) {
+    if (password == null || confirmPassword == null) {
+      return 'Passwords must match.';
+    }
+
+    if (password != confirmPassword) {
+      return 'Passwords do not match.';
+    }
+
+    return null;
+  }
+
+  /// Phone number validation
   static String? validatePhoneNumber(String? value) {
     if (value == null || value.isEmpty) {
       return 'Phone number is required.';

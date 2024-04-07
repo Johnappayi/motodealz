@@ -60,13 +60,10 @@ class UserController extends GetxController {
       if (userCredentials != null) {
         final nameParts =
             UserModel.nameParts(userCredentials.user!.displayName ?? '');
-        final username =
-            UserModel.generateUsername(userCredentials.user!.displayName ?? '');
-
+      
         //Map Data
         final user = UserModel(
             id: userCredentials.user!.uid,
-            username: username,
             firstname: nameParts[0],
             lastname:
                 nameParts.length > 1 ? nameParts.sublist(1).join(' ') : '',

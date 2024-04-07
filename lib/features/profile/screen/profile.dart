@@ -7,7 +7,6 @@ import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/common/widgets/listed_ad_frame3.dart';
 import 'package:motodealz/data/repositories/authentication/authentication_repository.dart';
 import 'package:motodealz/features/kyc_verification/screens/kyc_landing_screen.dart';
-import 'package:motodealz/features/vehicle_listing/edit_listing/screens/vehicle_edit.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
@@ -183,14 +182,14 @@ class ProfileScreen extends StatelessWidget {
                               itemBuilder: (context, index) {
                                 return ListedAdFrame3(
                                   onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => VehicleEditScreen(
-                                          vehicle: user.vehicles![index],
-                                        ),
-                                      ),
-                                    );
+                                    // Navigator.push(
+                                    //   context,
+                                    //   MaterialPageRoute(
+                                    //     builder: (context) => VehicleEditScreen(
+                                    //       vehicle: user.vehicles![index],
+                                    //     ),
+                                    //   ),
+                                    // );
                                   },
                                   vehicle: user.vehicles![index],
                                 );

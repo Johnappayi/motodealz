@@ -1,8 +1,9 @@
 import 'package:get/get.dart';
 import 'package:motodealz/common/model/vehicle_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:motodealz/features/vehicle_listing/add_listing/model/ad_model.dart';
 
-class VehicleController extends GetxController{
+class VehicleController extends GetxController {
   static VehicleController get instance => Get.find();
   late List<Vehicle> _vehicles;
 
@@ -32,12 +33,15 @@ class VehicleController extends GetxController{
             price: (data['Price'] ?? 0).toDouble(),
             isPremium: data['IsPremium'] ?? false,
             ownerId: data['OwnerId'] ?? '',
-            datePosted: (data['DatePosted'] as Timestamp?)?.toDate() ?? DateTime.now(),
+            datePosted:
+                (data['DatePosted'] as Timestamp?)?.toDate() ?? DateTime.now(),
             location: data['Location'] ?? '',
             description: data['Description'] ?? '',
             images: List<String>.from(data['Images'] ?? []),
-            title:data['Title'] ?? '',
-            id: doc.id, 
+            title: data['Title'] ?? '',
+            id: doc.id,
+            rcNumber: data['RcNumber'] ?? '',
+            vinNumber: data['VinNumber'] ?? '',
           );
         } else {
           throw Exception("Data is null or does not exist.");
@@ -55,22 +59,24 @@ class VehicleController extends GetxController{
     if (_vehicles.isEmpty) {
       _vehicles = await _fetchVehicles();
     }
-     _vehicles.sort((a, b) {
-    if (a.isPremium && !b.isPremium) {
-      return -1; // a should come before b
-    } else if (!a.isPremium && b.isPremium) {
-      return 1; // b should come before a
-    } else {
-      return 0; // order doesn't matter
-    }
-  });
+    _vehicles.sort((a, b) {
+      if (a.isPremium && !b.isPremium) {
+        return -1; // a should come before b
+      } else if (!a.isPremium && b.isPremium) {
+        return 1; // b should come before a
+      } else {
+        return 0; // order doesn't matter
+      }
+    });
     return _vehicles;
   }
 
   // Method to search vehicles by brand
   List<Vehicle> searchVehiclesByBrand(String query) {
     var lowercaseQuery = query.toLowerCase();
-    return _vehicles.where((vehicle) => vehicle.brand.toLowerCase() == lowercaseQuery).toList();
+    return _vehicles
+        .where((vehicle) => vehicle.brand.toLowerCase() == lowercaseQuery)
+        .toList();
   }
 
   // Method to filter vehicles by category
@@ -79,7 +85,9 @@ class VehicleController extends GetxController{
   }
 
   List<Vehicle> getVehiclesByBrand(String brand) {
-    return _vehicles.where((vehicle) => vehicle.brand.toLowerCase() == brand.toLowerCase()).toList();
+    return _vehicles
+        .where((vehicle) => vehicle.brand.toLowerCase() == brand.toLowerCase())
+        .toList();
   }
 
   List<Vehicle> getVehiclesByOwnerId(String ownerId) {
@@ -101,11 +109,28 @@ class VehicleController extends GetxController{
     return _vehicles.where((vehicle) {
       var matchesBrand = vehicle.brand.toLowerCase().contains(lowercaseQuery);
       var matchesModel = vehicle.model.toLowerCase().contains(lowercaseQuery);
-      var matchesCategory = vehicle.category.toLowerCase().contains(lowercaseQuery);
+      var matchesCategory =
+          vehicle.category.toLowerCase().contains(lowercaseQuery);
 
       // Return true if any of the criteria matches
       return matchesBrand || matchesModel || matchesCategory;
     }).toList();
   }
-  
+
+ Future<void> uploadAdToFirestore(Ad ad) async {
+  try {
+    // Reference to the Firestore collection 'vehicles'
+    CollectionReference vehicles =
+        FirebaseFirestore.instance.collection('Vehicles');
+
+    // Convert the Ad object to a Map using the toJson method
+    Map<String, dynamic> adData = ad.toJson();
+
+    // Add the Ad data to Firestore
+    await vehicles.add(adData);
+  } catch (error) {
+    // print('Error uploading Ad to Firestore: $error');
+  }
+}
+
 }

@@ -7,7 +7,7 @@ class Vehicle {
   String fuelType;
   int ownershipCount;
   int year;
-  int mileage;
+  int mileage; //km driven
   double price;
   bool isPremium;
   String ownerId;
@@ -16,26 +16,29 @@ class Vehicle {
   String description;
   String title;
   List<String> images;
+  String rcNumber;
+  String vinNumber;
 
-  Vehicle({
-    required this.id,
-    required this.brand,
-    required this.model,
-    required this.category,
-    required this.transmission,
-    required this.fuelType,
-    required this.ownershipCount,
-    required this.year,
-    required this.mileage,
-    required this.price,
-    required this.isPremium,
-    required this.ownerId,
-    required this.datePosted,
-    required this.location,
-    required this.description,
-    required this.title,
-    required this.images,
-  });
+  Vehicle(
+      {required this.id,
+      required this.brand,
+      required this.model,
+      required this.category,
+      required this.transmission,
+      required this.fuelType,
+      required this.ownershipCount,
+      required this.year,
+      required this.mileage,
+      required this.price,
+      required this.isPremium,
+      required this.ownerId,
+      required this.datePosted,
+      required this.location,
+      required this.description,
+      required this.title,
+      required this.images,
+      required this.rcNumber,
+      required this.vinNumber});
 
   static Vehicle empty() => Vehicle(
         id: '',
@@ -55,6 +58,8 @@ class Vehicle {
         description: '',
         images: [],
         title: '',
+        rcNumber: '',
+        vinNumber: '',
       );
 
   Map<String, dynamic> toJson() {
@@ -76,6 +81,8 @@ class Vehicle {
       'Description': description,
       'Images': images,
       'Title': title,
+      'RcNumber': rcNumber,
+      'VinNumber': vinNumber,
     };
   }
 
@@ -98,7 +105,9 @@ class Vehicle {
       location: json['location'],
       description: json['description'],
       images: List<String>.from(json['images']),
-       title: json['description'],
+      title: json['description'],
+      rcNumber: json['rcNumber'],
+      vinNumber: json['vinNumber'],
     );
   }
 }

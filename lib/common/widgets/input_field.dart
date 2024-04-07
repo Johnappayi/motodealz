@@ -13,12 +13,14 @@ class InputField extends StatelessWidget {
     required this.label,
     this.validator,
     this.isEnabled,
+    this.controller,
   });
 
   final String hintText;
   final String label;
   final String? Function(String?)? validator;
   final bool? isEnabled;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +37,7 @@ class InputField extends StatelessWidget {
         TextFormField(
           enabled: isEnabled ?? true,
           validator: validator,
+          controller: controller,
           decoration: InputDecoration(
             hintText: hintText,
             contentPadding: const EdgeInsets.symmetric(
@@ -142,7 +145,6 @@ class InputFieldWithIcon extends StatelessWidget {
           height: MSizes.sm,
         ),
         TextFormField(
-          
           validator: validator,
           controller: controller,
           obscureText: finalObscureText,

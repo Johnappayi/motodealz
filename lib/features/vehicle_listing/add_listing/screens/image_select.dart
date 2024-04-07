@@ -84,6 +84,7 @@ class VehicleImageSelectScreenState extends State<VehicleImageSelectScreen> {
         VehicleController.instance.uploadAdToFirestore(widget.ad);
 
         // Navigate to next screen
+        
         MHelperFunctions.navigateToScreen(
           // ignore: use_build_context_synchronously
           context,
@@ -98,14 +99,15 @@ class VehicleImageSelectScreenState extends State<VehicleImageSelectScreen> {
     try {
       for (File image in images) {
         // Generate a unique file name for each image
-        String fileName = '${DateTime.now().millisecondsSinceEpoch}_${image.path.split('/').last}';
+        String fileName =
+            '${DateTime.now().millisecondsSinceEpoch}_${image.path.split('/').last}';
         // Reference to the Firebase Storage bucket
         Reference reference =
             FirebaseStorage.instance.ref().child('Vehicleimages/$fileName');
         // Upload the image to Firebase Storage
         await reference.putFile(image);
         // Get the file name (without 'gs://' prefix)
-        String pathName = reference.name;
+        String pathName = 'Vehicleimages/$fileName';
         // Add the file name to the list of uploaded image paths
         uploadedImagePaths.add(pathName);
       }
@@ -181,12 +183,9 @@ class VehicleImageSelectScreenState extends State<VehicleImageSelectScreen> {
                   ),
                 const SizedBox(height: MSizes.spaceBtwSections),
                 LargeButtonNS(
-                  onPressed: isUploading ? null : _uploadImages,
+                  onPressed: selectedImages.isNotEmpty && !isUploading ? _uploadImages : null,
                   child: isUploading
-                      ? const Row(children: [
-                          CircularProgressIndicator(),
-                          Text("Uploading"),
-                        ])
+                      ? const Text("Uploading")
                       : const Text("Upload"),
                 ),
               ],

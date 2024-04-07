@@ -44,7 +44,7 @@ class VerifyEmailController extends GetxController {
             image : MImages.emailSent,
             title : "Your Account has been created!",
             subTitle: "Congratulations! Your account has been successfully created.",
-            onPressed: () => AuthenticationRepository.instance.checkAuthentication()),
+            onPressed: () => AuthenticationRepository.instance.initialCheckAuthentication()),
         );
       }
     });
@@ -58,7 +58,7 @@ class VerifyEmailController extends GetxController {
         image : MImages.emailSent,
             title : "Your Account has been created!",
             subTitle: "Congratulations! Your account has been successfully created.",
-            onPressed: () => AuthenticationRepository.instance.checkAuthentication()),
+            onPressed: () => AuthenticationRepository.instance.initialCheckAuthentication()),
       );
     }
   }

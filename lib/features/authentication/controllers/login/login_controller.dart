@@ -60,7 +60,7 @@ class LoginController extends GetxController {
       MFullScreenLoader.stopLoading();
 
       //Redirect
-      AuthenticationRepository.instance.checkAuthentication();
+      AuthenticationRepository.instance.initialCheckAuthentication();
     } catch (e) {
       MLoaders.errorSnackBar(title: 'Oh Snap', message: e.toString());
     }
@@ -90,7 +90,7 @@ class LoginController extends GetxController {
       MFullScreenLoader.stopLoading();
 
       //Redirect
-      AuthenticationRepository.instance.checkAuthentication();
+      AuthenticationRepository.instance.initialCheckAuthentication();
       
     } catch (e) {
       // Remove Loader

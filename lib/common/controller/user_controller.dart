@@ -23,13 +23,10 @@ class UserController extends GetxController {
   /// Fetch User Record
   Future<void> fetchUserRecord() async {
     try {
-      // Add print statement before fetching user details
       profileLoading.value = true;
       final fetchedUser = await userRepository.fetchUserDetails();
-      // Print fetched user details
       user.value = fetchedUser; // Update user details
     } catch (e) {
-      // Print error if fetching fails
       user.value =
           UserModel.empty(); // Set user to empty UserModel in case of error
     } finally {

@@ -1,9 +1,13 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:motodealz/common/model/user_details.dart';
 import 'package:motodealz/common/widgets/button_container.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/common/widgets/navigation_menu.dart';
+import 'package:motodealz/common/widgets/signin_prompt.dart';
+import 'package:motodealz/data/repositories/authentication/authentication_repository.dart';
+import 'package:motodealz/data/repositories/user/user_repository.dart';
 import 'package:motodealz/features/vehicle_listing/add_listing/screens/uploaded_rc.dart';
 import 'package:motodealz/splash_screen.dart';
 import 'package:motodealz/utils/constants/colors.dart';
@@ -70,18 +74,38 @@ class _VehicleVerificationIdCaptureScreenState
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _initFuture,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: SplashScreen2(),
-          );
-        } else {
-          return _buildScreen();
-        }
-      },
-    );
+    final authController = Get.put(AuthenticationRepository());
+    final userRepository = Get.put(UserRepository());
+    final isUserAuthenticated = authController.isUserAuthenticated();
+
+    if (isUserAuthenticated) {
+      return FutureBuilder<UserModel>(
+        future: userRepository.fetchUserDetails(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const SizedBox(); // Show loading indicator while fetching data
+          } else if (snapshot.hasError) {
+            return Text(
+                'Error: ${snapshot.error}'); // Show error message if fetching data fails
+          } else {
+            return FutureBuilder(
+              future: _initFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: SplashScreen2(),
+                  );
+                } else {
+                  return _buildScreen();
+                }
+              },
+            );
+          }
+        },
+      );
+    } else {
+      return const Scaffold(body: SignUpPromptScreen());
+    }
   }
 
   Widget _buildScreen() {
@@ -142,7 +166,6 @@ class _VehicleVerificationIdCaptureScreenState
                                   alignment: Alignment.center,
                                   child: SizedBox(
                                     width: MHelperFunctions.screenWidth(),
-                                    
                                     child: CameraPreview(_controller),
                                   ),
                                 ),

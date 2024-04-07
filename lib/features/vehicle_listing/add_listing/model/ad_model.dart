@@ -36,21 +36,21 @@ class Ad {
   // Method to convert Ad object to a Map
   Map<String, dynamic> toJson() {
     return {
-      'brand': brand,
-      'model': model,
-      'year': year,
-      'mileage': mileage,
-      'ownershipCount': ownershipCount,
-      'title': title,
-      'description': description,
-      'rcNumber': rcNumber,
-      'vinNumber': vinNumber,
-      'price': price,
-      'isPremium': isPremium,
-      'ownerId': ownerId,
-      'datePosted': datePosted.toIso8601String(),
-      'location': location,
-      'images': images,
+      'Brand': brand,
+      'Model': model,
+      'Year': year,
+      'Mileage': mileage,
+      'OwnershipCount': ownershipCount,
+      'Title': title,
+      'Description': description,
+      'RcNumber': rcNumber,
+      'VinNumber': vinNumber,
+      'Price': price,
+      'IsPremium': isPremium,
+      'OwnerId': ownerId,
+      'DatePosted': datePosted.toIso8601String(),
+      'Location': location,
+      'Images': images,
     };
   }
 }

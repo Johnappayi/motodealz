@@ -5,8 +5,6 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:motodealz/common/widgets/navigation_menu.dart';
-import 'package:motodealz/features/authentication/screens/login/login.dart';
-import 'package:motodealz/features/authentication/screens/signup/create_acc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:motodealz/features/authentication/screens/signup/email_verification_screen.dart';
 import 'package:motodealz/utils/exceptions/firebase_auth_exceptions.dart';
@@ -29,12 +27,11 @@ class AuthenticationRepository extends GetxController {
   @override
   void onReady() {
     FlutterNativeSplash.remove();
-    // Check if the user is signed in
-    checkAuthentication();
+    initialCheckAuthentication();
   }
 
-  // Function to check user authentication status
-  void checkAuthentication() async {
+  // Function to check initial authentication status
+  void initialCheckAuthentication() async {
     final user = _auth.currentUser;
     if (user != null) {
       if (user.emailVerified) {
@@ -44,11 +41,12 @@ class AuthenticationRepository extends GetxController {
             () => EmailVerificationScreen(email: _auth.currentUser?.email));
       }
     } else {
-      // Local Storage
-      deviceStorage.writeIfNull('IsFirstTime', true);
-      deviceStorage.read('IsFirstTime') != true
-          ? Get.offAll(() => const LoginScreen())
-          : Get.offAll(const CreateAccountScreen());
+      Get.offAll(() => const NavigationMenu());
+      // // Local Storage
+      // deviceStorage.writeIfNull('IsFirstTime', true);
+      // deviceStorage.read('IsFirstTime') != true
+      //     ? Get.offAll(() => const LoginScreen())
+      //     : Get.offAll(const CreateAccountScreen());
     }
 
     //
@@ -88,6 +86,12 @@ class AuthenticationRepository extends GetxController {
   //     Get.offAll(() => const ForgotPasswordLastScreen());
   //   });
   // }
+  bool isUserAuthenticated() {
+    // Get the current user from FirebaseAuth instance
+    final user = _auth.currentUser;
+    // If the user is not null, then the user is authenticated
+    return user != null;
+  }
 
   /// [EmailAuthentication] - LOGIN
   Future<UserCredential> loginWithEmailAndPassword(
@@ -200,7 +204,7 @@ class AuthenticationRepository extends GetxController {
     try {
       await GoogleSignIn().signOut();
       await FirebaseAuth.instance.signOut();
-      Get.offAll(() => const LoginScreen());
+      Get.offAll(() => const NavigationMenu());
     } on FirebaseAuthException catch (e) {
       throw MFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {

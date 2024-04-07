@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motodealz/common/model/vehicle_model.dart';
@@ -23,6 +24,7 @@ class VehicleListingInfoScreen extends StatefulWidget {
 
 class VehicleListingInfoScreenState extends State<VehicleListingInfoScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final auth = FirebaseAuth.instance;
 
   // Define controllers for each input field
   final TextEditingController _brandController = TextEditingController();
@@ -100,72 +102,45 @@ class VehicleListingInfoScreenState extends State<VehicleListingInfoScreen> {
                         hintText: "Enter brand name",
                         controller: _brandController,
                       ),
-                      const SizedBox(
-                        height: MSizes.xs,
-                      ),
                       InputField(
                         label: "Model",
                         hintText: "Enter the model",
                         controller: _modelController,
-                      ),
-                      const SizedBox(
-                        height: MSizes.xs,
                       ),
                       InputField(
                         label: "Year",
                         hintText: "Enter the make year",
                         controller: _yearController,
                       ),
-                      const SizedBox(
-                        height: MSizes.xs,
-                      ),
                       InputField(
                         label: "KM driven",
                         hintText: "Enter total KMs driven",
                         controller: _kmDrivenController,
-                      ),
-                      const SizedBox(
-                        height: MSizes.xs,
                       ),
                       InputField(
                         label: "No. of Owners",
                         hintText: "Enter no. of owners",
                         controller: _ownersController,
                       ),
-                      const SizedBox(
-                        height: MSizes.xs,
-                      ),
                       InputField(
                         label: "Ad title",
                         hintText: "Enter an ad title",
                         controller: _adTitleController,
-                      ),
-                      const SizedBox(
-                        height: MSizes.xs,
                       ),
                       InputField(
                         label: "Description",
                         hintText: "Describe the details of your vehicle",
                         controller: _descriptionController,
                       ),
-                      const SizedBox(
-                        height: MSizes.xs,
-                      ),
                       InputField(
                         label: "Registeration no.",
                         hintText: "Enter the licence plate number ",
                         controller: _registrationNoController,
                       ),
-                      const SizedBox(
-                        height: MSizes.xs,
-                      ),
                       InputField(
                         label: "VIN Number",
                         hintText: "Enter the vehicle identification number",
                         controller: _vinController,
-                      ),
-                      const SizedBox(
-                        height: MSizes.xs,
                       ),
                       InputField(
                         label: "Price",
@@ -215,8 +190,7 @@ class VehicleListingInfoScreenState extends State<VehicleListingInfoScreen> {
                               price: double.parse(_priceController.text),
                               isPremium:
                                   false, // Change this based on user's premium status
-                              ownerId:
-                                  'userId', // Get this from your authentication state
+                              ownerId: auth.currentUser!.uid, // Get this from your authentication state
                               datePosted: DateTime.now(),
                               location: 'kerala', // Determine this later
                               images: [], // Initialize with an empty list

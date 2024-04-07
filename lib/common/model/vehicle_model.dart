@@ -1,5 +1,4 @@
 class Vehicle {
-  String id;
   String brand;
   String model;
   String category;
@@ -20,7 +19,7 @@ class Vehicle {
   String vinNumber;
 
   Vehicle(
-      {required this.id,
+      {
       required this.brand,
       required this.model,
       required this.category,
@@ -41,7 +40,6 @@ class Vehicle {
       required this.vinNumber});
 
   static Vehicle empty() => Vehicle(
-        id: '',
         brand: '',
         model: '',
         category: '',
@@ -64,7 +62,6 @@ class Vehicle {
 
   Map<String, dynamic> toJson() {
     return {
-      'Id': id,
       'Brand': brand,
       'Model': model,
       'Category': category,
@@ -89,7 +86,6 @@ class Vehicle {
   // Factory method to create a Vehicle from a JSON map.
   factory Vehicle.fromJson(Map<String, dynamic> json) {
     return Vehicle(
-      id: json['id'],
       brand: json['brand'],
       model: json['model'],
       category: json['category'],

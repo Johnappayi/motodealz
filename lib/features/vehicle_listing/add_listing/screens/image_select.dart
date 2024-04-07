@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:motodealz/common/controller/vehicle_controller.dart';
+import 'package:motodealz/common/model/vehicle_model.dart';
 import 'package:motodealz/common/widgets/button_container.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
+import 'package:motodealz/common/widgets/custom_indicator.dart';
 import 'package:motodealz/common/widgets/navigation_menu.dart';
 import 'package:motodealz/common/widgets/select_file.dart';
 import 'package:motodealz/common/widgets/selected_image_gallery.dart';
-import 'package:motodealz/features/vehicle_listing/add_listing/model/ad_model.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
@@ -17,8 +18,9 @@ import 'package:motodealz/utils/helpers/helper_functions.dart';
 import 'final_screen.dart';
 
 class VehicleImageSelectScreen extends StatefulWidget {
-  const VehicleImageSelectScreen({super.key, required this.ad});
-  final Ad ad;
+  const VehicleImageSelectScreen({super.key, required this.vehicle});
+
+  final Vehicle vehicle;
 
   @override
   VehicleImageSelectScreenState createState() =>
@@ -76,15 +78,15 @@ class VehicleImageSelectScreenState extends State<VehicleImageSelectScreen> {
       if (_isMounted) {
         // Update Ad object with uploaded image paths
         setState(() {
-          widget.ad.images.addAll(uploadedImagePaths);
+          widget.vehicle.images.addAll(uploadedImagePaths);
           isUploading = false;
         });
 
         // Add the Ad to the vehicles collection using VehicleController
-        VehicleController.instance.uploadAdToFirestore(widget.ad);
+        VehicleController.instance.uploadVehicleToFirestore(widget.vehicle);
 
         // Navigate to next screen
-        
+
         MHelperFunctions.navigateToScreen(
           // ignore: use_build_context_synchronously
           context,
@@ -129,69 +131,74 @@ class VehicleImageSelectScreenState extends State<VehicleImageSelectScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: MSizes.defaultSpace, vertical: MSizes.nm),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    ButtonContainer(
-                      onPressed: () {
-                        Get.offAll(const NavigationMenu());
-                      },
-                      child: MImages.closeIcon,
-                    ),
-                  ],
-                ),
-                const Text(
-                  "VEHICLE IMAGE",
-                  style: MFonts.fontAH1,
-                ),
-                const SizedBox(height: MSizes.defaultSpace),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "Upload photos",
-                      style: MFonts.fontCH4,
-                    ),
-                    const SizedBox(height: MSizes.sm),
-                    SelectFile(
-                      onPressed: _pickMultipleImages,
-                    ),
-                  ],
-                ),
-                if (selectedImages.isNotEmpty)
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+        child: isUploading
+            ? const CustomIndicator()
+            : SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: MSizes.defaultSpace, vertical: MSizes.nm),
+                  child: Column(
                     children: [
-                      const SizedBox(height: MSizes.spaceBtwSections),
-                      const Text(
-                        "Selected photos",
-                        style: MFonts.fontCH4,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          ButtonContainer(
+                            onPressed: () {
+                              Get.offAll(const NavigationMenu());
+                            },
+                            child: MImages.closeIcon,
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: MSizes.sm),
-                      SelectedImageGallery(
-                        images:
-                            selectedImages.map((file) => file.path).toList(),
-                        onImageRemoved: _removeImage,
+                      const Text(
+                        "VEHICLE IMAGE",
+                        style: MFonts.fontAH1,
+                      ),
+                      const SizedBox(height: MSizes.defaultSpace),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "Upload photos",
+                            style: MFonts.fontCH4,
+                          ),
+                          const SizedBox(height: MSizes.sm),
+                          SelectFile(
+                            onPressed: _pickMultipleImages,
+                          ),
+                        ],
+                      ),
+                      if (selectedImages.isNotEmpty)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: MSizes.spaceBtwSections),
+                            const Text(
+                              "Selected photos",
+                              style: MFonts.fontCH4,
+                            ),
+                            const SizedBox(height: MSizes.sm),
+                            SelectedImageGallery(
+                              images: selectedImages
+                                  .map((file) => file.path)
+                                  .toList(),
+                              onImageRemoved: _removeImage,
+                            ),
+                          ],
+                        ),
+                      const SizedBox(height: MSizes.spaceBtwSections),
+                      LargeButtonNS(
+                        onPressed: selectedImages.isNotEmpty && !isUploading
+                            ? _uploadImages
+                            : null,
+                        child: isUploading
+                            ? const Text("Uploading")
+                            : const Text("Upload"),
                       ),
                     ],
                   ),
-                const SizedBox(height: MSizes.spaceBtwSections),
-                LargeButtonNS(
-                  onPressed: selectedImages.isNotEmpty && !isUploading ? _uploadImages : null,
-                  child: isUploading
-                      ? const Text("Uploading")
-                      : const Text("Upload"),
                 ),
-              ],
-            ),
-          ),
-        ),
+              ),
       ),
     );
   }

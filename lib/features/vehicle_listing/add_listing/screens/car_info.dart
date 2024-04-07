@@ -6,7 +6,6 @@ import 'package:motodealz/common/widgets/button_container.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/common/widgets/input_field.dart';
 import 'package:motodealz/common/widgets/navigation_menu.dart';
-import 'package:motodealz/features/vehicle_listing/add_listing/model/ad_model.dart';
 import 'package:motodealz/features/vehicle_listing/add_listing/screens/image_select.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
@@ -154,30 +153,8 @@ class VehicleListingInfoScreenState extends State<VehicleListingInfoScreen> {
                         child: const Text("Continue"),
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            // // Create a Vehicle object with current values
-                            // Vehicle vehicle = Vehicle(
-                            //   brand: _brandController.text,
-                            //   model: _modelController.text,
-                            //   year: _yearController.text as int,
-                            //   mileage : _kmDrivenController.text as int,
-                            //   ownershipCount : _ownersController.text as int,
-                            //   title: _adTitleController.text,
-                            //   description: _descriptionController.text,
-                            //   rcNumber : _registrationNoController.text,
-                            //   vinNumber: _vinController.text,
-                            //   id: '',
-                            //   category: '',
-                            //   transmission: '',
-                            //   fuelType: '',
-                            //   price: _priceController.text as double,
-                            //   isPremium: false,
-                            //   ownerId: '',
-                            //   datePosted: DateTime.now(),
-                            //   location: '',
-                            //   images: [],
-                            // );
-
-                            Ad ad = Ad(
+                            // Create a Vehicle object with current values
+                            Vehicle vehicle = Vehicle(
                               brand: _brandController.text,
                               model: _modelController.text,
                               year: int.parse(_yearController.text),
@@ -188,17 +165,19 @@ class VehicleListingInfoScreenState extends State<VehicleListingInfoScreen> {
                               rcNumber: _registrationNoController.text,
                               vinNumber: _vinController.text,
                               price: double.parse(_priceController.text),
-                              isPremium:
-                                  false, // Change this based on user's premium status
-                              ownerId: auth.currentUser!.uid, // Get this from your authentication state
+                              category: 'SUV',
+                              transmission: 'Manual',
+                              fuelType: 'Petrol',
+                              isPremium: false,
+                              ownerId: auth.currentUser!.uid,
                               datePosted: DateTime.now(),
-                              location: 'kerala', // Determine this later
-                              images: [], // Initialize with an empty list
+                              location: 'Kerala',
+                              images: [],
                             );
                             MHelperFunctions.navigateToScreen(
                               context,
                               VehicleImageSelectScreen(
-                                ad: ad,
+                                vehicle: vehicle,
                               ),
                             );
                           }

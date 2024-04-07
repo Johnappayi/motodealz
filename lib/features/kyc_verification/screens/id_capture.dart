@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:motodealz/common/styles/svg_styles.dart';
 import 'package:motodealz/common/widgets/back_button.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
+import 'package:motodealz/common/widgets/custom_indicator.dart';
 import 'package:motodealz/features/kyc_verification/screens/uploaded_id.dart';
 import 'package:motodealz/splash_screen.dart';
 import 'package:motodealz/utils/constants/colors.dart';
@@ -159,7 +160,7 @@ class UserVerificationIdCaptureScreenState
                               ),
                             ),
                           )
-                        : const Center(child: CircularProgressIndicator()),
+                        : const CustomIndicator(),
                     // Cutout Rectangle
                     CustomPaint(
                       painter: RectanglePainter(),

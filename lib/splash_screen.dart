@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:motodealz/common/widgets/custom_indicator.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
 
@@ -46,7 +47,7 @@ class SplashScreen2 extends StatelessWidget {
             ),
           ),
         ),
-        const Center(child: CircularProgressIndicator())
+        const CustomIndicator()
       ],
     );
   }

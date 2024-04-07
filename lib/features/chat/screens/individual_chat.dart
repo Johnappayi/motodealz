@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:motodealz/common/widgets/custom_indicator.dart';
 import 'package:motodealz/features/chat/controller/chat_room_controller.dart';
 import 'package:motodealz/features/chat/model/message_model.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
@@ -39,9 +40,7 @@ class ChatScreenState extends State<ChatScreen> {
                 stream: _messagesStream,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
+                    return const CustomIndicator();
                   } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                     return ListView.builder(
                       shrinkWrap: true,

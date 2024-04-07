@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:motodealz/common/styles/svg_styles.dart';
 import 'package:motodealz/common/widgets/app_bar.dart';
 import 'package:motodealz/common/widgets/car_category_item.dart';
+import 'package:motodealz/common/widgets/custom_indicator.dart';
 import 'package:motodealz/common/widgets/listed_ad_frame1.dart';
 import 'package:motodealz/common/widgets/side_bar.dart';
 import 'package:motodealz/common/controller/vehicle_controller.dart';
@@ -242,8 +243,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 itemCount: _vehicles.length,
                                 itemBuilder: (context, index) {
                                   if (_vehicles.isEmpty) {
-                                    return const CircularProgressIndicator(); // or any other loading indicator
+                                    return const CustomIndicator(); // or any other loading indicator
                                   } else {
+
                                     return ListedAdFrame1(
                                       onPressed: () =>
                                           MHelperFunctions.navigateToScreen(

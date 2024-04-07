@@ -100,7 +100,7 @@ class VehicleDetailsUI extends StatelessWidget {
             children: [
               Text('Posted on ${MFormatter.formatDate(vehicle.datePosted)}',
                   style: MFonts.fontCB3.copyWith(color: MColors.lightGrey)),
-              Text("Ad ID: ${vehicle.id.substring(0,6)}",
+              Text("Ad ID: ${vehicle.ownerId.substring(0,6)}",
                   style: MFonts.fontCB3.copyWith(color: MColors.lightGrey)),
             ],
           ),

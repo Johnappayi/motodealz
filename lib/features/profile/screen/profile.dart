@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:motodealz/common/model/user_details.dart';
 import 'package:motodealz/common/styles/svg_styles.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
+import 'package:motodealz/common/widgets/custom_indicator.dart';
 import 'package:motodealz/common/widgets/listed_ad_frame3.dart'; // Corrected import statement
 import 'package:motodealz/common/widgets/signin_prompt.dart';
 import 'package:motodealz/data/repositories/authentication/authentication_repository.dart';
@@ -30,7 +31,7 @@ class ProfileScreen extends StatelessWidget {
         future: userRepository.fetchUserDetails(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const SizedBox(); // Show loading indicator while fetching data
+            return const CustomIndicator(); // Show loading indicator while fetching data
           } else if (snapshot.hasError) {
             return Text(
                 'Error: ${snapshot.error}'); // Show error message if fetching data fails

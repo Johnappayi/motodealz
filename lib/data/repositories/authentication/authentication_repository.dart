@@ -27,6 +27,10 @@ class AuthenticationRepository extends GetxController {
   @override
   void onReady() {
     FlutterNativeSplash.remove();
+
+    // test individual screens here
+    // Get.offAll(() => const CustomIndicator()); 
+    // comment this
     initialCheckAuthentication();
   }
 

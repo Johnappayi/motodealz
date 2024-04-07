@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:motodealz/common/model/user_details.dart';
 import 'package:motodealz/common/widgets/button_container.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
+import 'package:motodealz/common/widgets/custom_indicator.dart';
 import 'package:motodealz/common/widgets/navigation_menu.dart';
 import 'package:motodealz/common/widgets/signin_prompt.dart';
 import 'package:motodealz/data/repositories/authentication/authentication_repository.dart';
@@ -172,7 +173,7 @@ class _VehicleVerificationIdCaptureScreenState
                               ),
                             ),
                           )
-                        : const Center(child: CircularProgressIndicator()),
+                        : const CustomIndicator(),
                     // Cutout Rectangle
                     CustomPaint(
                       painter: RectanglePainter(),

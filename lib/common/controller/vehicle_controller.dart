@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:motodealz/common/model/vehicle_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:motodealz/features/vehicle_listing/add_listing/model/ad_model.dart';
 
 class VehicleController extends GetxController {
   static VehicleController get instance => Get.find();
@@ -39,7 +38,6 @@ class VehicleController extends GetxController {
             description: data['Description'] ?? '',
             images: List<String>.from(data['Images'] ?? []),
             title: data['Title'] ?? '',
-            id: doc.id,
             rcNumber: data['RcNumber'] ?? '',
             vinNumber: data['VinNumber'] ?? '',
           );
@@ -94,11 +92,11 @@ class VehicleController extends GetxController {
     return _vehicles.where((vehicle) => vehicle.ownerId == ownerId).toList();
   }
 
-  // Method to get a single vehicle by its ID
-  Vehicle getVehicleById(String id) {
-    // Search for the vehicle with the given ID in the list of vehicles
-    return _vehicles.firstWhere((vehicle) => vehicle.id == id);
-  }
+  // // Method to get a single vehicle by its ID
+  // Vehicle getVehicleById(String id) {
+  //   // Search for the vehicle with the given ID in the list of vehicles
+  //   return _vehicles.firstWhere((vehicle) => vehicle.id == id);
+  // }
 
   // Method to search vehicles by criteria
   List<Vehicle> searchVehicles(String query) {
@@ -117,14 +115,14 @@ class VehicleController extends GetxController {
     }).toList();
   }
 
- Future<void> uploadAdToFirestore(Ad ad) async {
+ Future<void> uploadVehicleToFirestore(Vehicle vehicle) async {
   try {
     // Reference to the Firestore collection 'vehicles'
     CollectionReference vehicles =
         FirebaseFirestore.instance.collection('Vehicles');
 
     // Convert the Ad object to a Map using the toJson method
-    Map<String, dynamic> adData = ad.toJson();
+    Map<String, dynamic> adData = vehicle.toJson();
 
     // Add the Ad data to Firestore
     await vehicles.add(adData);

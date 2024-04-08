@@ -4,7 +4,7 @@ import 'package:motodealz/utils/constants/sizes.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
 
 class SmallButton extends StatelessWidget {
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final Widget child;
   //   required this.onPressed-add later
   const SmallButton({super.key, required this.child, required this.onPressed});
@@ -12,8 +12,10 @@ class SmallButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
+      
       onPressed: onPressed ,
       style: ElevatedButton.styleFrom(
+        
         minimumSize: Size(MHelperFunctions.screenWidth() * 0.39, 60.0),
       ),
       child: child,

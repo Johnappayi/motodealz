@@ -5,10 +5,13 @@ import 'package:motodealz/features/chat/model/message_model.dart';
 
 class ChatRoomController extends GetxController {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
-  Stream<List<ChatRoom>> getAllChatRooms() {
+  Stream<List<ChatRoom>> getAllChatRooms(String userId) {
     return _firestore.collection("ChatRoom").snapshots().map((snapshot) =>
-        snapshot.docs.map((doc) => ChatRoom.fromFirestore(doc)).toList());
+        snapshot.docs
+            .map((doc) => ChatRoom.fromFirestore(doc))
+            .where((chatRoom) =>
+                chatRoom.buyerId == userId || chatRoom.sellerId == userId)
+            .toList());
   }
 
   Stream<List<ChatRoom>> getBuyingChatRooms(String userId) {
@@ -90,6 +93,25 @@ class ChatRoomController extends GetxController {
         .snapshots()
         .map((snapshot) =>
             snapshot.docs.map((doc) => Message.fromFirestore(doc)).toList());
+  }
+
+  Future<ChatRoom?> getChatRoomDetails(String roomId) async {
+    try {
+      DocumentSnapshot roomSnapshot =
+          await _firestore.collection("ChatRoom").doc(roomId).get();
+
+      if (roomSnapshot.exists) {
+        // Chat room exists, parse its details
+        return ChatRoom.fromFirestore(roomSnapshot);
+      } else {
+        // Chat room doesn't exist
+        return ChatRoom.empty();
+      }
+    } catch (e) {
+      // Handle error
+      // print('Error getting chat room details: $e');
+      return null;
+    }
   }
 
   String appendAndSortStrings(String str1, String str2) {

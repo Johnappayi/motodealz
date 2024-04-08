@@ -113,9 +113,7 @@ class VehicleVeiwScreenState extends State<VehicleVeiwScreen> {
                       MFormatter.formatCurrency(widget.vehicle.price),
                       style: MFonts.fontCH1,
                     ),
-                    SmallButton(
-                        onPressed: () => _onChatPressed(context),
-                        child: const Text("Chat"))
+                    _buildChatButton(context),
                   ],
                 ),
               ),
@@ -144,9 +142,16 @@ class VehicleVeiwScreenState extends State<VehicleVeiwScreen> {
   }
 
   // Inside _onChatPressed function
+  // Inside _onChatPressed function
   void _onChatPressed(BuildContext context) async {
     String buyerId = user!.uid; // Get the buyer's ID (implement this logic)
     String sellerId = widget.vehicle.ownerId;
+
+    // Check if the buyerId and sellerId are the same
+    if (buyerId == sellerId) {
+      // If they are the same, do nothing (chat button will remain disabled)
+      return;
+    }
 
     try {
       // Fetch the room ID from createChatRoom
@@ -163,6 +168,26 @@ class VehicleVeiwScreenState extends State<VehicleVeiwScreen> {
     } catch (error) {
       // Handle error if fetching chat rooms fails
       // print('Error fetching chat rooms: $error');
+    }
+  }
+
+  Widget _buildChatButton(BuildContext context) {
+    String buyerId = user!.uid; // Get the buyer's ID (implement this logic)
+    String sellerId = widget.vehicle.ownerId;
+
+    // Check if the buyerId and sellerId are the same
+    if (buyerId == sellerId) {
+      // If they are the same, show a different button
+      return const SmallButton(
+        onPressed: null,
+        child: Text("Shushh"),
+      );
+    } else {
+      // If they are different, show the chat button as usual
+      return SmallButton(
+        onPressed: () => _onChatPressed(context),
+        child: const Text("Chat"),
+      );
     }
   }
 }

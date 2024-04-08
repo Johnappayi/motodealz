@@ -4,6 +4,7 @@ import 'package:motodealz/features/chat/model/chat_room.dart';
 import 'package:motodealz/features/chat/screens/individual_chat.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
+import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart'; 
 
 class InboxItem extends StatelessWidget {
@@ -30,9 +31,9 @@ class InboxItem extends StatelessWidget {
           style: MFonts.fontCB1
               .copyWith(color: darkMode ? MColors.darkGrey : MColors.lightGrey),
         ),
-        leading: CircleAvatar(
+        leading: const CircleAvatar(
           radius: 30,
-          backgroundImage: AssetImage(chatItem.profilePicture),
+          backgroundImage: AssetImage(MImages.sampleUser1),
         ),
         trailing: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,

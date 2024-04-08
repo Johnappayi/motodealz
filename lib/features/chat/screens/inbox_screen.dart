@@ -109,9 +109,10 @@ class InboxScreenState extends State<InboxScreen>
                   });
                 },
                 children: [
-                  _buildChatList(_chatRoomController.getAllChatRooms()),
                   _buildChatList(
-                      _chatRoomController.getBuyingChatRooms(user!.uid)),
+                      _chatRoomController.getAllChatRooms(user!.uid)),
+                  _buildChatList(
+                      _chatRoomController.getBuyingChatRooms(user.uid)),
                   _buildChatList(
                       _chatRoomController.getSellingChatRooms(user.uid)),
                 ],
@@ -130,7 +131,6 @@ class InboxScreenState extends State<InboxScreen>
       child: StreamBuilder<List<ChatRoom>>(
         stream: chatRoomsStream,
         builder: (context, snapshot) {
-          print(snapshot); 
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),

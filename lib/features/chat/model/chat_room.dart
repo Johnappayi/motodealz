@@ -30,7 +30,7 @@ factory ChatRoom.fromFirestore(DocumentSnapshot doc) {
         buyerId: data['BuyerId'] ?? '', // Update field name and handle null case
         sellerId: data['SellerId'] ?? '', // Update field name and handle null case
         lastMsg: data['LastMsg'] ?? '',
-        lastMsgTime: (data['LastMsgTime'] as Timestamp).toDate(),
+        lastMsgTime: (data['LastMsgTime'] as Timestamp?)?.toDate() ?? DateTime.now(),
         unreadCount: data['UnreadCount'] ?? 0,
         profilePicture: '', // You can add the profile picture logic here
       );

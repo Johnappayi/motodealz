@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:motodealz/utils/constants/sizes.dart';
 
 class ReplyCard extends StatelessWidget {
   const ReplyCard({ super.key, required this.message, required this.time});
@@ -15,9 +16,9 @@ class ReplyCard extends StatelessWidget {
         ),
         child: Card(
           elevation: 1,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular( MSizes.cardRadiusSm)),
           // color: Color(0xffdcf8c6),
-          margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+          margin: const EdgeInsets.symmetric(horizontal: MSizes.md, vertical: MSizes.xs),
           child: Stack(
             children: [
               Padding(

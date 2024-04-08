@@ -20,6 +20,8 @@ class ChatRoom {
     required this.profilePicture,
   });
 
+  final CollectionReference usersCollection = FirebaseFirestore.instance.collection('users');
+
 factory ChatRoom.fromFirestore(DocumentSnapshot doc) {
   if (doc.exists) {
     Map<String, dynamic>? data = doc.data() as Map<String, dynamic>?;

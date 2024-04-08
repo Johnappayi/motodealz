@@ -7,7 +7,7 @@ class MValidator {
     return null;
   }
 
-  ///Email Validation
+  /// Email Validation
   static String? validateEmail(String? value) {
     if (value == null || value.isEmpty) {
       return 'Email is required.';
@@ -82,6 +82,7 @@ class MValidator {
     return null;
   }
 
+  /// Date Validation
   static String? validateDate(String? value) {
     if (value == null || value.isEmpty) {
       return 'Please enter your date of birth';
@@ -116,6 +117,21 @@ class MValidator {
     return null; // Return null if validation passes
   }
 
+  /// Vehicle Registration Number Validation
+  static String? validateIndianRegistrationNumber(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Registration number is required.';
+    }
+
+    // Regular expression for Indian vehicle registration number validation
+    final regNumberRegExp = RegExp(r'^[A-Z]{2}[0-9]{2}[A-Z]{1,3}[0-9]{1,4}$');
+
+    if (!regNumberRegExp.hasMatch(value)) {
+      return 'Invalid Indian registration number.';
+    }
+
+    return null;
   }
+}
 
 // Add more custom validators as needed for your specific requirements.

@@ -28,9 +28,12 @@ class VehicleListingInfoScreenState extends State<VehicleListingInfoScreen> {
   // Define controllers for each input field
   final TextEditingController _brandController = TextEditingController();
   final TextEditingController _modelController = TextEditingController();
+  final TextEditingController _categoryController = TextEditingController();
   final TextEditingController _yearController = TextEditingController();
   final TextEditingController _kmDrivenController = TextEditingController();
   final TextEditingController _ownersController = TextEditingController();
+  final TextEditingController _transmissionController = TextEditingController();
+  final TextEditingController _fuelTypeController = TextEditingController();
   final TextEditingController _adTitleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _registrationNoController =
@@ -106,6 +109,54 @@ class VehicleListingInfoScreenState extends State<VehicleListingInfoScreen> {
                         hintText: "Enter the model",
                         controller: _modelController,
                       ),
+                      InputFieldWithDropdown(
+                        hintText: "Select transmission type",
+                        label: "Transmission",
+                        dropdownValue: _transmissionController.text.isNotEmpty
+                            ? _transmissionController.text
+                            : null,
+                        dropdownItems: const [
+                          DropdownMenuItem<String>(
+                            value: 'Manual',
+                            child: Text('Manual'),
+                          ),
+                          DropdownMenuItem<String>(
+                            value: 'Automatic',
+                            child: Text('Automatic'),
+                          ),
+                        ],
+                        dropdownOnChanged: (newValue) {
+                          setState(() {
+                            _transmissionController.text = newValue!;
+                          });
+                        },
+                      ),
+                      InputFieldWithDropdown(
+                        hintText: "Select fuel type",
+                        label: "Fuel Type",
+                        dropdownValue: _fuelTypeController.text.isNotEmpty
+                            ? _fuelTypeController.text
+                            : null,
+                        dropdownItems: const [
+                          DropdownMenuItem<String>(
+                            value: 'Petrol',
+                            child: Text('Petrol'),
+                          ),
+                          DropdownMenuItem<String>(
+                            value: 'Diesel',
+                            child: Text('Diesel'),
+                          ),
+                          DropdownMenuItem<String>(
+                            value: 'Electric',
+                            child: Text('Electric'),
+                          ),
+                        ],
+                        dropdownOnChanged: (newValue) {
+                          setState(() {
+                            _fuelTypeController.text = newValue!;
+                          });
+                        },
+                      ),
                       InputField(
                         label: "Year",
                         hintText: "Enter the make year",
@@ -120,6 +171,31 @@ class VehicleListingInfoScreenState extends State<VehicleListingInfoScreen> {
                         label: "No. of Owners",
                         hintText: "Enter no. of owners",
                         controller: _ownersController,
+                      ),
+                      InputFieldWithDropdown(
+                        hintText: "Select vehicle category",
+                        label: "Category",
+                        dropdownValue: _categoryController.text.isNotEmpty
+                            ? _categoryController.text
+                            : null,
+                        dropdownItems: [
+                          "Coupe",
+                          "Hatchback",
+                          "MUV",
+                          "Pickup",
+                          "Sedan",
+                          "SUV"
+                        ].map((category) {
+                          return DropdownMenuItem<String>(
+                            value: category,
+                            child: Text(category),
+                          );
+                        }).toList(),
+                        dropdownOnChanged: (value) {
+                          setState(() {
+                            _categoryController.text = value!;
+                          });
+                        },
                       ),
                       InputField(
                         label: "Ad title",

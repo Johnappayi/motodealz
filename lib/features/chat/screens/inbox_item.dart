@@ -4,10 +4,10 @@ import 'package:motodealz/features/chat/model/chat_room.dart';
 import 'package:motodealz/features/chat/screens/individual_chat.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
-import 'package:motodealz/utils/helpers/helper_functions.dart'; // Import the ChatItem model
+import 'package:motodealz/utils/helpers/helper_functions.dart'; 
 
 class InboxItem extends StatelessWidget {
-  final ChatRoom chatItem; // Receive ChatItem as a parameter
+  final ChatRoom chatItem; 
 
   const InboxItem({super.key, required this.chatItem});
 
@@ -15,14 +15,13 @@ class InboxItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool darkMode = MHelperFunctions.isDarkMode(context);
 
-    // Build UI using chatItem
     return GestureDetector(
       onTap: () {
-        MHelperFunctions.navigateToScreen(context,  ChatScreen(receiverUserId:  chatItem.sender!));
+        MHelperFunctions.navigateToScreen(context,  ChatScreen(roomId: chatItem.chatRoomId));
       },
       child: ListTile(
         title: Text(
-          chatItem.sender!,
+          chatItem.sellerId, // Or chatItem.buyerId depending on the context
           style: MFonts.fontCH2,
         ),
         subtitle: Text(
@@ -50,7 +49,7 @@ class InboxItem extends StatelessWidget {
                     shape: BoxShape.circle, color: MColors.secondary),
                 child: Center(
                     child: Text(
-                  chatItem.unreadCount,
+                  chatItem.unreadCount.toString(), // Convert int to string
                   style: MFonts.fontCB4,
                 )))
           ],

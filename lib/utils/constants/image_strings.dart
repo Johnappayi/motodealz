@@ -91,7 +91,8 @@ class MImages {
       "assets/images/waiting man(user verif waiting page).svg";
   static const String verifyImg5 =
       "assets/images/jumping girl(user verif waiting page).svg";
-
+static const String signInPrompt =
+      "assets/images/bro1.svg";
   static const String noResultImg =
       "assets/images/searching man(search page).svg";
 

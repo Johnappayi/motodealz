@@ -43,7 +43,7 @@ class SignUpPromptScreen extends StatelessWidget {
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: MSizes.defaultSpace),
-                child: SvgPicture.asset(MImages.verifyImg4),
+                child: SvgPicture.asset(MImages.signInPrompt),
               ),
               const SizedBox(height: MSizes.spaceBtwSections),
               LargeButtonNS(

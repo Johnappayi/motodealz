@@ -1,7 +1,9 @@
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-// import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:motodealz/common/styles/text_style.dart';
+import 'package:motodealz/data/repositories/authentication/authentication_repository.dart';
+import 'package:motodealz/features/chat/controller/chat_room_controller.dart';
 import 'package:motodealz/features/chat/model/chat_room.dart';
 import 'package:motodealz/features/chat/screens/inbox_item.dart';
 import 'package:motodealz/utils/constants/colors.dart';
@@ -9,10 +11,8 @@ import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
-// mport 'package:motodealz/features/chat/controller/chat_controller.dart';
 
 class InboxScreen extends StatefulWidget {
-  // final ChatController chatController = Get.put(ChatController());
   const InboxScreen({super.key});
 
   @override
@@ -23,165 +23,65 @@ class InboxScreenState extends State<InboxScreen>
     with AutomaticKeepAliveClientMixin<InboxScreen> {
   int _selectedIndex = 0;
   final PageController _pageController = PageController(initialPage: 0);
-
-  List<ChatRoom> allChatItems = [
-    ChatRoom(
-      sender: 'Aadit Viji',
-      lastMsg: 'Hey there! Is the vehicle still available?',
-      lastMsgTime: DateTime.now(),
-      timestamp: DateTime.now(),
-      unreadCount: '12',
-      profilePicture: MImages.sampleUser1,
-      buyer: "",
-      seller:""
-    ),
-    ChatRoom(
-      sender: 'Aaron peter',
-      lastMsg: 'Hey there! Is the vehicle still available?',
-      lastMsgTime: DateTime.now(),
-      timestamp: DateTime.now(),
-      unreadCount: '12',
-      profilePicture: MImages.sampleUser1,
-      buyer: "",
-      seller:""
-    ),
-    ChatRoom(
-      sender: 'Adithi Viji',
-      lastMsg: 'Hey there! Is the vehicle still available?',
-      lastMsgTime: DateTime.now(),
-      timestamp: DateTime.now(),
-      unreadCount: '12',
-      profilePicture: MImages.sampleUser1,
-      buyer: "",
-      seller:""
-    ),
-    ChatRoom(
-      sender: 'Aaron peter',
-      lastMsg: 'Hey there! Is the vehicle still available?',
-      lastMsgTime: DateTime.now(),
-      timestamp: DateTime.now(),
-      unreadCount: '12',
-      profilePicture: MImages.sampleUser1,
-      buyer: "",
-      seller:""
-    ),
-    ChatRoom(
-      sender: 'Adithi Viji',
-      lastMsg: 'Hey there! Is the vehicle still available?',
-      lastMsgTime: DateTime.now(),
-      timestamp: DateTime.now(),
-      unreadCount: '12',
-      profilePicture: MImages.sampleUser1,
-      buyer: "",
-      seller:""
-    ),
-  ];
-
-  List<ChatRoom> buyingChatItems = [
-    ChatRoom(
-      sender: 'Adithi Viji',
-      lastMsg: 'Hey there! Is the vehicle still available?',
-      lastMsgTime: DateTime.now(),
-      timestamp: DateTime.now(),
-      unreadCount: '12',
-      profilePicture: MImages.sampleUser1,
-      buyer: "",
-      seller:""
-    ),
-    ChatRoom(
-      sender: 'Adithi Viji',
-      lastMsg: 'Hey there! Is the vehicle still available?',
-      lastMsgTime: DateTime.now(),
-      timestamp: DateTime.now(),
-      unreadCount: '12',
-      profilePicture: MImages.sampleUser1,
-      buyer: "",
-      seller:""
-    ),
-    ChatRoom(
-      sender: 'Adithi Viji',
-      lastMsg: 'Hey there! Is the vehicle still available?',
-      lastMsgTime: DateTime.now(),
-      timestamp: DateTime.now(),
-      unreadCount: '12',
-      profilePicture: MImages.sampleUser1,
-      buyer: "",
-      seller:""
-    ),
-  ];
-
-  List<ChatRoom> sellingChatItems = [
-    ChatRoom(
-      sender: 'Aaron peter',
-      lastMsg: 'Hey there! Is the vehicle still available?',
-      lastMsgTime: DateTime.now(),
-      timestamp: DateTime.now(),
-      unreadCount: '12',
-      profilePicture: MImages.sampleUser1,
-      buyer: "",
-      seller:""
-    ),
-    ChatRoom(
-      sender: 'Aaron peter',
-      lastMsg: 'Hey there! Is the vehicle still available?',
-      lastMsgTime: DateTime.now(),
-      timestamp: DateTime.now() ,
-      unreadCount: '12',
-      profilePicture: MImages.sampleUser1, buyer: '', seller: '',
-    ),
-  ];
+  final ChatRoomController _chatRoomController = Get.put(ChatRoomController());
+  final authController = Get.put(AuthenticationRepository());
 
   @override
   bool get wantKeepAlive => true;
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
     final bool darkMode = MHelperFunctions.isDarkMode(context);
-    // List<ChatRoom> selectedChatItems = _getSelectedChatItems();
+    final user = FirebaseAuth.instance.currentUser;
 
     return SafeArea(
       child: Container(
         decoration: BoxDecoration(
-            color: darkMode ? MColors.primaryBackground : MColors.primary),
+          color: darkMode ? MColors.primaryBackground : MColors.primary,
+        ),
         child: Column(
           children: [
             Container(
               padding: const EdgeInsets.symmetric(
-                  horizontal: MSizes.defaultSpace, vertical: MSizes.md),
+                horizontal: MSizes.defaultSpace,
+                vertical: MSizes.md,
+              ),
               decoration: BoxDecoration(
-                  color:
-                      darkMode ? MColors.primaryBackground : MColors.primary),
-              child: 
-              Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
-                Text(
-                  "Messages",
-                  style: MFonts.fontAH1.copyWith(
-                      color: darkMode ? MColors.primary : MColors.white),
-                ),
-                const Spacer(),
-                Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: darkMode
-                          ? MColors.primary
-                          : MColors.white, // specify the color here
-                      width: 3.0, // specify the width here
+                color: darkMode ? MColors.primaryBackground : MColors.primary,
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    "Messages",
+                    style: MFonts.fontAH1.copyWith(
+                      color: darkMode ? MColors.primary : MColors.white,
                     ),
                   ),
-                  child: const CircleAvatar(
-                    radius: 32,
-                    backgroundImage: AssetImage(MImages.sampleUser1),
-                  ),
-                )
-              ]),
+                  const Spacer(),
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: darkMode ? MColors.primary : MColors.white,
+                        width: 3.0,
+                      ),
+                    ),
+                    child: const CircleAvatar(
+                      radius: 32,
+                      backgroundImage: AssetImage(MImages.sampleUser1),
+                    ),
+                  )
+                ],
+              ),
             ),
             Container(
               decoration: BoxDecoration(
-                border:  Border(
+                border: Border(
                   bottom: BorderSide(
-                    color: darkMode ? MColors.black : MColors.primary2Light, // specify the color here
-                    width: 1.0, // specify the width here
+                    color: darkMode ? MColors.black : MColors.primary2Light,
+                    width: 1.0,
                   ),
                 ),
                 color:
@@ -209,65 +109,57 @@ class InboxScreenState extends State<InboxScreen>
                   });
                 },
                 children: [
-                  Container(
-                    color: darkMode
-                        ? MColors.darkerGrey
-                        : MColors.primaryBackground,
-                    child: ListView.separated(
-                      itemBuilder: (context, index) {
-                        return InboxItem(
-                            chatItem: _getSelectedChatItems()[index]);
-                      },
-                      separatorBuilder: (context, index) {
-                        return const Padding(
-                          padding: EdgeInsets.only(left: 20, right: 20),
-                          child: Divider(),
-                        );
-                      },
-                      itemCount: _getSelectedChatItems().length,
-                    ),
-                  ),
-                  Container(
-                    color: darkMode
-                        ? MColors.darkerGrey
-                        : MColors.primaryBackground,
-                    child: ListView.separated(
-                      itemBuilder: (context, index) {
-                        return InboxItem(
-                            chatItem: _getSelectedChatItems()[index]);
-                      },
-                      separatorBuilder: (context, index) {
-                        return const Padding(
-                          padding: EdgeInsets.only(left: 20, right: 20),
-                          child: Divider(),
-                        );
-                      },
-                      itemCount: _getSelectedChatItems().length,
-                    ),
-                  ),
-                  Container(
-                    color: darkMode
-                        ? MColors.darkerGrey
-                        : MColors.primaryBackground,
-                    child: ListView.separated(
-                      itemBuilder: (context, index) {
-                        return InboxItem(
-                            chatItem: _getSelectedChatItems()[index]);
-                      },
-                      separatorBuilder: (context, index) {
-                        return const Padding(
-                          padding: EdgeInsets.only(left: 20, right: 20),
-                          child: Divider(),
-                        );
-                      },
-                      itemCount: _getSelectedChatItems().length,
-                    ),
-                  ),
+                  _buildChatList(_chatRoomController.getAllChatRooms()),
+                  _buildChatList(
+                      _chatRoomController.getBuyingChatRooms(user!.uid)),
+                  _buildChatList(
+                      _chatRoomController.getSellingChatRooms(user.uid)),
                 ],
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildChatList(Stream<List<ChatRoom>> chatRoomsStream) {
+    final bool darkMode = MHelperFunctions.isDarkMode(context);
+    return Container(
+      color: darkMode ? MColors.darkerGrey : MColors.primaryBackground,
+      child: StreamBuilder<List<ChatRoom>>(
+        stream: chatRoomsStream,
+        builder: (context, snapshot) {
+          print(snapshot); 
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (snapshot.hasError) {
+            return const Center(
+              child: Text('Error: edaa mandaa'),
+              // ${snapshot.error}
+            );
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return const Center(
+              child: Text('No chat rooms available'),
+            );
+          } else {
+            List<ChatRoom> chatRooms = snapshot.data!;
+            return ListView.separated(
+              itemBuilder: (context, index) {
+                return InboxItem(chatItem: chatRooms[index]);
+              },
+              separatorBuilder: (context, index) {
+                return const Padding(
+                  padding: EdgeInsets.only(left: 20, right: 20),
+                  child: Divider(),
+                );
+              },
+              itemCount: chatRooms.length,
+            );
+          }
+        },
       ),
     );
   }
@@ -300,18 +192,5 @@ class InboxScreenState extends State<InboxScreen>
         ),
       ),
     );
-  }
-
-  List<ChatRoom> _getSelectedChatItems() {
-    switch (_selectedIndex) {
-      case 0:
-        return allChatItems;
-      case 1:
-        return buyingChatItems;
-      case 2:
-        return sellingChatItems;
-      default:
-        return allChatItems;
-    }
   }
 }

@@ -29,7 +29,7 @@ class AuthenticationRepository extends GetxController {
     FlutterNativeSplash.remove();
 
     // test individual screens here
-    // Get.offAll(() => const CustomIndicator()); 
+    // Get.offAll(() => const ChatRoomSelectionScreen()); 
     // comment this
     initialCheckAuthentication();
   }

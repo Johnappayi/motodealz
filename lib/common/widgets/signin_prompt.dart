@@ -50,7 +50,6 @@ class SignUpPromptScreen extends StatelessWidget {
                 onPressed: () => Get.offAll(() => const LoginScreen()),
                 child: const Text(
                   "Login now",
-                  style: MFonts.fontCB1,
                 ),
               ),
             ],

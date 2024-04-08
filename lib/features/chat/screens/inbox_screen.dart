@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motodealz/common/styles/text_style.dart';
+import 'package:motodealz/common/widgets/signin_prompt.dart';
 import 'package:motodealz/data/repositories/authentication/authentication_repository.dart';
 import 'package:motodealz/features/chat/controller/chat_room_controller.dart';
 import 'package:motodealz/features/chat/model/chat_room.dart';
@@ -32,7 +33,16 @@ class InboxScreenState extends State<InboxScreen>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    final bool isUserAuthenticated = FirebaseAuth.instance.currentUser != null;
+
+    return isUserAuthenticated
+        ? _buildInboxScreen()
+        : const SignUpPromptScreen();
+  }
+
+  Widget _buildInboxScreen() {
     final bool darkMode = MHelperFunctions.isDarkMode(context);
+
     final user = FirebaseAuth.instance.currentUser;
 
     return SafeArea(
@@ -133,12 +143,11 @@ class InboxScreenState extends State<InboxScreen>
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: SizedBox(),
             );
           } else if (snapshot.hasError) {
-            return const Center(
-              child: Text('Error: edaa mandaa'),
-              // ${snapshot.error}
+            return  Center(
+              child: Text('Error: ${snapshot.error}'),
             );
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return const Center(

@@ -20,7 +20,7 @@ class ChatRoom {
     required this.profilePicture,
   });
 
-  final CollectionReference usersCollection = FirebaseFirestore.instance.collection('users');
+  final CollectionReference usersCollection = FirebaseFirestore.instance.collection('Users');
 
 factory ChatRoom.fromFirestore(DocumentSnapshot doc) {
   if (doc.exists) {

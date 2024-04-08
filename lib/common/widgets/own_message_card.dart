@@ -1,64 +1,61 @@
 import 'package:flutter/material.dart';
+import 'package:motodealz/utils/constants/colors.dart';
+import 'package:motodealz/utils/constants/fonts.dart';
+import 'package:motodealz/utils/constants/sizes.dart';
+import 'package:motodealz/utils/helpers/helper_functions.dart';
 
 class OwnMessageCard extends StatelessWidget {
-  const OwnMessageCard(
-      { super.key, required this.message, required this.time});
+  const OwnMessageCard({super.key, required this.message, required this.time});
   final String message;
-  final String time;
+  final DateTime time;
 
   @override
   Widget build(BuildContext context) {
+    final darkMode = MHelperFunctions.isDarkMode(context);
     return Align(
       alignment: Alignment.centerRight,
       child: ConstrainedBox(
         constraints: BoxConstraints(
           maxWidth: MediaQuery.of(context).size.width - 45,
         ),
-        child: Card(
-          elevation: 1,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-          color: const Color(0xffdcf8c6),
-          margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-          child: Stack(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 10,
-                  right: 30,
-                  top: 5,
-                  bottom: 20,
-                ),
-                child: Text(
-                  message,
-                  style: const TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
-              ),
-              Positioned(
-                bottom: 4,
-                right: 10,
-                child: Row(
-                  children: [
-                    Text(
-                      time,
-                      style: TextStyle(
-                        fontSize: 13,
-                        color: Colors.grey[600],
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Text(
+              MHelperFunctions.getFormattedTime(time).toLowerCase(),
+              style: MFonts.fontCB2.copyWith(color: MColors.lightGrey),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                color: darkMode ? MColors.primary2Dark : const Color.fromARGB(255, 96, 182, 175),
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(MSizes.cardRadiusSm),
+                  bottomLeft: Radius.circular(MSizes.cardRadiusSm),
+                  bottomRight: Radius.zero, // Sharp bottom-right corner
+                  topRight: Radius.circular(MSizes.cardRadiusSm),
+                ), // Adjust as needed
+                boxShadow:  [
+                  BoxShadow(
+                      color:
+                          MColors.darkGrey.withOpacity(0.4), // Shadow color
+                      spreadRadius:  0, // Spread radius
+                      blurRadius: 0.2,
+                      offset: const Offset(
+                          0, 1) // Blur radius// Offset to bottom-right
                       ),
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    const Icon(
-                      Icons.done_all,
-                      size: 20,
-                    ),
-                  ],
-                ),
+                ],
               ),
-            ],
-          ),
+              margin: const EdgeInsets.symmetric(
+                horizontal: MSizes.xs,
+                vertical: MSizes.xs,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(MSizes.nm),
+                child: Text(message, style: MFonts.fontCB1),
+              ),
+            ),
+          ],
         ),
       ),
     );

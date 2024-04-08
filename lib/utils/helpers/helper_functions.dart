@@ -27,6 +27,28 @@ class MHelperFunctions {
     );
   }
 
+//  static void navigateToScreen(BuildContext context, Widget screen) {
+//   Navigator.push(
+//     context,
+//     PageRouteBuilder(
+//       transitionDuration: const Duration(milliseconds: 200), // Set the duration of the animation
+//       transitionsBuilder: (context, animation, secondaryAnimation, child) {
+//         const begin = Offset(1.0, 0.0);
+//         const end = Offset.zero;
+//         const curve = Curves.ease;
+//         var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+//         var offsetAnimation = animation.drive(tween);
+//         return SlideTransition(
+//           position: offsetAnimation,
+//           child: child,
+//         );
+//       },
+//       pageBuilder: (context, animation, secondaryAnimation) {
+//         return screen;
+//       },
+//     ),
+//   );
+// }
   static void navigateToScreen(BuildContext context, Widget screen) {
     Navigator.push(
       context,

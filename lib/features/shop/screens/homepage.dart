@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:motodealz/common/styles/svg_styles.dart';
 import 'package:motodealz/common/widgets/app_bar.dart';
 import 'package:motodealz/common/widgets/car_category_item.dart';
 import 'package:motodealz/common/widgets/custom_indicator.dart';
@@ -206,17 +204,17 @@ class _HomeScreenState extends State<HomeScreen> {
                           const SizedBox(
                             height: MSizes.nm,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              const Text(
-                                "Choose your location",
-                                style: MFonts.fontCB3,
-                              ),
-                              SvgPicture.asset(MImages.locationIcon,
-                                  colorFilter: MSvgStyle.svgStyle(darkMode)),
-                            ],
-                          ),
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.end,
+                          //   children: [
+                          //     const Text(
+                          //       "Choose your location",
+                          //       style: MFonts.fontCB3,
+                          //     ),
+                          //     SvgPicture.asset(MImages.locationIcon,
+                          //         colorFilter: MSvgStyle.svgStyle(darkMode)),
+                          //   ],
+                          // ),
                           const SizedBox(
                             height: MSizes.md,
                           ),

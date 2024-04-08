@@ -7,6 +7,9 @@ class ChatRoomController extends GetxController {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final CollectionReference usersCollection =
       FirebaseFirestore.instance.collection('Users');
+
+
+
   Future<Map<String, dynamic>?> getUserNames(String userId) async {
     try {
       // Get the user document from Firestore
@@ -29,7 +32,31 @@ class ChatRoomController extends GetxController {
       }
     } catch (e) {
       // Handle any errors that occur during the process
-      print('Error fetching user names: $e');
+      // print('Error fetching user names: $e');
+      return null;
+    }
+  }
+
+  Future<String?> getUserName(String userId) async {
+    try {
+      // Get the user document from Firestore
+      DocumentSnapshot userSnapshot = await usersCollection.doc(userId).get();
+
+      // Check if the document exists
+      if (userSnapshot.exists) {
+        // Extract the first and last name fields
+        String firstName = userSnapshot.get('FirstName');
+        String lastName = userSnapshot.get('LastName');
+        String userName = '$firstName $lastName';
+        // Return a map containing the first and last names
+        return userName;
+      } else {
+        // If the document doesn't exist, return null or handle accordingly
+        return null;
+      }
+    } catch (e) {
+      // Handle any errors that occur during the process
+      // print('Error fetching user names: $e');
       return null;
     }
   }

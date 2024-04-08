@@ -35,6 +35,7 @@ class VehicleVeiwScreenState extends State<VehicleVeiwScreen> {
   final ChatRoomController _chatRoomController = ChatRoomController();
   final List<String> _imageUrls = [];
   User? user = FirebaseAuth.instance.currentUser;
+
   @override
   void initState() {
     super.initState();
@@ -125,8 +126,7 @@ class VehicleVeiwScreenState extends State<VehicleVeiwScreen> {
   }
 
   void _navigateToImageViewScreen(BuildContext context) {
-    // ignore: unnecessary_null_comparison
-    if (!_hasNavigatedToImageViewScreen && _imageUrls != null) {
+    if (!_hasNavigatedToImageViewScreen && _imageUrls.isNotEmpty) {
       _hasNavigatedToImageViewScreen = true;
       Navigator.push(
         context,
@@ -135,59 +135,66 @@ class VehicleVeiwScreenState extends State<VehicleVeiwScreen> {
               VehicleImageViewScreen(vehicleImages: _imageUrls),
         ),
       ).then((_) {
-        // Reset the flag when the navigation is completed
         _hasNavigatedToImageViewScreen = false;
       });
     }
   }
+void _onChatPressed(BuildContext context) async {
+  String? buyerId = user?.uid; // Get the buyer's ID (implement this logic)
+  String sellerId = widget.vehicle.ownerId;
 
-  // Inside _onChatPressed function
-  // Inside _onChatPressed function
-  void _onChatPressed(BuildContext context) async {
-    String buyerId = user!.uid; // Get the buyer's ID (implement this logic)
-    String sellerId = widget.vehicle.ownerId;
+  if (buyerId == null || buyerId == sellerId) {
+    return;
+  }
 
-    // Check if the buyerId and sellerId are the same
-    if (buyerId == sellerId) {
-      // If they are the same, do nothing (chat button will remain disabled)
-      return;
-    }
+  try {
+    String roomId = await _chatRoomController.createChatRoom(buyerId, sellerId);
 
-    try {
-      // Fetch the room ID from createChatRoom
-      String roomId =
-          await _chatRoomController.createChatRoom(buyerId, sellerId);
-
-      // Navigate to the chat screen using the room ID
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ChatScreen(roomId: roomId),
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => Material( // Wrap with Material widget
+          child: FutureBuilder<String?>(
+            future: _chatRoomController.getUserName(sellerId),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const SizedBox(); // Placeholder widget
+              } else if (snapshot.hasError) {
+                return const ListTile(
+                  title: Text('Error loading display name'),
+                );
+              } else {
+                return ChatScreen(
+                  roomId: roomId,
+                  displayName: snapshot.data ?? '',
+                );
+              }
+            },
+          ),
         ),
-      );
-    } catch (error) {
-      // Handle error if fetching chat rooms fails
-      // print('Error fetching chat rooms: $error');
-    }
+      ),
+    );
+  } catch (error) {
+    // Handle error if fetching chat rooms fails
+    // print('Error fetching chat rooms: $error');
   }
+}
 
-  Widget _buildChatButton(BuildContext context) {
-    String buyerId = user!.uid; // Get the buyer's ID (implement this logic)
-    String sellerId = widget.vehicle.ownerId;
+ Widget _buildChatButton(BuildContext context) {
+  String? buyerId = user?.uid; // Use null-aware operator
+  String sellerId = widget.vehicle.ownerId;
 
-    // Check if the buyerId and sellerId are the same
-    if (buyerId == sellerId) {
-      // If they are the same, show a different button
-      return const SmallButton(
-        onPressed: null,
-        child: Text("Shushh"),
-      );
-    } else {
-      // If they are different, show the chat button as usual
-      return SmallButton(
-        onPressed: () => _onChatPressed(context),
-        child: const Text("Chat"),
-      );
-    }
+  if (buyerId == null || buyerId == sellerId) {
+    return const SmallButton(
+      onPressed: null,
+      child: Text("Shushh"),
+    );
+  } else {
+    return SmallButton(
+      onPressed: () => _onChatPressed(context),
+      child: const Text("Chat"),
+    );
   }
+}
+
 }

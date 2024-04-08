@@ -21,7 +21,6 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final darkMode = MHelperFunctions.isDarkMode(context);
     final authController = Get.put(AuthenticationRepository());
     final userRepository = Get.put(UserRepository());
     final isUserAuthenticated = authController.isUserAuthenticated();
@@ -36,7 +35,7 @@ class ProfileScreen extends StatelessWidget {
             return Text(
                 'Error: ${snapshot.error}'); // Show error message if fetching data fails
           } else {
-            return _buildAuthenticatedProfile(snapshot.data, darkMode,
+            return _buildAuthenticatedProfile(snapshot.data,
                 context); // Pass fetched user data to the profile widget
           }
         },
@@ -46,8 +45,8 @@ class ProfileScreen extends StatelessWidget {
     }
   }
 
-  Widget _buildAuthenticatedProfile(
-      UserModel? user, bool darkMode, BuildContext context) {
+  Widget _buildAuthenticatedProfile(UserModel? user, BuildContext context) {
+    final darkMode = MHelperFunctions.isDarkMode(context);
     return SafeArea(
       child: SingleChildScrollView(
         child: Padding(

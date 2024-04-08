@@ -183,3 +183,56 @@ class InputFieldWithIcon extends StatelessWidget {
     );
   }
 }
+
+class InputFieldWithDropdown extends StatelessWidget {
+  const InputFieldWithDropdown({
+    super.key,
+    required this.hintText,
+    required this.label,
+    this.validator,
+    this.isEnabled,
+    this.controller,
+    this.dropdownValue,
+    required this.dropdownItems,
+    this.dropdownOnChanged,
+  });
+
+  final String hintText;
+  final String label;
+  final String? Function(String?)? validator;
+  final bool? isEnabled;
+  final TextEditingController? controller;
+  final String? dropdownValue;
+  final List<DropdownMenuItem<String>> dropdownItems;
+  final void Function(String?)? dropdownOnChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: MFonts.fontCH4,
+        ),
+        const SizedBox(
+          height: MSizes.sm,
+        ),
+        DropdownButtonFormField<String>(
+          decoration: InputDecoration(
+            hintText: hintText,
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: MSizes.lg,
+              vertical: MSizes.nm,
+            ),
+          ),
+          value: dropdownValue,
+          items: dropdownItems,
+          onChanged: dropdownOnChanged,
+        ),
+      ],
+    );
+  }
+}
+
+

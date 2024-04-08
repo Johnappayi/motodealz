@@ -185,10 +185,7 @@ void _onChatPressed(BuildContext context) async {
   String sellerId = widget.vehicle.ownerId;
 
   if (buyerId == null || buyerId == sellerId) {
-    return const SmallButton(
-      onPressed: null,
-      child: Text("Shushh"),
-    );
+    return const SizedBox();
   } else {
     return SmallButton(
       onPressed: () => _onChatPressed(context),

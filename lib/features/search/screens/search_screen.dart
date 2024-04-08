@@ -3,12 +3,14 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:motodealz/common/widgets/app_bar.dart';
 import 'package:motodealz/common/widgets/car_category_item.dart';
+import 'package:motodealz/common/widgets/custom_indicator.dart';
 import 'package:motodealz/common/widgets/input_field.dart';
 import 'package:motodealz/common/widgets/listed_ad_frame2.dart';
 import 'package:motodealz/common/widgets/popular_brand_container.dart';
 import 'package:motodealz/common/widgets/side_bar.dart';
 import 'package:motodealz/common/controller/vehicle_controller.dart';
 import 'package:motodealz/common/model/vehicle_model.dart';
+import 'package:motodealz/features/shop/screens/vehicle_view_page.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
@@ -377,20 +379,20 @@ class _SearchScreenState extends State<SearchScreen> {
                                 ),
                                 itemCount: _vehicles.length,
                                 itemBuilder: (context, index) {
-                                  return ListedAdFrame2(
-                                    onPressed: () {
-                                      // Navigator.push(
-                                      //   context,
-                                      //   MaterialPageRoute(
-                                      //     builder: (context) =>
-                                      //         // const VehicleVeiwScreen(
-                                      //       // vehicle: _vehicles[index],
-                                      //     ),
-                                      //   ),
-                                      // );
-                                    },
-                                    vehicle: _vehicles[index],
-                                  );
+                                if (_vehicles.isEmpty) {
+                                    return const CustomIndicator(); // or any other loading indicator
+                                  } else {
+
+                                    return ListedAdFrame2(
+                                      onPressed: () =>
+                                          MHelperFunctions.navigateToScreen(
+                                        context,
+                                        VehicleVeiwScreen(
+                                            vehicle: _vehicles[index]),
+                                      ),
+                                      vehicle: _vehicles[index],
+                                    );
+                                  }
                                 },
                               ),
                             ],

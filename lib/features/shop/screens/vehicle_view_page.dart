@@ -1,28 +1,50 @@
+// ignore_for_file: use_build_context_synchronously
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:motodealz/common/model/vehicle_model.dart';
 import 'package:motodealz/common/widgets/back_button.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/common/widgets/draggable_sheet.dart';
+import 'package:motodealz/common/widgets/image_carousel.dart';
 import 'package:motodealz/common/widgets/vehicle_details_ui.dart';
-import 'package:motodealz/features/shop/model/vehicle_model.dart';
+import 'package:motodealz/features/chat/controller/chat_room_controller.dart';
+import 'package:motodealz/features/chat/screens/individual_chat.dart';
 import 'package:motodealz/features/shop/screens/vehicle_image_veiw_page.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
+import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
 import 'package:motodealz/utils/formatters/formatter.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
-import 'package:motodealz/common/widgets/image_carousel.dart';
+import 'package:motodealz/utils/http/http_client.dart';
 
 class VehicleVeiwScreen extends StatefulWidget {
-  const VehicleVeiwScreen({Key? key, required this.vehicle}) : super(key: key);
-
+  const VehicleVeiwScreen({
+    super.key,
+    required this.vehicle,
+  });
   final Vehicle vehicle;
-
   @override
   VehicleVeiwScreenState createState() => VehicleVeiwScreenState();
 }
 
 class VehicleVeiwScreenState extends State<VehicleVeiwScreen> {
   bool _hasNavigatedToImageViewScreen = false;
+  final ChatRoomController _chatRoomController = ChatRoomController();
+  final List<String> _imageUrls = [];
+  User? user = FirebaseAuth.instance.currentUser;
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  Future<List<String>> _fetchImages() async {
+    for (String imageUrl in widget.vehicle.images) {
+      String httpsUrl = await MHttpHelper.convertGCSUrlToHttps(imageUrl);
+      _imageUrls.add(httpsUrl);
+    }
+    return _imageUrls;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +54,26 @@ class VehicleVeiwScreenState extends State<VehicleVeiwScreen> {
         body: Stack(
           children: [
             GestureDetector(
-              onTap: () {
-                _navigateToImageViewScreen(context);
-              },
-              child: MImageCarousel1(images: widget.vehicle.images),
+              onTap: () => _navigateToImageViewScreen(context),
+              child: FutureBuilder<List<String>>(
+                future: _fetchImages(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    // Show a loading indicator while fetching images
+                    return Image.asset(
+                      darkMode ? MImages.sampleCarDarkMode : MImages.sampleCar,
+                      height: MHelperFunctions.screenHeight() * 0.45,
+                      fit: BoxFit.cover,
+                    );
+                  } else if (snapshot.hasError) {
+                    // Show an error message if fetching images fails
+                    return const Center(child: Text('Error fetching images'));
+                  } else {
+                    // Build MImageCarousel1 with fetched images
+                    return MImageCarousel1(images: snapshot.data!);
+                  }
+                },
+              ),
             ),
             MyDraggableSheet(
               child: Column(
@@ -72,7 +110,7 @@ class VehicleVeiwScreenState extends State<VehicleVeiwScreen> {
                       MFormatter.formatCurrency(widget.vehicle.price),
                       style: MFonts.fontCH1,
                     ),
-                    const SmallButton(child: Text("Chat"))
+                    _buildChatButton(context),
                   ],
                 ),
               ),
@@ -84,17 +122,51 @@ class VehicleVeiwScreenState extends State<VehicleVeiwScreen> {
   }
 
   void _navigateToImageViewScreen(BuildContext context) {
-    if (!_hasNavigatedToImageViewScreen) {
+    if (!_hasNavigatedToImageViewScreen && _imageUrls.isNotEmpty) {
       _hasNavigatedToImageViewScreen = true;
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => VehicleImageViewScreen(vehicle: widget.vehicle),
+          builder: (context) =>
+              VehicleImageViewScreen(vehicleImages: _imageUrls),
         ),
       ).then((_) {
-        // Reset the flag when the navigation is completed
         _hasNavigatedToImageViewScreen = false;
       });
+    }
+  }
+
+  void _onChatPressed(BuildContext context) async {
+    String? buyerId = user?.uid; // Get the buyer's ID (implement this logic)
+    String sellerId = widget.vehicle.ownerId;
+    if (buyerId == null || buyerId == sellerId) {
+      return;
+    }
+    try {
+      String roomId =
+          await _chatRoomController.createChatRoom(buyerId, sellerId);
+      String displayName =
+          await _chatRoomController.getUserName(sellerId) ?? '';
+      MHelperFunctions.navigateToScreen(
+        context,
+        ChatScreen(roomId: roomId, displayName: displayName),
+      );
+    } catch (error) {
+      // Handle error if fetching chat rooms fails
+      // print('Error fetching chat rooms: $error');
+    }
+  }
+
+  Widget _buildChatButton(BuildContext context) {
+    String? buyerId = user?.uid; // Use null-aware operator
+    String sellerId = widget.vehicle.ownerId;
+    if (buyerId == null || buyerId == sellerId) {
+      return const SizedBox();
+    } else {
+      return SmallButton(
+        onPressed: () => _onChatPressed(context),
+        child: const Text("Chat"),
+      );
     }
   }
 }

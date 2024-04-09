@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:motodealz/common/styles/svg_styles.dart';
-import 'package:motodealz/features/shop/model/vehicle_model.dart';
+import 'package:motodealz/common/model/vehicle_model.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
@@ -19,6 +19,7 @@ class VehicleDetailsUI extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     final bool darkMode = MHelperFunctions.isDarkMode(context);
 
     return Padding(
@@ -97,9 +98,9 @@ class VehicleDetailsUI extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Posted on ${MFormatter.formatDate(vehicle.datePosted) }',
+              Text('Posted on ${MFormatter.formatDate(vehicle.datePosted)}',
                   style: MFonts.fontCB3.copyWith(color: MColors.lightGrey)),
-              Text("Ad ID: 09982792",
+              Text("Ad ID: ${vehicle.ownerId.substring(0,6)}",
                   style: MFonts.fontCB3.copyWith(color: MColors.lightGrey)),
             ],
           ),
@@ -126,8 +127,8 @@ class VehicleDetailsUI extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  "Toyota Innova for sale", //include title later
+                Text(
+                  vehicle.title, //include title later
                   style: MFonts.fontCB2b,
                 ),
                 const SizedBox(

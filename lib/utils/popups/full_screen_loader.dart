@@ -10,7 +10,7 @@ class MFullScreenLoader {
       context: Get.overlayContext!,
       barrierDismissible: false,
       builder: (_) => PopScope(
-        canPop: false,
+        canPop: true,
         child: Container(
             color: MHelperFunctions.isDarkMode(Get.context!)
                 ? MColors.dark
@@ -19,7 +19,7 @@ class MFullScreenLoader {
             height: double.infinity,
             child: Column(
               children: [
-                const SizedBox(height: 250),
+                const SizedBox(height: 200),
                 MAnimationLoaderWidget(text: text, animation: animation),
               ],
             )),

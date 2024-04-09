@@ -31,7 +31,8 @@ class _MImageCarousel1State extends State<MImageCarousel1> {
           items: widget.images.map((image) {
             return Builder(
               builder: (BuildContext context) {
-                return Image.asset(
+                return 
+                Image.network(
                   image,
                   fit: BoxFit.cover,
                 );
@@ -61,7 +62,7 @@ class _MImageCarousel1State extends State<MImageCarousel1> {
           child: Center(
             child: DotsIndicator(
               dotsCount: widget.images.length,
-              position: currentIndex.toDouble(),
+              position: currentIndex.toInt(),
               decorator: DotsDecorator(
                 spacing: const EdgeInsets.all(MSizes.xs),
                 size: const Size.square(MSizes.sm),
@@ -106,7 +107,7 @@ class _MImageCarousel2State extends State<MImageCarousel2> {
           items: widget.images.map((image) {
             return Builder(
               builder: (BuildContext context) {
-                return Image.asset(
+                return Image.network(
                   image,
                   fit: BoxFit.fitWidth,
                 );
@@ -136,7 +137,7 @@ class _MImageCarousel2State extends State<MImageCarousel2> {
           child: Center(
             child: DotsIndicator(
               dotsCount: widget.images.length,
-              position: currentIndex.toDouble(),
+              position: currentIndex.toInt(),
               decorator: DotsDecorator(
                 spacing: const EdgeInsets.all(MSizes.xs),
                 size: const Size.square(MSizes.sm),

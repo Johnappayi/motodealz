@@ -11,9 +11,16 @@ class InputField extends StatelessWidget {
     super.key,
     required this.hintText,
     required this.label,
+    this.validator,
+    this.isEnabled,
+    this.controller,
   });
+
   final String hintText;
   final String label;
+  final String? Function(String?)? validator;
+  final bool? isEnabled;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +35,18 @@ class InputField extends StatelessWidget {
           height: MSizes.sm,
         ),
         TextFormField(
-          decoration: InputDecoration(hintText: hintText),
+          enabled: isEnabled ?? true,
+          validator: validator,
+          controller: controller,
+          decoration: InputDecoration(
+            hintText: hintText,
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: MSizes.lg,
+              vertical: MSizes.nm,
+            ), // Adjust the content padding as needed
+            errorStyle:
+                const TextStyle(height: 0), // Hide the error message inline
+          ),
         ),
       ],
     );
@@ -37,16 +55,17 @@ class InputField extends StatelessWidget {
 
 class SearchField extends StatelessWidget {
   const SearchField({
-    Key? key,
+    super.key,
     required this.hintText,
     this.prefixIcon,
-    this.suffixIcon, this.onChanged,
-  }) : super(key: key);
+    this.suffixIcon,
+    this.onChanged,
+  });
 
   final String hintText;
   final String? prefixIcon;
   final String? suffixIcon;
-  final ValueChanged<String>? onChanged; 
+  final ValueChanged<String>? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +74,7 @@ class SearchField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TextFormField(
-           onChanged: onChanged, 
+          onChanged: onChanged,
           decoration: InputDecoration(
             hintText: hintText,
             enabledBorder: const OutlineInputBorder().copyWith(
@@ -90,7 +109,7 @@ class SearchField extends StatelessWidget {
 
 class InputFieldWithIcon extends StatelessWidget {
   const InputFieldWithIcon({
-    Key? key,
+    super.key,
     this.hintText,
     this.prefixIcon,
     this.suffixIcon,
@@ -99,7 +118,7 @@ class InputFieldWithIcon extends StatelessWidget {
     this.validator,
     this.obscureText,
     this.onSuffixIconPressed,
-  }) : super(key: key);
+  });
 
   final String? hintText;
   final String? prefixIcon;
@@ -128,8 +147,12 @@ class InputFieldWithIcon extends StatelessWidget {
         TextFormField(
           validator: validator,
           controller: controller,
-          obscureText: finalObscureText ,
+          obscureText: finalObscureText,
           decoration: InputDecoration(
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: MSizes.lg,
+              vertical: MSizes.nm,
+            ), // Ad
             enabled: true,
             hintText: hintText,
             suffixIcon: suffixIcon != null
@@ -160,3 +183,56 @@ class InputFieldWithIcon extends StatelessWidget {
     );
   }
 }
+
+class InputFieldWithDropdown extends StatelessWidget {
+  const InputFieldWithDropdown({
+    super.key,
+    required this.hintText,
+    required this.label,
+    this.validator,
+    this.isEnabled,
+    this.controller,
+    this.dropdownValue,
+    required this.dropdownItems,
+    this.dropdownOnChanged,
+  });
+
+  final String hintText;
+  final String label;
+  final String? Function(String?)? validator;
+  final bool? isEnabled;
+  final TextEditingController? controller;
+  final String? dropdownValue;
+  final List<DropdownMenuItem<String>> dropdownItems;
+  final void Function(String?)? dropdownOnChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: MFonts.fontCH4,
+        ),
+        const SizedBox(
+          height: MSizes.sm,
+        ),
+        DropdownButtonFormField<String>(
+          decoration: InputDecoration(
+            hintText: hintText,
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: MSizes.lg,
+              vertical: MSizes.nm,
+            ),
+          ),
+          value: dropdownValue,
+          items: dropdownItems,
+          onChanged: dropdownOnChanged,
+        ),
+      ],
+    );
+  }
+}
+
+

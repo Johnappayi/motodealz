@@ -1,58 +1,80 @@
 import 'package:flutter/material.dart';
-// import 'package:motodealz/common/widgets/button_container.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:motodealz/common/styles/svg_styles.dart';
+import 'package:motodealz/common/widgets/back_button.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
+import 'package:motodealz/features/kyc_verification/screens/id_capture.dart';
+import 'package:motodealz/features/kyc_verification/screens/id_upload.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
-// import 'package:motodealz/utils/constants/image_strings.dart';
+import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
+import 'package:motodealz/utils/helpers/helper_functions.dart';
 
 class UserVerificationUploadChoiceScreen extends StatelessWidget {
   const UserVerificationUploadChoiceScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // final bool darkMode = MHelperFunctions.isDarkMode(context);
-    return const Scaffold(
+    final bool darkMode = MHelperFunctions.isDarkMode(context);
+    return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
             child: Padding(
-          padding: EdgeInsets.only(
+          padding: const EdgeInsets.only(
               left: MSizes.defaultSpace,
               right: MSizes.defaultSpace,
               top: MSizes.nm,
               bottom: MSizes.defaultSpace),
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                // children: [ButtonContainer(child: MImages.closeIcon)],
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [MBackButton()],
               ),
-              Text(
+              const Text(
                 "KYC VERIFICATION",
                 style: MFonts.fontAH1,
               ),
-              SizedBox(
+              const SizedBox(
                 height: MSizes.spaceBtwSections,
               ),
-              Text(
+              SvgPicture.asset(MImages.progressBar3,colorFilter: MSvgStyle.svgStyle3(darkMode),),
+              const SizedBox(
+                height: MSizes.defaultSpace,
+              ),
+              const Text(
                 "We are almost there",
                 style: MFonts.fontBH1,
               ),
-              SizedBox(
+              const SizedBox(
                 height: MSizes.spaceBtwSections,
               ),
-              SizedBox(
+              const SizedBox(
                 height: MSizes.spaceBtwSections,
               ),
               Column(
-                crossAxisAlignment:CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Choose a method to submit your ID", style: MFonts.fontCH4,),
-                  SizedBox(height: MSizes.spaceBtwSections,),
-                  LargeButtonNS(child: Text("Take a picture")),
-                  SizedBox(
+                  const Text(
+                    "Choose a method to submit your ID",
+                    style: MFonts.fontCH4,
+                  ),
+                  const SizedBox(
+                    height: MSizes.spaceBtwSections,
+                  ),
+                  LargeButtonNS(
+                    child: const Text("Take a picture"),
+                    onPressed: () => MHelperFunctions.navigateToScreen(
+                        context, const UserVerificationIdCaptureScreen()),
+                  ),
+                  const SizedBox(
                     height: MSizes.spaceBtwItems,
                   ),
-                  LargeSecButton(child: Text("Upload")),
+                  LargeSecButton(
+                    child: const Text("Upload"),
+                    onPressed: () => MHelperFunctions.navigateToScreen(
+                        context, const UserVerificationUploadScreen()),
+                  ),
                 ],
               )
             ],

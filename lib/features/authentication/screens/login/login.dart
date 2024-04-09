@@ -4,6 +4,8 @@ import 'package:motodealz/common/styles/spacing_styles.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/common/widgets/input_field.dart';
 import 'package:motodealz/features/authentication/controllers/login/login_controller.dart';
+import 'package:motodealz/features/authentication/screens/password_configuration/forgot_password.dart';
+import 'package:motodealz/features/authentication/screens/signup/create_acc.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
@@ -63,7 +65,7 @@ class LoginScreen extends StatelessWidget {
                         validator: (value) => MValidator.validateEmail(value),
                       ),
 
-                      const SizedBox(height: MSizes.spaceBtwInputFields),
+                      const SizedBox(height: MSizes.xs),
 
                       /// Password
                       Obx(
@@ -87,14 +89,9 @@ class LoginScreen extends StatelessWidget {
                           },
                         ),
                       ),
-                      const SizedBox(height: MSizes.spaceBtwInputFields),
+                      
 
-                      const LargeButtonNS(
-                        child: Text("Login"),
-                      ),
-
-                      const SizedBox(height: MSizes.sm),
-
+                      
                       ///Remember Me & Forgot Password
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -114,10 +111,21 @@ class LoginScreen extends StatelessWidget {
 
                           ///Forgot Password
                           TextButton(
-                              onPressed: () {},
+                              onPressed: () => Get.to(
+                                  () => const ForgotPasswordScreen()),
                               child: const Text(MTexts.forgetPassword)),
                         ],
                       ),
+
+                      const SizedBox(height: MSizes.xs),
+
+                      LargeButtonNS(
+                        child: const Text("Login"),
+                        onPressed: () => controller.emailAndPasswordSignIn(),
+                      ),
+
+                      const SizedBox(height: MSizes.spaceBtwItems),
+
                     ],
                   ),
                 ),
@@ -149,12 +157,13 @@ class LoginScreen extends StatelessWidget {
 
               const SizedBox(height: MSizes.spaceBtwSections),
 
-              const LargeSecButtonWithIcon(
+              LargeSecButtonWithIcon(
                 icon: MImages.google,
-                child: Text(
+                child: const Text(
                   "Continue with google",
                   style: MFonts.fontCB1,
                 ),
+                onPressed: () => controller.googleSignIn(),
               ),
 
               const SizedBox(height: MSizes.nm),
@@ -165,7 +174,8 @@ class LoginScreen extends StatelessWidget {
                   style: MFonts.fontCB1,
                 ),
                 TextButton(
-                    onPressed: () {}, child: const Text("Create Account")),
+                    onPressed: () => Get.to(() => const CreateAccountScreen()),
+                    child: const Text("Create Account")),
               ])
             ],
           ),

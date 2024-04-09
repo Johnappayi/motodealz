@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class MHelperFunctions {
- 
   static void showSnackBar(String message) {
     ScaffoldMessenger.of(Get.context!).showSnackBar(
       SnackBar(content: Text(message)),
@@ -28,6 +27,28 @@ class MHelperFunctions {
     );
   }
 
+//  static void navigateToScreen(BuildContext context, Widget screen) {
+//   Navigator.push(
+//     context,
+//     PageRouteBuilder(
+//       transitionDuration: const Duration(milliseconds: 200), // Set the duration of the animation
+//       transitionsBuilder: (context, animation, secondaryAnimation, child) {
+//         const begin = Offset(1.0, 0.0);
+//         const end = Offset.zero;
+//         const curve = Curves.ease;
+//         var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+//         var offsetAnimation = animation.drive(tween);
+//         return SlideTransition(
+//           position: offsetAnimation,
+//           child: child,
+//         );
+//       },
+//       pageBuilder: (context, animation, secondaryAnimation) {
+//         return screen;
+//       },
+//     ),
+//   );
+// }
   static void navigateToScreen(BuildContext context, Widget screen) {
     Navigator.push(
       context,
@@ -59,7 +80,12 @@ class MHelperFunctions {
     return MediaQuery.of(Get.context!).size.width;
   }
 
-  static String getFormattedDate(DateTime date, {String format = 'dd MMM yyyy'}) {
+  static String getFormattedDate(DateTime date,
+      {String format = 'dd MMM yyyy'}) {
+    return DateFormat(format).format(date);
+  }
+
+  static String getFormattedTime(DateTime date, {String format = 'hh:mm a'}) {
     return DateFormat(format).format(date);
   }
 
@@ -70,7 +96,8 @@ class MHelperFunctions {
   static List<Widget> wrapWidgets(List<Widget> widgets, int rowSize) {
     final wrappedList = <Widget>[];
     for (var i = 0; i < widgets.length; i += rowSize) {
-      final rowChildren = widgets.sublist(i, i + rowSize > widgets.length ? widgets.length : i + rowSize);
+      final rowChildren = widgets.sublist(
+          i, i + rowSize > widgets.length ? widgets.length : i + rowSize);
       wrappedList.add(Row(children: rowChildren));
     }
     return wrappedList;

@@ -70,7 +70,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '946874732653',
     projectId: 'motodealz-7badd',
     storageBucket: 'motodealz-7badd.appspot.com',
-    androidClientId: '946874732653-datlad88no4nkttro8c6offd94r9p4uq.apps.googleusercontent.com',
+    androidClientId: '946874732653-d1ktgc13tip964ugbrvggvn8v38ht5kq.apps.googleusercontent.com',
     iosClientId: '946874732653-o1jahlb3ejkdfjnjtc9ft1qb6s82s05r.apps.googleusercontent.com',
     iosBundleId: 'com.example.motodealz',
   );

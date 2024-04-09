@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:motodealz/features/shop/model/vehicle_model.dart';
+import 'package:motodealz/common/model/vehicle_model.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
 import 'package:motodealz/utils/formatters/formatter.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
+import 'package:motodealz/utils/http/http_client.dart';
 
 class ListedAdFrame1 extends StatelessWidget {
   const ListedAdFrame1({
-    Key? key,
+    super.key,
     required this.vehicle,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   final Vehicle vehicle;
   final VoidCallback onPressed;
@@ -21,7 +21,6 @@ class ListedAdFrame1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final darkMode = MHelperFunctions.isDarkMode(context);
- 
     return GestureDetector(
       onTap: onPressed,
       child: Column(
@@ -46,10 +45,33 @@ class ListedAdFrame1 extends StatelessWidget {
                     width: MHelperFunctions.screenWidth() * 0.42,
                     child: Column(
                       children: [
-                        Image.asset(
-                          height:  MHelperFunctions.screenHeight() * 0.15,
-                          vehicle.images[0],
-                          fit: BoxFit.cover,
+                        FutureBuilder<String>(
+                          future: MHttpHelper.convertGCSUrlToHttps(
+                              vehicle.images.isNotEmpty
+                                  ? vehicle.images[0]
+                                  : ''),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Image.asset(
+                                darkMode
+                                    ? MImages.sampleCarDarkMode
+                                    : MImages.sampleCar,
+                                width: MHelperFunctions.screenWidth() * 0.42,
+                                height: MHelperFunctions.screenHeight() * 0.15,
+                                fit: BoxFit.cover,
+                              );
+                            } else if (snapshot.hasError) {
+                              return Text('Error: ${snapshot.error}');
+                            } else {
+                              return Image.network(
+                                snapshot.data ?? '',
+                                width: MHelperFunctions.screenWidth() * 0.42,
+                                height: MHelperFunctions.screenHeight() * 0.15,
+                                fit: BoxFit.cover,
+                              );
+                            }
+                          },
                         ),
                         Container(
                           decoration: BoxDecoration(

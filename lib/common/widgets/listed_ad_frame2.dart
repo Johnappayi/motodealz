@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:motodealz/features/shop/model/vehicle_model.dart';
+import 'package:motodealz/common/model/vehicle_model.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
 import 'package:motodealz/utils/formatters/formatter.dart';
+import 'package:motodealz/utils/http/http_client.dart';
 
 class ListedAdFrame2 extends StatelessWidget {
   const ListedAdFrame2({
-    Key? key,
+    super.key,
     required this.vehicle,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   final Vehicle vehicle;
   final VoidCallback onPressed;
@@ -41,11 +41,31 @@ class ListedAdFrame2 extends StatelessWidget {
                   // ignore: sized_box_for_whitespace
                   child: Stack(
                     children: [
-                      Image.asset(
-                        vehicle.images[0],
-                        height: MHelperFunctions.screenHeight() * 0.22,
-                        width: MHelperFunctions.screenWidth(),
-                        fit: BoxFit.cover,
+                      FutureBuilder<String>(
+                        future: MHttpHelper.convertGCSUrlToHttps(
+                            vehicle.images.isNotEmpty ? vehicle.images[0] : ''),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Image.asset(
+                                darkMode
+                                    ? MImages.sampleCarDarkMode
+                                    : MImages.sampleCar,
+                                width: MHelperFunctions.screenWidth() ,
+                                height: MHelperFunctions.screenHeight() * 0.22,
+                                fit: BoxFit.cover,
+                              );
+                          } else if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          } else {
+                            return Image.network(
+                              snapshot.data ?? '',
+                              width: MHelperFunctions.screenWidth(),
+                              height: MHelperFunctions.screenHeight() * 0.22,
+                              fit: BoxFit.cover,
+                            );
+                          }
+                        },
                       ),
                       Positioned(
                         bottom: 0,
@@ -97,9 +117,10 @@ class ListedAdFrame2 extends StatelessWidget {
                 ),
                 if (vehicle.isPremium)
                   Positioned(
-                      top: -5,
-                      left: 1,
-                      child: Image.asset(MImages.premiumIcon)),
+                    top: -5,
+                    left: 1,
+                    child: Image.asset(MImages.premiumIcon),
+                  ),
               ],
             ),
           ),

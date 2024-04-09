@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:firebase_storage/firebase_storage.dart';
 
 class MHttpHelper {
-  static const String _baseUrl = 'https://your-api-base-url.com'; // Replace with your API base URL
+  static const String _baseUrl =
+      'https://your-api-base-url.com'; // Replace with your API base URL
 
   // Helper method to make a GET request
   static Future<Map<String, dynamic>> get(String endpoint) async {
@@ -11,7 +13,8 @@ class MHttpHelper {
   }
 
   // Helper method to make a POST request
-  static Future<Map<String, dynamic>> post(String endpoint, dynamic data) async {
+  static Future<Map<String, dynamic>> post(
+      String endpoint, dynamic data) async {
     final response = await http.post(
       Uri.parse('$_baseUrl/$endpoint'),
       headers: {'Content-Type': 'application/json'},
@@ -43,5 +46,14 @@ class MHttpHelper {
     } else {
       throw Exception('Failed to load data: ${response.statusCode}');
     }
+  }
+
+// Function to convert 'gs' URL to HTTPS URL
+  static Future<String> convertGCSUrlToHttps(String gsUrl) async {
+    // Create a FirebaseStorage instance
+    FirebaseStorage storage = FirebaseStorage.instance;
+    // Get the download URL for the referenced image
+    String downloadUrl = await storage.ref(gsUrl).getDownloadURL();
+    return downloadUrl;
   }
 }

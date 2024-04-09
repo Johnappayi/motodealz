@@ -13,20 +13,20 @@ class MAnimationLoaderWidget extends StatelessWidget {
   ///   - showAction: Whether to show an action button below the text.
   ///   - actionText: The text to be displayed on the action button.
   ///   - onActionPressed: Callback function to be executed when the action button is pressed.
+  const MAnimationLoaderWidget({
+    super.key,
+    required this.text,
+    required this.animation,
+    this.showAction = false,
+    this.actionText,
+    this.onActionPressed,
+  });
+
   final String text;
   final String animation;
   final bool showAction;
   final String? actionText;
   final VoidCallback? onActionPressed;
-
-  const MAnimationLoaderWidget({
-    super.key,
-    required this.text,
-    required this.animation,
-    this.showAction = true,
-    this.actionText,
-    this.onActionPressed,
-  });
 
   @override
   Widget build(BuildContext context){
@@ -34,7 +34,7 @@ class MAnimationLoaderWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Lottie.asset(animation, width: MediaQuery.of(context).size.width),
+          Lottie.asset(animation, width: MediaQuery.of(context).size.width * 0.6),
           const SizedBox(height: MSizes.defaultSpace),
           Text(
             text,
@@ -61,3 +61,4 @@ class MAnimationLoaderWidget extends StatelessWidget {
 
   }
 }
+

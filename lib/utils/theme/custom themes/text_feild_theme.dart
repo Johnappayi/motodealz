@@ -8,7 +8,6 @@ class MTextFormFieldTheme {
   static InputDecorationTheme lightInputDecorationTheme = InputDecorationTheme(
     filled: true,
     fillColor: MColors.card,
-    errorMaxLines: 3,
     prefixIconColor: MColors.darkGrey,
     suffixIconColor: MColors.darkGrey,
     constraints: const BoxConstraints.expand(height: MSizes.inputFieldHeight),
@@ -18,11 +17,11 @@ class MTextFormFieldTheme {
     floatingLabelStyle: const TextStyle().copyWith(color: MColors.black.withOpacity(0.8)),
     border: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(MSizes.inputFieldRadius),
-      borderSide:  BorderSide(width: 1, color: MColors.primary.withOpacity(0.7)),
+      borderSide:  BorderSide.none,
     ),
     enabledBorder: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(MSizes.inputFieldRadius),
-      borderSide: const BorderSide(width: 1, color: MColors.lightGrey),
+      borderSide: BorderSide.none,
     ),
     focusedBorder:const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(MSizes.inputFieldRadius),
@@ -41,7 +40,6 @@ class MTextFormFieldTheme {
   static InputDecorationTheme darkInputDecorationTheme = InputDecorationTheme(
     filled: true,
     fillColor: MColors.cardDark,
-    errorMaxLines: 3,
     prefixIconColor: MColors.darkGrey,
     suffixIconColor: MColors.darkGrey,
     constraints: const BoxConstraints.expand(height: MSizes.inputFieldHeight),
@@ -50,11 +48,11 @@ class MTextFormFieldTheme {
     floatingLabelStyle: const TextStyle().copyWith(color: MColors.white.withOpacity(0.8)),
     border: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(MSizes.inputFieldRadius),
-      borderSide:  BorderSide(width: 1, color: MColors.secondary.withOpacity(0.4)),
+      borderSide:  BorderSide.none,
     ),
     enabledBorder: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(MSizes.inputFieldRadius),
-      borderSide:  BorderSide(width: 1, color: MColors.secondary.withOpacity(0.4)),
+      borderSide:  BorderSide.none,
     ),
     focusedBorder: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(MSizes.inputFieldRadius),

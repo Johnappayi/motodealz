@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:motodealz/common/widgets/custom_indicator.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
 
@@ -22,6 +23,31 @@ class SplashScreen extends StatelessWidget {
           ),
         ),
         Center(child: Image.asset(MImages.lightAppLogo))
+      ],
+    );
+  }
+}
+
+class SplashScreen2 extends StatelessWidget {
+  const SplashScreen2({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                MColors.secondary,
+                MColors.primary,
+              ],
+            ),
+          ),
+        ),
+        const CustomIndicator()
       ],
     );
   }

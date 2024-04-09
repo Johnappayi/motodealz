@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:motodealz/common/styles/svg_styles.dart';
+import 'package:get/get.dart';
 import 'package:motodealz/common/widgets/app_bar.dart';
 import 'package:motodealz/common/widgets/car_category_item.dart';
+import 'package:motodealz/common/widgets/custom_indicator.dart';
 import 'package:motodealz/common/widgets/listed_ad_frame1.dart';
 import 'package:motodealz/common/widgets/side_bar.dart';
-import 'package:motodealz/features/shop/controller/vehicle_controller.dart';
-import 'package:motodealz/features/shop/model/vehicle_model.dart';
+import 'package:motodealz/common/controller/vehicle_controller.dart';
+import 'package:motodealz/common/model/vehicle_model.dart';
 import 'package:motodealz/features/shop/screens/vehicle_view_page.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
@@ -15,7 +15,7 @@ import 'package:motodealz/utils/constants/sizes.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -23,8 +23,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool _isSideBarOpen = false;
-  final VehicleController _vehicleController = VehicleController();
-  late List<Vehicle> _vehicles;
+  final _vehicleController = Get.put(VehicleController());
+  late List<Vehicle> _vehicles = [];
 
   void _toggleSideBar() {
     setState(() {
@@ -35,7 +35,19 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _vehicles = _vehicleController.getAllVehicles();
+    _loadVehicles();
+  }
+
+  // Method to load vehicles asynchronously
+  void _loadVehicles() async {
+    try {
+      List<Vehicle> vehicles = await _vehicleController.getAllVehicles();
+      setState(() {
+        _vehicles = vehicles; // Update _vehicles when data is fetched
+      });
+    } catch (error) {
+      // print("Error loading vehicles: $error");
+    }
   }
 
   @override
@@ -96,77 +108,91 @@ class _HomeScreenState extends State<HomeScreen> {
                                             });
                                           },
                                         ),
-                                        const SizedBox(height: MSizes.nm,),
+                                        const SizedBox(
+                                          height: MSizes.nm,
+                                        ),
                                         CarCategoryItem(
                                           darkMode: darkMode,
                                           icon: MImages.hatchbackIcon,
                                           type: 'Hatchback',
-                                          onPressed: () { setState(() {
+                                          onPressed: () {
+                                            setState(() {
                                               // Update the list of vehicles based on the selected category
                                               _vehicles = _vehicleController
                                                   .getVehiclesByCategory(
                                                       'Hatchback');
-                                            });},
+                                            });
+                                          },
                                         )
                                       ],
                                     ),
                                     const Spacer(),
                                     Column(
-                                       crossAxisAlignment:
+                                      crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
                                         CarCategoryItem(
                                           darkMode: darkMode,
                                           icon: MImages.suvIcon,
                                           type: 'SUV',
-                                          onPressed: () { setState(() {
+                                          onPressed: () {
+                                            setState(() {
                                               // Update the list of vehicles based on the selected category
                                               _vehicles = _vehicleController
-                                                  .getVehiclesByCategory(
-                                                      'SUV');
-                                            });},
+                                                  .getVehiclesByCategory('SUV');
+                                            });
+                                          },
                                         ),
-                                        const SizedBox(height: MSizes.nm,),
+                                        const SizedBox(
+                                          height: MSizes.nm,
+                                        ),
                                         CarCategoryItem(
                                           darkMode: darkMode,
                                           icon: MImages.muvIcon,
                                           type: 'MUV',
-                                          onPressed: () { setState(() {
+                                          onPressed: () {
+                                            setState(() {
                                               // Update the list of vehicles based on the selected category
                                               _vehicles = _vehicleController
-                                                  .getVehiclesByCategory(
-                                                      'MUV');
-                                            });},
+                                                  .getVehiclesByCategory('MUV');
+                                            });
+                                          },
                                         )
                                       ],
                                     ),
                                     const Spacer(),
                                     Column(
-                                       crossAxisAlignment:
+                                      crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
                                         CarCategoryItem(
                                           darkMode: darkMode,
                                           icon: MImages.coupeIcon,
                                           type: 'Coupe',
-                                          onPressed: () { setState(() {
+                                          onPressed: () {
+                                            setState(() {
                                               // Update the list of vehicles based on the selected category
                                               _vehicles = _vehicleController
                                                   .getVehiclesByCategory(
                                                       'Coupe');
-                                            });},
+                                            });
+                                          },
                                         ),
-                                        const SizedBox(height: MSizes.nm,),
+                                        const SizedBox(
+                                          height: MSizes.nm,
+                                        ),
                                         CarCategoryItem(
                                           darkMode: darkMode,
                                           icon: MImages.pickupIcon,
                                           type: 'Pickup',
-                                          onPressed: () { setState(() {
+                                          onPressed: () {
+                                            setState(() {
                                               // Update the list of vehicles based on the selected category
                                               _vehicles = _vehicleController
                                                   .getVehiclesByCategory(
                                                       'Pickup');
-                                            });},
+                                            });
+                                          },
                                         )
                                       ],
                                     ),
@@ -178,17 +204,17 @@ class _HomeScreenState extends State<HomeScreen> {
                           const SizedBox(
                             height: MSizes.nm,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              const Text(
-                                "Choose your location",
-                                style: MFonts.fontCB3,
-                              ),
-                              SvgPicture.asset(MImages.locationIcon,
-                                  colorFilter: MSvgStyle.svgStyle(darkMode)),
-                            ],
-                          ),
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.end,
+                          //   children: [
+                          //     const Text(
+                          //       "Choose your location",
+                          //       style: MFonts.fontCB3,
+                          //     ),
+                          //     SvgPicture.asset(MImages.locationIcon,
+                          //         colorFilter: MSvgStyle.svgStyle(darkMode)),
+                          //   ],
+                          // ),
                           const SizedBox(
                             height: MSizes.md,
                           ),
@@ -214,22 +240,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 itemCount: _vehicles.length,
                                 itemBuilder: (context, index) {
-                                  return ListedAdFrame1(
-                                    onPressed: () {
-                                      Navigator.push(
+                                  if (_vehicles.isEmpty) {
+                                    return const CustomIndicator(); // or any other loading indicator
+                                  } else {
+                                    return ListedAdFrame1(
+                                      onPressed: () =>
+                                          MHelperFunctions.navigateToScreen(
                                         context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              VehicleVeiwScreen(
-                                            vehicle: _vehicles[index],
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    vehicle: _vehicles[index],
-                                  );
+                                        VehicleVeiwScreen(
+                                            vehicle: _vehicles[index]),
+                                      ),
+                                      vehicle: _vehicles[index],
+                                    );
+                                  }
                                 },
-                              ),
+                              )
                             ],
                           ),
                         ],

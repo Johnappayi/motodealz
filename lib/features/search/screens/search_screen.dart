@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:motodealz/common/widgets/app_bar.dart';
 import 'package:motodealz/common/widgets/car_category_item.dart';
+import 'package:motodealz/common/widgets/custom_indicator.dart';
 import 'package:motodealz/common/widgets/input_field.dart';
 import 'package:motodealz/common/widgets/listed_ad_frame2.dart';
 import 'package:motodealz/common/widgets/popular_brand_container.dart';
 import 'package:motodealz/common/widgets/side_bar.dart';
-import 'package:motodealz/features/shop/controller/vehicle_controller.dart';
-import 'package:motodealz/features/shop/model/vehicle_model.dart';
+import 'package:motodealz/common/controller/vehicle_controller.dart';
+import 'package:motodealz/common/model/vehicle_model.dart';
 import 'package:motodealz/features/shop/screens/vehicle_view_page.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
@@ -17,7 +19,7 @@ import 'package:motodealz/utils/device/device_utility.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
 
 class SearchScreen extends StatefulWidget {
-  const SearchScreen({Key? key}) : super(key: key);
+  const SearchScreen({super.key});
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
@@ -25,9 +27,9 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   bool _isSideBarOpen = false;
-  final VehicleController _vehicleController = VehicleController();
-  late List<Vehicle> _vehicles;
+  final _vehicleController = Get.put(VehicleController());
   bool _showResults = false;
+  late List<Vehicle> _vehicles = [];
 
   void _toggleSideBar() {
     setState(() {
@@ -38,7 +40,19 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   void initState() {
     super.initState();
-    _vehicles = _vehicleController.getAllVehicles();
+    _loadVehicles();
+  }
+
+  // Method to load vehicles asynchronously
+  void _loadVehicles() async {
+    try {
+      List<Vehicle> vehicles = await _vehicleController.getAllVehicles();
+      setState(() {
+        _vehicles = vehicles; // Update _vehicles when data is fetched
+      });
+    } catch (error) {
+      // print("Error loading vehicles: $error");
+    }
   }
 
   @override
@@ -317,7 +331,10 @@ class _SearchScreenState extends State<SearchScreen> {
                             children: [
                               Text(
                                 _showResults
-                                    ? "Search Results"
+                                    ? (_vehicles.isEmpty
+                                            ? null
+                                            : "Search Results") ??
+                                        ""
                                     : "Top Recommendations",
                                 style: MFonts.fontBH1,
                               ),
@@ -362,20 +379,20 @@ class _SearchScreenState extends State<SearchScreen> {
                                 ),
                                 itemCount: _vehicles.length,
                                 itemBuilder: (context, index) {
-                                  return ListedAdFrame2(
-                                    onPressed: () {
-                                      Navigator.push(
+                                if (_vehicles.isEmpty) {
+                                    return const CustomIndicator(); // or any other loading indicator
+                                  } else {
+
+                                    return ListedAdFrame2(
+                                      onPressed: () =>
+                                          MHelperFunctions.navigateToScreen(
                                         context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              VehicleVeiwScreen(
-                                            vehicle: _vehicles[index],
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    vehicle: _vehicles[index],
-                                  );
+                                        VehicleVeiwScreen(
+                                            vehicle: _vehicles[index]),
+                                      ),
+                                      vehicle: _vehicles[index],
+                                    );
+                                  }
                                 },
                               ),
                             ],

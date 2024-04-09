@@ -25,6 +25,8 @@ class ChatScreen extends StatefulWidget {
 class ChatScreenState extends State<ChatScreen> {
   final ChatRoomController _chatController = Get.put(ChatRoomController());
   final TextEditingController _messageController = TextEditingController();
+  // Define a ScrollController
+  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -111,22 +113,32 @@ class ChatScreenState extends State<ChatScreen> {
                               child: SizedBox(),
                             );
                           }
-                          List<Message> messages = snapshot.data!;
+                          // Reverse the order of messages
+                          List<Message> messages = snapshot.data!.reversed.toList();
+                          // Scroll to the end of the list after loading the messages
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            _scrollController.animateTo(
+                              _scrollController.position.minScrollExtent,
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.easeOut,
+                            );
+                          });
                           return ListView.builder(
+                            shrinkWrap: true,
+                            reverse: true, // Set reverse to true
+                            controller: _scrollController,
                             itemCount: messages.length,
                             itemBuilder: (context, index) {
                               Message message = messages[index];
                               if (message.senderId == user?.uid) {
                                 return OwnMessageCard(
                                   message: message.text,
-                                  time: message
-                                      .timestamp, // Assuming timestamp is a DateTime object
+                                  time: message.timestamp, // Assuming timestamp is a DateTime object
                                 );
                               } else {
                                 return ReplyCard(
                                   message: message.text,
-                                  time: message
-                                      .timestamp, // Assuming timestamp is a DateTime object
+                                  time: message.timestamp, // Assuming timestamp is a DateTime object
                                 );
                               }
                             },
@@ -135,39 +147,43 @@ class ChatScreenState extends State<ChatScreen> {
                       ),
                     ),
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: darkMode
-                          ? MColors.darkerGrey
-                          : MColors.primaryBackground,
-                    ),
-                    child: Padding(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: MSizes.md),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: TextFormField(
-                              controller: _messageController,
-                              decoration: const InputDecoration(
-                                hintText: 'Type a message...',
+                  //container input
+                  Align(
+                    alignment: Alignment.bottomCenter ,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: darkMode
+                            ? MColors.darkerGrey
+                            : MColors.primaryBackground,
+                      ),
+                      child: Padding(
+                        padding:
+                            const EdgeInsets.symmetric(horizontal: MSizes.md),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: TextFormField(
+                                controller: _messageController,
+                                decoration: const InputDecoration(
+                                  hintText: 'Type a message...',
+                                ),
                               ),
                             ),
-                          ),
-                          IconButton(
-                            alignment: Alignment.center,
-                            icon: const Icon(Icons.send),
-                            onPressed: () {
-                              _chatController.sendMessage(
-                                  _messageController.text,
-                                  user!.uid,
-                                  widget.roomId);
-                              _messageController.clear();
-                            },
-                          ),
-                        ],
+                            IconButton(
+                              alignment: Alignment.center,
+                              icon: const Icon(Icons.send),
+                              onPressed: () {
+                                _chatController.sendMessage(
+                                    _messageController.text,
+                                    user!.uid,
+                                    widget.roomId);
+                                _messageController.clear();
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

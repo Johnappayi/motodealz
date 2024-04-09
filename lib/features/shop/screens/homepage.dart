@@ -243,7 +243,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   if (_vehicles.isEmpty) {
                                     return const CustomIndicator(); // or any other loading indicator
                                   } else {
-
                                     return ListedAdFrame1(
                                       onPressed: () =>
                                           MHelperFunctions.navigateToScreen(

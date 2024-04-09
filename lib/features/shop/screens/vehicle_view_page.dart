@@ -23,9 +23,7 @@ class VehicleVeiwScreen extends StatefulWidget {
     super.key,
     required this.vehicle,
   });
-
   final Vehicle vehicle;
-
   @override
   VehicleVeiwScreenState createState() => VehicleVeiwScreenState();
 }
@@ -35,7 +33,6 @@ class VehicleVeiwScreenState extends State<VehicleVeiwScreen> {
   final ChatRoomController _chatRoomController = ChatRoomController();
   final List<String> _imageUrls = [];
   User? user = FirebaseAuth.instance.currentUser;
-
   @override
   void initState() {
     super.initState();
@@ -52,7 +49,6 @@ class VehicleVeiwScreenState extends State<VehicleVeiwScreen> {
   @override
   Widget build(BuildContext context) {
     final bool darkMode = MHelperFunctions.isDarkMode(context);
-
     return SafeArea(
       child: Scaffold(
         body: Stack(
@@ -139,59 +135,38 @@ class VehicleVeiwScreenState extends State<VehicleVeiwScreen> {
       });
     }
   }
-void _onChatPressed(BuildContext context) async {
-  String? buyerId = user?.uid; // Get the buyer's ID (implement this logic)
-  String sellerId = widget.vehicle.ownerId;
 
-  if (buyerId == null || buyerId == sellerId) {
-    return;
+  void _onChatPressed(BuildContext context) async {
+    String? buyerId = user?.uid; // Get the buyer's ID (implement this logic)
+    String sellerId = widget.vehicle.ownerId;
+    if (buyerId == null || buyerId == sellerId) {
+      return;
+    }
+    try {
+      String roomId =
+          await _chatRoomController.createChatRoom(buyerId, sellerId);
+      String displayName =
+          await _chatRoomController.getUserName(sellerId) ?? '';
+      MHelperFunctions.navigateToScreen(
+        context,
+        ChatScreen(roomId: roomId, displayName: displayName),
+      );
+    } catch (error) {
+      // Handle error if fetching chat rooms fails
+      // print('Error fetching chat rooms: $error');
+    }
   }
 
-  try {
-    String roomId = await _chatRoomController.createChatRoom(buyerId, sellerId);
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => Material( // Wrap with Material widget
-          child: FutureBuilder<String?>(
-            future: _chatRoomController.getUserName(sellerId),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const SizedBox(); // Placeholder widget
-              } else if (snapshot.hasError) {
-                return const ListTile(
-                  title: Text('Error loading display name'),
-                );
-              } else {
-                return ChatScreen(
-                  roomId: roomId,
-                  displayName: snapshot.data ?? '',
-                );
-              }
-            },
-          ),
-        ),
-      ),
-    );
-  } catch (error) {
-    // Handle error if fetching chat rooms fails
-    // print('Error fetching chat rooms: $error');
+  Widget _buildChatButton(BuildContext context) {
+    String? buyerId = user?.uid; // Use null-aware operator
+    String sellerId = widget.vehicle.ownerId;
+    if (buyerId == null || buyerId == sellerId) {
+      return const SizedBox();
+    } else {
+      return SmallButton(
+        onPressed: () => _onChatPressed(context),
+        child: const Text("Chat"),
+      );
+    }
   }
-}
-
- Widget _buildChatButton(BuildContext context) {
-  String? buyerId = user?.uid; // Use null-aware operator
-  String sellerId = widget.vehicle.ownerId;
-
-  if (buyerId == null || buyerId == sellerId) {
-    return const SizedBox();
-  } else {
-    return SmallButton(
-      onPressed: () => _onChatPressed(context),
-      child: const Text("Chat"),
-    );
-  }
-}
-
 }

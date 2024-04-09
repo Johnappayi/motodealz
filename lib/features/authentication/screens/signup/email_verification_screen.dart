@@ -1,6 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:motodealz/common/styles/spacing_styles.dart';
+import 'package:motodealz/common/widgets/button_container.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/data/repositories/authentication/authentication_repository.dart';
 import 'package:motodealz/features/authentication/controllers/email_verification/verify_email_controller.dart';
@@ -19,55 +21,65 @@ class EmailVerificationScreen extends StatelessWidget {
     final controller = Get.put(VerifyEmailController());
 
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        actions: [
-          IconButton(
-              onPressed: () => AuthenticationRepository.instance.logout(),
-              icon: const Icon(CupertinoIcons.clear))
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-            padding: const EdgeInsets.all(MSizes.defaultSpace),
-            child: Column(children: [
-              ///Image
-              Image(
-                  image: AssetImage(MImages.verificationScreenImage),
-                  width: MHelperFunctions.screenWidth() * 0.6),
-              const SizedBox(height: MSizes.spaceBtwSections),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: MSpacingStyle.paddingWithAppBarHeight,
+            child: Column(
+              children: [
+                 Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          ButtonContainer(
+                              onPressed: () =>
+                                  AuthenticationRepository.instance.logout(),
+                              child: MImages.closeIcon),
+                        ],
+                      ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: MSizes.lg),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: MSizes.sm,
+                      ),
+                      Text("VERIFY YOUR EMAIL", style: MFonts.fontAH1),
+                      SizedBox(
+                        height: MSizes.md,
+                      ),
+                      Text(
+                          "Congratulations! You are just a step away. Kindly verify your email to continue.",
+                          textAlign: TextAlign.center,
+                          style: MFonts.fontCB1),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: MSizes.md,
+                ),
+                SizedBox(
+                  height: MHelperFunctions.screenHeight() * 0.55,
+                  child: Center(
+                    child: SvgPicture.asset(MImages.verificationScreenImage),
+                  ),
+                ),
 
-              ///Title and Subtitle
-              const Text("Verify your Email!", style: MFonts.fontAH1),
-              const SizedBox(
-                height: MSizes.md,
-              ),
-              Text(email ?? '',
-                  textAlign: TextAlign.center, style: MFonts.fontCB2b),
-              const SizedBox(
-                height: MSizes.md,
-              ),
-              const Text(
-                  "Congratulations! You are just one step away from starting your journey with us. Kindly verify your email to continue.",
-                  textAlign: TextAlign.center,
-                  style: MFonts.fontCB1),
-              const SizedBox(
-                height: MSizes.md,
-              ),
-
-              ///Buttons
-              LargeButtonNS(
-                child: const Text("Continue"),
-                onPressed: () =>
-                    Get.to(() => controller.checkEmailVerificationStatus()),
-              ),
-              const SizedBox(
-                height: MSizes.md,
-              ),
-              TextButton(
-                  onPressed: () => controller.sendEmailVerification(),
-                  child: const Text("Resend Email")),
-            ])),
+                ///Buttons
+                LargeButtonNS(
+                  child: const Text("Continue"),
+                  onPressed: () =>
+                      Get.to(() => controller.checkEmailVerificationStatus()),
+                ),
+                const SizedBox(
+                  height: MSizes.md,
+                ),
+                TextButton(
+                    onPressed: () => controller.sendEmailVerification(),
+                    child: const Text("Resend Email")),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

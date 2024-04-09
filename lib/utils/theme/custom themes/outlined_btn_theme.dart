@@ -6,7 +6,6 @@ import '../../constants/sizes.dart';
 /* -- Light & Dark Outlined Button Themes -- */
 class MOutlinedButtonTheme {
   MOutlinedButtonTheme._(); //To avoid creating instances
-
   /* -- Light Theme -- */
   static final lightOutlinedButtonTheme = OutlinedButtonThemeData(
     style: OutlinedButton.styleFrom(
@@ -29,7 +28,7 @@ class MOutlinedButtonTheme {
       elevation: 0,
       backgroundColor: MColors.surfaceDark,
       foregroundColor: MColors.secondary,
-      side: const BorderSide(color: MColors.white),
+      side: const BorderSide(color: MColors.secondary),
       textStyle: const TextStyle(
           fontSize: 20, color: MColors.white, fontWeight: FontWeight.w600),
       padding: const EdgeInsets.symmetric(

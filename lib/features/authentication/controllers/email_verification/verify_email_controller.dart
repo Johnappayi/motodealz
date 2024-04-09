@@ -1,10 +1,7 @@
 import 'dart:async';
-
 import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
 import 'package:motodealz/common/widgets/success_screen.dart';
-// import 'package:motodealz/common/widgets/navigation_menu.dart';
 import 'package:motodealz/data/repositories/authentication/authentication_repository.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/popups/loader.dart';

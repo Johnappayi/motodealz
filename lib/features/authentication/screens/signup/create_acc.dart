@@ -126,7 +126,7 @@ class CreateAccountScreen extends StatelessWidget {
                   ),
                 ),
               ),
-
+    const SizedBox(height: MSizes.xs),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -151,7 +151,7 @@ class CreateAccountScreen extends StatelessWidget {
                 ],
               ),
 
-              const SizedBox(height: MSizes.spaceBtwSections),
+              const SizedBox(height: MSizes.sm),
 
               LargeSecButtonWithIcon(
                 icon: MImages.google,

@@ -106,11 +106,12 @@ static const String signInPrompt =
 
   // -- Lottie Animations
   static String success = "assets/animations/successful.json";
+  static String login = "assets/animations/successful.json";
   static String emailSent = "assets/animations/email-sent.json";
   static String verifySuccess = "assets/animations/verification-success.json";
   static String emailVerifyScreen = "assets/animations/email-verify-screen.gif";
   static String verificationScreenImage =
-      "assets/animations/icons8-man-window-paper-plane-100.png";
+      "assets/images/email verifcation.svg";
   static String processing = "assets/animations/processing.json";
 
   // static const String adidasLogo = "assets/icons/brands/adidas-logo.png";

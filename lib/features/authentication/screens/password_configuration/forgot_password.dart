@@ -4,6 +4,7 @@ import 'package:motodealz/common/styles/spacing_styles.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/common/widgets/input_field.dart';
 import 'package:motodealz/features/authentication/controllers/forgot_password/forgot_password_controller.dart';
+import 'package:motodealz/features/authentication/screens/login/login.dart';
 import 'package:motodealz/features/authentication/screens/signup/create_acc.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
@@ -62,7 +63,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                         validator: MValidator.validateEmail,
                         prefixIcon: MImages.mailIcon,
                       ),
-                      const SizedBox(height: MSizes.spaceBtwInputFields),
+                      const SizedBox(height: MSizes.xs),
                       LargeButtonNS(
                         child: const Text("Send"),
                         onPressed: () => controller.sendPasswordResetEmail(),
@@ -73,6 +74,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                 ),
               ),
 
+              const SizedBox(height: MSizes.xs),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -97,13 +99,13 @@ class ForgotPasswordScreen extends StatelessWidget {
                 ],
               ),
 
-              const SizedBox(height: MSizes.spaceBtwSections),
+              const SizedBox(height: MSizes.sm),
 
-              const LargeSecButtonWithIcon(
-                icon: MImages.google,
-                child: Text(
-                  "Continue with google",
-                  style: MFonts.fontCB1,
+              LargeSecButton(
+                onPressed: () => Get.to(() => const LoginScreen()),
+                child: const Text(
+                  "Login",
+                  style: MFonts.fontCH2,
                 ),
               ),
 

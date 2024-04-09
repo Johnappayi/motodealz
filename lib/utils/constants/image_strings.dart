@@ -15,12 +15,12 @@ class MImages {
   // static const String facebook = "assets/logos/facebook-icon.png";
 
   // -- Category Icons
-  static const String sedanIcon = "assets/icons/sedan.svg";
-  static const String suvIcon = "assets/icons/SUV.svg";
-  static const String coupeIcon = "assets/icons/coupe.svg";
-  static const String hatchbackIcon = "assets/icons/hatchback.svg";
-  static const String muvIcon = "assets/icons/MUV.svg";
-  static const String pickupIcon = "assets/icons/pick up.svg";
+  static const String sedanIcon = "assets/icons/coupe.png";
+  static const String suvIcon = "assets/icons/estate.png";
+  static const String coupeIcon = "assets/icons/convertible.png";
+  static const String hatchbackIcon = "assets/icons/hatchback.png";
+  static const String muvIcon = "assets/icons/mpv.png";
+  static const String pickupIcon = "assets/icons/pickup.png";
 
   // -- Navigation Bar Icons
   static const String homeIcon = "assets/icons/home filled.svg";

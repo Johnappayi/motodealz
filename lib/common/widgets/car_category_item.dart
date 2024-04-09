@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:motodealz/common/styles/svg_styles.dart';
+import 'package:flutter/widgets.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 
 class CarCategoryItem extends StatelessWidget {
@@ -23,8 +22,8 @@ class CarCategoryItem extends StatelessWidget {
       onTap: onPressed,
       child: Row(
         children: [
-          SvgPicture.asset(icon, colorFilter: MSvgStyle.svgStyle(darkMode)),
-          const SizedBox(width: 12),
+          Image.asset(icon, height: 18),
+          const SizedBox(width: 4),
           Text(
             type,
             style: MFonts.fontCB2,

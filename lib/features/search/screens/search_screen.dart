@@ -98,7 +98,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                 const Text(
                                   "Browse Categories",
                                   style: MFonts.fontBH1,
-                                ), // Example Text Widget 1
+                                ), 
+                                const SizedBox(height: MSizes.md),// Example Text Widget 1
                                 Container(
                                   padding: const EdgeInsets.all(MSizes.md),
                                   decoration: BoxDecoration(
@@ -131,7 +132,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                             },
                                           ),
                                           const SizedBox(
-                                            height: MSizes.nm,
+                                            height: MSizes.md,
                                           ),
                                           CarCategoryItem(
                                             darkMode: darkMode,
@@ -169,7 +170,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                             },
                                           ),
                                           const SizedBox(
-                                            height: MSizes.nm,
+                                            height: MSizes.md,
                                           ),
                                           CarCategoryItem(
                                             darkMode: darkMode,
@@ -207,7 +208,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                             },
                                           ),
                                           const SizedBox(
-                                            height: MSizes.nm,
+                                            height: MSizes.md,
                                           ),
                                           CarCategoryItem(
                                             darkMode: darkMode,

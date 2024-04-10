@@ -91,6 +91,25 @@ class UserRepository extends GetxController {
     }
   }
 
+  /// Function to update the user's vehicles list in Firestore
+  Future<void> updateUserVehiclesList(String userId, String vehicleId) async {
+    try {
+      await _db.collection("Users").doc(userId).update({
+        'Vehicles': FieldValue.arrayUnion([vehicleId]),
+        'HasListedAd': true, // Update HasListed to true
+        'NoOfListedAd': FieldValue.increment(1), // Increment NoOfListedAd
+      });
+    } on FirebaseException catch (e) {
+      throw MFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const MFormatException();
+    } on PlatformException catch (e) {
+      throw MPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again.';
+    }
+  }
+
   /// Upload any image
   Future<String> uploadImage(String path, XFile image) async {
     try {

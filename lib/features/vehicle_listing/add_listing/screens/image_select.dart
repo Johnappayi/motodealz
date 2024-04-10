@@ -11,6 +11,7 @@ import 'package:motodealz/common/widgets/custom_indicator.dart';
 import 'package:motodealz/common/widgets/navigation_menu.dart';
 import 'package:motodealz/common/widgets/select_file.dart';
 import 'package:motodealz/common/widgets/selected_image_gallery.dart';
+import 'package:motodealz/data/repositories/user/user_repository.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
@@ -18,23 +19,22 @@ import 'package:motodealz/utils/helpers/helper_functions.dart';
 import 'final_screen.dart';
 
 class VehicleImageSelectScreen extends StatefulWidget {
-  const VehicleImageSelectScreen({super.key, required this.vehicle});
-
+  const VehicleImageSelectScreen(
+      {super.key, required this.vehicle, required this.rcImagePath});
   final Vehicle vehicle;
-
+  final String rcImagePath;
   @override
   VehicleImageSelectScreenState createState() =>
       VehicleImageSelectScreenState();
 }
 
 class VehicleImageSelectScreenState extends State<VehicleImageSelectScreen> {
+  final userRepository = Get.put(UserRepository());
   final _imagePicker = ImagePicker();
   final _maxImageCount = 10;
-
   List<File> selectedImages = [];
   bool isUploading = false;
   bool _isMounted = true;
-
   @override
   void dispose() {
     _isMounted = false;
@@ -72,21 +72,26 @@ class VehicleImageSelectScreenState extends State<VehicleImageSelectScreen> {
       });
 
       // Upload images to cloud storage and get their paths
-      List<String> uploadedImagePaths =
-          await uploadImagesToStorage(selectedImages);
+      Map<String, List<String>> uploadedImagePaths =
+          await uploadImagesToStorage(selectedImages, widget.rcImagePath);
 
       if (_isMounted) {
         // Update Ad object with uploaded image paths
         setState(() {
-          widget.vehicle.images.addAll(uploadedImagePaths);
-          isUploading = false;
+          widget.vehicle.images.addAll(uploadedImagePaths['vehicleImages']!);
+          // widget.vehicle.rcImage = uploadedImagePaths['rcImage']!.first; // Assuming RC image is single
         });
 
-        // Add the Ad to the vehicles collection using VehicleController
-        VehicleController.instance.uploadVehicleToFirestore(widget.vehicle);
-
+        /// Upload vehicle details to Firestore
+        String vehicleId = await VehicleController.instance
+            .uploadVehicleToFirestore(widget.vehicle);
+        // Update the user's vehicles list in Firestore with the new vehicle ID
+        await userRepository.updateUserVehiclesList(
+            widget.vehicle.ownerId, vehicleId);
+        setState(() {
+          isUploading = false;
+        });
         // Navigate to next screen
-
         MHelperFunctions.navigateToScreen(
           // ignore: use_build_context_synchronously
           context,
@@ -96,25 +101,33 @@ class VehicleImageSelectScreenState extends State<VehicleImageSelectScreen> {
     }
   }
 
-  Future<List<String>> uploadImagesToStorage(List<File> images) async {
-    List<String> uploadedImagePaths = [];
+  Future<Map<String, List<String>>> uploadImagesToStorage(
+      List<File> vehicleImages, String rcImagePath) async {
+    Map<String, List<String>> uploadedImagePaths = {
+      'vehicleImages': [],
+      'rcImage': [],
+    };
     try {
-      for (File image in images) {
-        // Generate a unique file name for each image
+      // Upload vehicle images
+      for (File image in vehicleImages) {
         String fileName =
             '${DateTime.now().millisecondsSinceEpoch}_${image.path.split('/').last}';
-        // Reference to the Firebase Storage bucket
         Reference reference =
             FirebaseStorage.instance.ref().child('Vehicleimages/$fileName');
-        // Upload the image to Firebase Storage
         await reference.putFile(image);
-        // Get the file name (without 'gs://' prefix)
         String pathName = 'Vehicleimages/$fileName';
-        // Add the file name to the list of uploaded image paths
-        uploadedImagePaths.add(pathName);
+        uploadedImagePaths['vehicleImages']!.add(pathName);
       }
+      // Upload RC image
+      String rcFileName =
+          '${DateTime.now().millisecondsSinceEpoch}_${rcImagePath.split('/').last}';
+      Reference rcReference =
+          FirebaseStorage.instance.ref().child('Rcimages/$rcFileName');
+      await rcReference.putFile(File(rcImagePath));
+      String rcPathName = 'Rcimages/$rcFileName';
+      uploadedImagePaths['rcImage']!.add(rcPathName);
     } catch (error) {
-      // print('Error uploading images: $error');
+      // Handle error
     }
     return uploadedImagePaths;
   }
@@ -131,74 +144,91 @@ class VehicleImageSelectScreenState extends State<VehicleImageSelectScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: isUploading
-            ? const CustomIndicator()
-            : SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: MSizes.defaultSpace, vertical: MSizes.nm),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          ButtonContainer(
-                            onPressed: () {
-                              Get.offAll(const NavigationMenu());
-                            },
-                            child: MImages.closeIcon,
-                          ),
-                        ],
-                      ),
-                      const Text(
-                        "VEHICLE IMAGE",
-                        style: MFonts.fontAH1,
-                      ),
-                      const SizedBox(height: MSizes.defaultSpace),
+        child: Stack(
+          children: [
+            SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: MSizes.defaultSpace, vertical: MSizes.nm),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        ButtonContainer(
+                          onPressed: () {
+                            Get.offAll(const NavigationMenu());
+                          },
+                          child: MImages.closeIcon,
+                        ),
+                      ],
+                    ),
+                    const Text(
+                      "VEHICLE IMAGE",
+                      style: MFonts.fontAH1,
+                    ),
+                    const SizedBox(height: MSizes.defaultSpace),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Upload photos",
+                          style: MFonts.fontCH4,
+                        ),
+                        const SizedBox(height: MSizes.sm),
+                        SelectFile(
+                          onPressed: _pickMultipleImages,
+                        ),
+                      ],
+                    ),
+                    if (selectedImages.isNotEmpty)
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          const SizedBox(height: MSizes.spaceBtwSections),
                           const Text(
-                            "Upload photos",
+                            "Selected photos",
                             style: MFonts.fontCH4,
                           ),
                           const SizedBox(height: MSizes.sm),
-                          SelectFile(
-                            onPressed: _pickMultipleImages,
+                          SelectedImageGallery(
+                            images: selectedImages
+                                .map((file) => file.path)
+                                .toList(),
+                            onImageRemoved: _removeImage,
                           ),
                         ],
                       ),
-                      if (selectedImages.isNotEmpty)
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(height: MSizes.spaceBtwSections),
-                            const Text(
-                              "Selected photos",
-                              style: MFonts.fontCH4,
-                            ),
-                            const SizedBox(height: MSizes.sm),
-                            SelectedImageGallery(
-                              images: selectedImages
-                                  .map((file) => file.path)
-                                  .toList(),
-                              onImageRemoved: _removeImage,
-                            ),
-                          ],
-                        ),
-                      const SizedBox(height: MSizes.spaceBtwSections),
-                      LargeButtonNS(
-                        onPressed: selectedImages.isNotEmpty && !isUploading
-                            ? _uploadImages
-                            : null,
-                        child: isUploading
-                            ? const Text("Uploading")
-                            : const Text("Upload"),
-                      ),
-                    ],
+                    const SizedBox(height: MSizes.spaceBtwSections),
+                    LargeButtonNS(
+                      onPressed: selectedImages.isNotEmpty && !isUploading
+                          ? _uploadImages
+                          : null,
+                      child: isUploading
+                          ? const Text("Uploading")
+                          : const Text("Upload"),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            if (isUploading) // Show the progress indicator if uploading
+              Positioned.fill(
+                child: Container(
+                  color: Colors.black.withOpacity(0.5),
+                  child: const Center(
+                    child: Column(
+                      children: [
+                        CustomIndicator(),
+                        SizedBox(height: MSizes.md,),
+                        Text('Uploading...',style: MFonts.fontCH4,)
+                      ],
+                    ),
                   ),
                 ),
               ),
+          ],
+        ),
       ),
     );
   }

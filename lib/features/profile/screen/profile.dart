@@ -189,19 +189,20 @@ class ProfileScreen extends StatelessWidget {
                           ),
                           itemCount: user!.noOfListedAd,
                           itemBuilder: (context, index) {
-                            return ListedAdFrame3(
-                              onPressed: () {
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //     builder: (context) => VehicleEditScreen(
-                                //       vehicle: user.vehicles![index],
-                                //     ),
-                                //   ),
-                                // );
-                              },
-                              vehicle: user.vehicles![index],
-                            );
+                            return;
+                            // ListedAdFrame3(
+                            //   onPressed: () {
+                            //     // Navigator.push(
+                            //     //   context,
+                            //     //   MaterialPageRoute(
+                            //     //     builder: (context) => VehicleEditScreen(
+                            //     //       vehicle: user.vehicles![index],
+                            //     //     ),
+                            //     //   ),
+                            //     // );
+                            //   },
+                            //   vehicle: user.vehicles![index],
+                            // );
                           },
                         ),
                       ],

@@ -21,6 +21,7 @@ class VehicleController extends GetxController {
         Map<String, dynamic>? data = doc.data() as Map<String, dynamic>?;
         if (data != null) {
           return Vehicle(
+            id: data['Id'] ?? '',
             brand: data['Brand'] ?? '',
             model: data['Model'] ?? '',
             category: data['Category'] ?? '',
@@ -92,12 +93,6 @@ class VehicleController extends GetxController {
     return _vehicles.where((vehicle) => vehicle.ownerId == ownerId).toList();
   }
 
-  // // Method to get a single vehicle by its ID
-  // Vehicle getVehicleById(String id) {
-  //   // Search for the vehicle with the given ID in the list of vehicles
-  //   return _vehicles.firstWhere((vehicle) => vehicle.id == id);
-  // }
-
   // Method to search vehicles by criteria
   List<Vehicle> searchVehicles(String query) {
     // Convert the query to lowercase for case-insensitive matching
@@ -115,20 +110,22 @@ class VehicleController extends GetxController {
     }).toList();
   }
 
- Future<void> uploadVehicleToFirestore(Vehicle vehicle) async {
-  try {
-    // Reference to the Firestore collection 'vehicles'
-    CollectionReference vehicles =
-        FirebaseFirestore.instance.collection('Vehicles');
+  Future<String> uploadVehicleToFirestore(Vehicle vehicle) async {
+    try {
+      // Reference to the Firestore collection 'vehicles'
+      CollectionReference vehicles =
+          FirebaseFirestore.instance.collection('Vehicles');
 
-    // Convert the Ad object to a Map using the toJson method
-    Map<String, dynamic> adData = vehicle.toJson();
+      // Convert the Ad object to a Map using the toJson method
+      Map<String, dynamic> adData = vehicle.toJson();
 
-    // Add the Ad data to Firestore
-    await vehicles.add(adData);
-  } catch (error) {
-    // print('Error uploading Ad to Firestore: $error');
+      // Add the Ad data to Firestore
+      DocumentReference docRef = await vehicles.add(adData);
+      
+      return docRef.id;
+    } catch (error) {
+      throw Exception("Error uploading vehicle details: $error");
+      // print('Error uploading Ad to Firestore: $error');
+    }
   }
-}
-
 }

@@ -57,7 +57,7 @@ class UserController extends GetxController {
       if (userCredentials != null) {
         final nameParts =
             UserModel.nameParts(userCredentials.user!.displayName ?? '');
-      
+
         //Map Data
         final user = UserModel(
             id: userCredentials.user!.uid,

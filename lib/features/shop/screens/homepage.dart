@@ -69,9 +69,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           .height, // Set minimum height
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(MSizes.lg),
-                      child: 
-                      Column(
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: MSizes.lg),
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Column(
@@ -81,7 +81,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 "Browse Categories",
                                 style: MFonts.fontBH1,
                               ),
-                              const SizedBox(height: MSizes.md), // Example Text Widget 1
+                              const SizedBox(
+                                  height: MSizes.md), // Example Text Widget 1
                               Container(
                                 padding: const EdgeInsets.all(MSizes.md),
                                 decoration: BoxDecoration(

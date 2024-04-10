@@ -184,7 +184,6 @@ class ProfileScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: MSizes.defaultSpace),
                   ],
                   if (!(user.isVerified)) ...[
                     const SizedBox(height: MSizes.defaultSpace),

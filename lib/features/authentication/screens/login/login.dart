@@ -89,9 +89,7 @@ class LoginScreen extends StatelessWidget {
                           },
                         ),
                       ),
-                      
 
-                      
                       ///Remember Me & Forgot Password
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -111,8 +109,8 @@ class LoginScreen extends StatelessWidget {
 
                           ///Forgot Password
                           TextButton(
-                              onPressed: () => Get.to(
-                                  () => const ForgotPasswordScreen()),
+                              onPressed: () =>
+                                  Get.to(() => const ForgotPasswordScreen()),
                               child: const Text(MTexts.forgetPassword)),
                         ],
                       ),
@@ -125,12 +123,11 @@ class LoginScreen extends StatelessWidget {
                       ),
 
                       const SizedBox(height: MSizes.sm),
-
                     ],
                   ),
                 ),
               ),
-const SizedBox(height: MSizes.xs),
+              const SizedBox(height: MSizes.xs),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

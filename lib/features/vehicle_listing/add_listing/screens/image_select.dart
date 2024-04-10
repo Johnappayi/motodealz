@@ -66,6 +66,7 @@ class VehicleImageSelectScreenState extends State<VehicleImageSelectScreen> {
   }
 
   Future<void> _uploadImages() async {
+    String rcPath;
     if (_isMounted) {
       setState(() {
         isUploading = true;
@@ -79,10 +80,13 @@ class VehicleImageSelectScreenState extends State<VehicleImageSelectScreen> {
         // Update Ad object with uploaded image paths
         setState(() {
           widget.vehicle.images.addAll(uploadedImagePaths['vehicleImages']!);
-          // widget.vehicle.rcImage = uploadedImagePaths['rcImage']!.first; // Assuming RC image is single
         });
-
+        rcPath =
+            uploadedImagePaths['rcImage']!.first; // Assuming RC image is single
         /// Upload vehicle details to Firestore
+        await VehicleController.instance
+            .uploadVehicleToFirestore(widget.vehicle);
+        await userRepository.updateUserRC(widget.vehicle.ownerId, rcPath);
         String vehicleId = await VehicleController.instance
             .uploadVehicleToFirestore(widget.vehicle);
         // Update the user's vehicles list in Firestore with the new vehicle ID
@@ -218,10 +222,16 @@ class VehicleImageSelectScreenState extends State<VehicleImageSelectScreen> {
                   color: Colors.black.withOpacity(0.5),
                   child: const Center(
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         CustomIndicator(),
-                        SizedBox(height: MSizes.md,),
-                        Text('Uploading...',style: MFonts.fontCH4,)
+                        SizedBox(
+                          height: MSizes.md,
+                        ),
+                        Text(
+                          'Uploading...',
+                          style: MFonts.fontCH4,
+                        )
                       ],
                     ),
                   ),

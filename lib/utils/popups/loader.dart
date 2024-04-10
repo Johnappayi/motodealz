@@ -21,7 +21,7 @@ class MLoaders {
       duration: const Duration(seconds: 3),
       margin: const EdgeInsets.all(20),
       icon:
-          Icon(Iconsax.check, color: darkmode ? MColors.black : MColors.white),
+          Icon(Iconsax.check, color: darkmode ? MColors.success : MColors.secondary),
     );
   }
 
@@ -53,7 +53,7 @@ class MLoaders {
       snackPosition: SnackPosition.BOTTOM,
       duration: const Duration(seconds: 3),
       margin: const EdgeInsets.all(20),
-      icon: const Icon(Iconsax.warning_2, color: MColors.white),
+      icon: const Icon(Iconsax.information, color: MColors.white),
     );
   }
 }

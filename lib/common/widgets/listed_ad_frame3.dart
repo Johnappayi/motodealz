@@ -70,17 +70,19 @@ class ListedAdFrame3 extends StatelessWidget {
                       width: MHelperFunctions.screenWidth() * 0.28,
                       decoration: BoxDecoration(
                         color: darkMode
-                            ? MColors.surface.withOpacity(0.6)
-                            : MColors.surfaceDark.withOpacity(0.8),
+                            ? MColors.surfaceDark.withOpacity(0.6)
+                            : MColors.surface.withOpacity(0.8),
                       ),
                       padding: const EdgeInsets.symmetric(
                           horizontal: MSizes.md, vertical: MSizes.sm),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Text(
                            '${vehicle.brand} ${vehicle.model}',
                             style: MFonts.fontCH4.copyWith(
-                                color: darkMode ? MColors.black : MColors.white),
+                                color: darkMode ? MColors.white : MColors.black),
                           ),
                           const SizedBox(
                             height: MSizes.sm,
@@ -91,12 +93,12 @@ class ListedAdFrame3 extends StatelessWidget {
                                  vehicle.year.toString(),
                                 style: MFonts.fontCB4.copyWith(
                                     color:
-                                        darkMode ? MColors.black : MColors.white),
+                                        darkMode ? MColors.white : MColors.black),
                               ),
                               const Spacer(),
                               SvgPicture.asset(
                                 MImages.arrowRIcon,
-                                colorFilter: MSvgStyle.svgStyleInv(darkMode),
+                                colorFilter: MSvgStyle.svgStyle(darkMode),
                               )
                             ],
                           ),

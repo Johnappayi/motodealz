@@ -113,6 +113,39 @@ class UserRepository extends GetxController {
     }
   }
 
+  Future<void> updateUserRC(String userId, String rcPath) async {
+    try {
+      await _db.collection("Users").doc(userId).update({
+        'RcId': rcPath,
+      });
+    } on FirebaseException catch (e) {
+      throw MFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const MFormatException();
+    } on PlatformException catch (e) {
+      throw MPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again.';
+    }
+  }
+
+  Future<String> uploadImage(String path, XFile image) async {
+    try {
+      final ref = FirebaseStorage.instance.ref(path).child(image.name);
+      await ref.putFile(File(image.path));
+      final url = await ref.getDownloadURL();
+      return url;
+    } on FirebaseException catch (e) {
+      throw MFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const MFormatException();
+    } on PlatformException catch (e) {
+      throw MPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again.';
+    }
+  }
+
   /// Remove user data from Users Collection
   Future<void> removeUserRecord(String userId) async {
     try {
@@ -128,15 +161,52 @@ class UserRepository extends GetxController {
     }
   }
 
-  Future<String> uploadImageAndReturnUrl(
+  /// Function to remove the Vehicles field and update nooflistedads and hasListedAd
+  Future<void> removeVehicleFromUser(String vehicleId) async {
+    try {
+      final currentUserId = AuthenticationRepository.instance.authUser?.uid;
+      final userRef = _db.collection("Users").doc(currentUserId);
+
+      // Transaction to ensure data consistency
+      await _db.runTransaction((transaction) async {
+        final documentSnapshot = await transaction.get(userRef);
+        final userData = documentSnapshot.data();
+
+        if (userData != null) {
+          List<String> vehicles = userData['Vehicles']?.cast<String>() ?? [];
+          vehicles.remove(vehicleId);
+
+          int noOfListedAds = userData['NoOfListedAd'] ?? 0;
+
+          if (vehicles.isEmpty) {
+            noOfListedAds = 0;
+          } else if (noOfListedAds > 0) {
+            noOfListedAds--;
+          }
+
+          transaction.update(userRef, {
+            'Vehicles': FieldValue.delete(), // Remove the Vehicles field
+            'HasListedAd': vehicles.isNotEmpty, // Update HasListedAd
+            'NoOfListedAd': noOfListedAds, // Update NoOfListedAd
+          });
+        }
+      });
+    } on FirebaseException catch (e) {
+      throw MFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const MFormatException();
+    } on PlatformException catch (e) {
+      throw MPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again.';
+    }
+  }
+
+  Future<void> uploadUserImage(
       File imageFile, String imagePath) async {
     try {
-      final TaskSnapshot uploadTask =
-          await _storage.ref().child(imagePath).putFile(imageFile);
+      await _storage.ref().child(imagePath).putFile(imageFile);
 
-      final String imageUrl = await uploadTask.ref.getDownloadURL();
-
-      return imageUrl;
     } catch (e) {
       throw 'Failed to upload image: $e';
     }
@@ -153,7 +223,7 @@ class UserRepository extends GetxController {
     }
   }
 
-  Future<String> uploadImageAndUpdateProfile() async {
+  Future<void> uploadImageAndUpdateProfile() async {
     try {
       final picker = ImagePicker();
       final XFile? pickedFile =
@@ -162,14 +232,9 @@ class UserRepository extends GetxController {
         final File imageFile = File(pickedFile.path);
 
         final String userId = _auth.currentUser!.uid;
-        final String imagePath = 'profile_pictures/$userId.jpg';
-
-        final String imageUrl =
-            await uploadImageAndReturnUrl(imageFile, imagePath);
-
-        await updateUserProfilePicture(userId, imageUrl);
-
-        return imageUrl;
+        final String imagePath = 'Profilepictures/$userId.jpg';
+        await uploadUserImage(imageFile, imagePath);
+        await updateUserProfilePicture(userId, imagePath);
       } else {
         throw 'No image selected';
       }

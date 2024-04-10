@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -5,7 +7,6 @@ import 'package:motodealz/common/model/user_details.dart';
 import 'package:motodealz/common/styles/svg_styles.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/common/widgets/custom_indicator.dart';
-import 'package:motodealz/common/widgets/listed_ad_frame3.dart'; // Corrected import statement
 import 'package:motodealz/common/widgets/signin_prompt.dart';
 import 'package:motodealz/data/repositories/authentication/authentication_repository.dart';
 import 'package:motodealz/data/repositories/user/user_repository.dart';
@@ -67,13 +68,34 @@ class ProfileScreen extends StatelessWidget {
                     children: [
                       const CircleAvatar(
                         radius: 73,
-                        backgroundImage: AssetImage(MImages.sampleUser1),
+                        backgroundImage: NetworkImage(imageUrl) ?? '' : AssetImage(MImages.sampleUser1),
                       ),
                       Positioned(
                         bottom: 5,
                         right: 5,
                         child: GestureDetector(
-                          onTap: () {},
+                          onTap: () async {
+                            try {
+                              final userRepository = Get.put(UserRepository());
+
+                              final String imageUrl = await userRepository
+                                  .uploadImageAndUpdateProfile();
+                              // Show a success message or update UI to display the new profile picture
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                content: Text(
+                                    'Profile picture updated successfully'),
+                              ));
+                            } catch (e) {
+                              // Handle error if image upload or profile update fails
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Text(
+                                    'Failed to update profile picture: $e'),
+                                backgroundColor: Colors.red,
+                              ));
+                            }
+                          },
                           child: Container(
                             width: 52,
                             height: 52,

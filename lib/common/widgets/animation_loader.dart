@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
+// import 'package:lottie/lottie.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
 
@@ -34,7 +34,7 @@ class MAnimationLoaderWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Lottie.asset(animation, width: MediaQuery.of(context).size.width * 0.6),
+          // Lottie.asset(animation, width: MediaQuery.of(context).size.width * 0.6),
           const SizedBox(height: MSizes.defaultSpace),
           Text(
             text,

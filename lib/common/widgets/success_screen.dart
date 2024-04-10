@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
+// import 'package:lottie/lottie.dart';
 import 'package:motodealz/common/styles/spacing_styles.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
@@ -20,7 +20,7 @@ class SuccessScreen extends StatelessWidget {
           child: Column(
             children: [
               ///Image
-              Lottie.asset(image, width: MediaQuery.of(context).size.width * 0.6),
+              // Lottie.asset(image, width: MediaQuery.of(context).size.width * 0.6),
 
               const SizedBox(height: MSizes.spaceBtwSections),
 

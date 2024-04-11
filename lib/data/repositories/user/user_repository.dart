@@ -128,6 +128,36 @@ class UserRepository extends GetxController {
       throw 'Something went wrong. Please try again.';
     }
   }
+  Future<void> updateUserKYCDoc(String userId, List<String> kycPath) async {
+    try {
+      await _db.collection("Users").doc(userId).update({
+        'KycDocPath': kycPath,
+      });
+    } on FirebaseException catch (e) {
+      throw MFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const MFormatException();
+    } on PlatformException catch (e) {
+      throw MPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again.';
+    }
+  }
+   Future<void> updateUserKYCSelfi(String userId, String kycPath) async {
+    try {
+      await _db.collection("Users").doc(userId).update({
+        'KycSelfiePath': kycPath,
+      });
+    } on FirebaseException catch (e) {
+      throw MFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const MFormatException();
+    } on PlatformException catch (e) {
+      throw MPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again.';
+    }
+  }
 
   Future<String> uploadImage(String path, XFile image) async {
     try {

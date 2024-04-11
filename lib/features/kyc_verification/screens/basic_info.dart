@@ -1,9 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:motodealz/common/styles/svg_styles.dart';
 import 'package:motodealz/common/widgets/back_button.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/common/widgets/input_field.dart';
+import 'package:motodealz/features/kyc_verification/controllers/kyc_controller.dart';
+import 'package:motodealz/features/kyc_verification/model/kyc_data_model.dart';
 import 'package:motodealz/features/kyc_verification/screens/selfie_screen.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
@@ -25,6 +29,25 @@ class UserVerificationInfoScreenState
     extends State<UserVerificationInfoScreen> {
   final _formKey = GlobalKey<FormState>();
   bool _isContinueButtonEnabled = false;
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _dobController = TextEditingController();
+  final TextEditingController _residentialAddressController =
+      TextEditingController();
+  final TextEditingController _postalCodeController = TextEditingController();
+  final  _kycController = Get.put(KYCController());
+  
+    final user = FirebaseAuth.instance.currentUser;
+
+  @override
+  void dispose() {
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _dobController.dispose();
+    _residentialAddressController.dispose();
+    _postalCodeController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,12 +56,13 @@ class UserVerificationInfoScreenState
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-             padding: const EdgeInsets.only(
+            padding: const EdgeInsets.only(
               left: MSizes.defaultSpace,
               right: MSizes.defaultSpace,
               top: MSizes.nm,
-              bottom: MSizes.defaultSpace),
-          child: Column(
+              bottom: MSizes.defaultSpace,
+            ),
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const Row(
@@ -75,6 +99,7 @@ class UserVerificationInfoScreenState
                         hintText: "Enter first name",
                         validator: (value) =>
                             MValidator.validateEmptyText('First Name', value),
+                        controller: _firstNameController,
                       ),
                       const SizedBox(height: MSizes.xs),
                       InputField(
@@ -82,13 +107,16 @@ class UserVerificationInfoScreenState
                         hintText: "Enter last name",
                         validator: (value) =>
                             MValidator.validateEmptyText('Last Name', value),
+                        controller: _lastNameController,
                       ),
                       const SizedBox(height: MSizes.xs),
                       InputFieldWithIcon(
                         label: "Date of Birth",
                         hintText: "DD/MM/YYYY",
                         suffixIcon: MImages.calenderIcon,
-                        validator: (value) => MValidator.validateDate(value),
+                        validator: (value) =>
+                            MValidator.validateDate(value),
+                        controller: _dobController,
                       ),
                       const SizedBox(height: MSizes.xs),
                       InputField(
@@ -96,6 +124,7 @@ class UserVerificationInfoScreenState
                         hintText: "Enter permanent address",
                         validator: (value) => MValidator.validateEmptyText(
                             'Residential Address', value),
+                        controller: _residentialAddressController,
                       ),
                       const SizedBox(height: MSizes.xs),
                       InputField(
@@ -103,6 +132,7 @@ class UserVerificationInfoScreenState
                         hintText: "Enter postal code",
                         validator: (value) =>
                             MValidator.validateEmptyText('Postal Code', value),
+                        controller: _postalCodeController,
                       ),
                     ],
                   ),
@@ -111,8 +141,21 @@ class UserVerificationInfoScreenState
                 LargeButtonNS(
                   onPressed: _isContinueButtonEnabled
                       ? () {
-                          MHelperFunctions.navigateToScreen(
-                              context, const UserVerificationSelfieScreen());
+                          if (_formKey.currentState!.validate()) {
+                            KYCData kycData = KYCData(
+                              firstName: _firstNameController.text,
+                              lastName: _lastNameController.text,
+                              dateOfBirth: _dobController.text,
+                              residentialAddress:
+                                  _residentialAddressController.text,
+                              postalCode: _postalCodeController.text,
+                            );
+                            _kycController.uploadKYCData(
+                                user!.uid, kycData); // Replace userId with actual user ID
+                            MHelperFunctions.navigateToScreen(
+                                context,
+                                const UserVerificationSelfieScreen());
+                          }
                         }
                       : null,
                   child: const Text("Continue"),

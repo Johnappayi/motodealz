@@ -14,6 +14,7 @@ import 'package:motodealz/common/widgets/signin_prompt.dart';
 import 'package:motodealz/data/repositories/authentication/authentication_repository.dart';
 import 'package:motodealz/data/repositories/user/user_repository.dart';
 import 'package:motodealz/features/kyc_verification/screens/kyc_landing_screen.dart';
+import 'package:motodealz/features/profile/screen/change_password.dart';
 import 'package:motodealz/features/vehicle_listing/edit_listing/screens/vehicle_edit.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
@@ -131,7 +132,6 @@ class ProfileScreen extends StatelessWidget {
                                   title: 'Looking good!',
                                   message:
                                       'Your profile picture has been successfully uploaded');
-                            
                             } catch (e) {
                               // Handle error if image upload or profile update fails
                               MLoaders.errorSnackBar(
@@ -332,20 +332,31 @@ class ProfileScreen extends StatelessWidget {
                               const SizedBox(height: MSizes.defaultSpace),
                               Row(
                                 children: [
-                                  Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                        MImages.changePasswordIcon,
-                                        colorFilter:
-                                            MSvgStyle.svgStyle(darkMode),
-                                      ),
-                                      const SizedBox(
-                                          width: MSizes.spaceBtwItems),
-                                      const Text(
-                                        "Change password",
-                                        style: MFonts.fontCH3,
-                                      ),
-                                    ],
+                                  GestureDetector(
+                                    onTap: () async {
+                                      final authController = Get.find<
+                                          AuthenticationRepository>(); // Get the authController instance
+                                      authController.sendPasswordResetEmail(user
+                                          .email); // Call the sendPasswordResetEmail method
+                                      // Navigate to ChangePassword screen and pass the user's email
+                                      Get.to(() =>
+                                          ChangePassword(email: user.email));
+                                    },
+                                    child: Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          MImages.changePasswordIcon,
+                                          colorFilter:
+                                              MSvgStyle.svgStyle(darkMode),
+                                        ),
+                                        const SizedBox(
+                                            width: MSizes.spaceBtwItems),
+                                        const Text(
+                                          "Change password",
+                                          style: MFonts.fontCH3,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                   const Spacer(),
                                   SvgPicture.asset(

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,6 +13,7 @@ import 'package:motodealz/data/repositories/authentication/authentication_reposi
 import 'package:motodealz/utils/exceptions/firebase_exceptions.dart';
 import 'package:motodealz/utils/exceptions/format_exceptions.dart';
 import 'package:motodealz/utils/exceptions/platform_exceptions.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// Repository class for user-related operations
 class UserRepository extends GetxController {
@@ -107,7 +109,7 @@ class UserRepository extends GetxController {
     }
   }
 
-  Future<Map<String, dynamic>?> getCachedUserData(String userId) async {
+  Future<Map<String, dynamic>?> getCachedUserData() async {
     return await dataCache.getCachedUserData();
   }
 
@@ -196,6 +198,12 @@ class UserRepository extends GetxController {
     } catch (e) {
       throw 'Something went wrong. Please try again.';
     }
+  }
+
+  Future<void> cacheData(Map<String, dynamic> userData) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String jsonData = jsonEncode(userData);
+    await prefs.setString('cachedUserData', jsonData);
   }
 
   Future<void> updateUserKYCSelfi(String userId, String kycPath) async {
@@ -301,6 +309,14 @@ class UserRepository extends GetxController {
       await _db.collection('Users').doc(userId).update({
         'ProfilePicture': newProfilePictureUrl,
       });
+
+      // Update cached user data
+      Map<String, dynamic>? cachedUserData = await getCachedUserData();
+      if (cachedUserData != null) {
+        cachedUserData['profilePicture'] = newProfilePictureUrl;
+        await cacheData(cachedUserData);
+        print('Profile picture updated in cache.');
+      }
     } catch (e) {
       throw 'Failed to update profile picture: $e';
     }
@@ -325,7 +341,8 @@ class UserRepository extends GetxController {
       throw 'Image upload failed: $e';
     }
   }
-    Future<String?> fetchProfilePicture(String userId) async {
+
+  Future<String?> fetchProfilePicture(String userId) async {
     try {
       final DocumentSnapshot snapshot =
           await _db.collection("Users").doc(userId).get();

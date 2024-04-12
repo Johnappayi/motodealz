@@ -378,31 +378,31 @@ class ProfileScreen extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: MSizes.defaultSpace),
-                              Row(
-                                children: [
-                                  Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                        MImages.favouriteIcon,
-                                        colorFilter:
-                                            MSvgStyle.svgStyle(darkMode),
-                                      ),
-                                      const SizedBox(
-                                          width: MSizes.spaceBtwItems),
-                                      const Text(
-                                        "Your favourites",
-                                        style: MFonts.fontCH3,
-                                      ),
-                                    ],
-                                  ),
-                                  const Spacer(),
-                                  SvgPicture.asset(
-                                    MImages.arrowRIcon,
-                                    colorFilter: MSvgStyle.svgStyle(darkMode),
-                                  ),
-                                ],
-                              ),
+                              // const SizedBox(height: MSizes.defaultSpace),
+                              // Row(
+                              //   children: [
+                              //     Row(
+                              //       children: [
+                              //         SvgPicture.asset(
+                              //           MImages.favouriteIcon,
+                              //           colorFilter:
+                              //               MSvgStyle.svgStyle(darkMode),
+                              //         ),
+                              //         const SizedBox(
+                              //             width: MSizes.spaceBtwItems),
+                              //         const Text(
+                              //           "Your favourites",
+                              //           style: MFonts.fontCH3,
+                              //         ),
+                              //       ],
+                              //     ),
+                              //     const Spacer(),
+                              //     SvgPicture.asset(
+                              //       MImages.arrowRIcon,
+                              //       colorFilter: MSvgStyle.svgStyle(darkMode),
+                              //     ),
+                              //   ],
+                              // ),
                             ],
                           ),
                         ),

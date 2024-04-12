@@ -356,10 +356,10 @@ class PrivacyPolicyScreen extends StatelessWidget {
         ),
         SizedBox(height: 8.0),
         Text(
-          'By email: febajose977@gmail.com',
+          'By email: cognito.work@gmail.com',
         ),
         Text(
-          'By phone number: 8301900875',
+          'By phone number: 8650700872',
         ),
       ],
     );

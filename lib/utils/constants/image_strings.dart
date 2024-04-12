@@ -106,7 +106,7 @@ static const String signInPrompt =
 
   // -- Lottie Animations
   static String success = "assets/animations/successful.json";
-  static String login = "assets/animations/successful.json";
+  static String login = "assets/animations/login.json";
   static String emailSent = "assets/animations/email-sent.json";
   static String verifySuccess = "assets/animations/verification-success.json";
   static String emailVerifyScreen = "assets/animations/email-verify-screen.gif";

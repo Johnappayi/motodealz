@@ -29,7 +29,7 @@ class LoginController extends GetxController {
   Future<void> emailAndPasswordSignIn() async {
     try {
       // Start Loading
-      MFullScreenLoader.openLoadingDialog('Hold on we are fetching your details...', MImages.success);
+      MFullScreenLoader.openLoadingDialog('Hold on we are fetching your details...', MImages.login);
 
       //Check Internet Connectivity
       final isConnected = await NetworkManager.instance.isConnected();

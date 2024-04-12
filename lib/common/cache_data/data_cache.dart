@@ -56,6 +56,11 @@ class DataCache extends GetxController {
     }
   }
 
+  Future<void> updateCachedUserData(Map<String, dynamic> newData) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.setString(_keyCachedData, jsonEncode(newData));
+}
+
   // Method for debugging to print cached data
   void printCachedData() async {
     try {

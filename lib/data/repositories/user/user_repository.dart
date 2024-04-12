@@ -148,11 +148,21 @@ class UserRepository extends GetxController {
   /// Function to update the user's vehicles list in Firestore
   Future<void> updateUserVehiclesList(String userId, String vehicleId) async {
     try {
-      await _db.collection("Users").doc(userId).update({
+      final userRef = _db.collection("Users").doc(userId);
+
+      await userRef.update({
         'Vehicles': FieldValue.arrayUnion([vehicleId]),
         'HasListedAd': true, // Update HasListed to true
         'NoOfListedAd': FieldValue.increment(1), // Increment NoOfListedAd
       });
+
+      // Fetch updated user data from Firestore
+      DocumentSnapshot userSnapshot = await userRef.get();
+      Map<String, dynamic> updatedData =
+          userSnapshot.data() as Map<String, dynamic>;
+
+      // Update cached data using DataCache class
+      dataCache.updateCachedUserData(updatedData);
     } on FirebaseException catch (e) {
       throw MFirebaseException(e.code).message;
     } on FormatException catch (_) {
@@ -169,6 +179,12 @@ class UserRepository extends GetxController {
       await _db.collection("Users").doc(userId).update({
         'RcId': rcPath,
       });
+      // Update cached user data
+      Map<String, dynamic>? cachedUserData = await getCachedUserData();
+      if (cachedUserData != null) {
+        cachedUserData['RcId'] = rcPath;
+        await cacheData(cachedUserData);
+      }
     } on FirebaseException catch (e) {
       throw MFirebaseException(e.code).message;
     } on FormatException catch (_) {
@@ -185,6 +201,12 @@ class UserRepository extends GetxController {
       await _db.collection("Users").doc(userId).update({
         'KycDocPath': kycPath,
       });
+      // Update cached user data
+      Map<String, dynamic>? cachedUserData = await getCachedUserData();
+      if (cachedUserData != null) {
+        cachedUserData['KycDocPath'] = kycPath;
+        await cacheData(cachedUserData);
+      }
     } on FirebaseException catch (e) {
       throw MFirebaseException(e.code).message;
     } on FormatException catch (_) {
@@ -202,11 +224,17 @@ class UserRepository extends GetxController {
     await prefs.setString('cachedUserData', jsonData);
   }
 
-  Future<void> updateUserKYCSelfi(String userId, String kycPath) async {
+  Future<void> updateUserKYCSelfie(String userId, String kycPath) async {
     try {
       await _db.collection("Users").doc(userId).update({
         'KycSelfiePath': kycPath,
       });
+      // Update cached user data
+      Map<String, dynamic>? cachedUserData = await getCachedUserData();
+      if (cachedUserData != null) {
+        cachedUserData['KycSelfiePath'] = kycPath;
+        await cacheData(cachedUserData);
+      }
     } on FirebaseException catch (e) {
       throw MFirebaseException(e.code).message;
     } on FormatException catch (_) {
@@ -218,37 +246,37 @@ class UserRepository extends GetxController {
     }
   }
 
-  Future<String> uploadImage(String path, XFile image) async {
-    try {
-      final ref = FirebaseStorage.instance.ref(path).child(image.name);
-      await ref.putFile(File(image.path));
-      final url = await ref.getDownloadURL();
-      return url;
-    } on FirebaseException catch (e) {
-      throw MFirebaseException(e.code).message;
-    } on FormatException catch (_) {
-      throw const MFormatException();
-    } on PlatformException catch (e) {
-      throw MPlatformException(e.code).message;
-    } catch (e) {
-      throw 'Something went wrong. Please try again.';
-    }
-  }
+  // Future<String> uploadImage(String path, XFile image) async {
+  //   try {
+  //     final ref = FirebaseStorage.instance.ref(path).child(image.name);
+  //     await ref.putFile(File(image.path));
+  //     final url = await ref.getDownloadURL();
+  //     return url;
+  //   } on FirebaseException catch (e) {
+  //     throw MFirebaseException(e.code).message;
+  //   } on FormatException catch (_) {
+  //     throw const MFormatException();
+  //   } on PlatformException catch (e) {
+  //     throw MPlatformException(e.code).message;
+  //   } catch (e) {
+  //     throw 'Something went wrong. Please try again.';
+  //   }
+  // }
 
-  /// Remove user data from Users Collection
-  Future<void> removeUserRecord(String userId) async {
-    try {
-      await _db.collection("Users").doc(userId).delete();
-    } on FirebaseException catch (e) {
-      throw MFirebaseException(e.code).message;
-    } on FormatException catch (_) {
-      throw const MFormatException();
-    } on PlatformException catch (e) {
-      throw MPlatformException(e.code).message;
-    } catch (e) {
-      throw 'Something went wrong. Please try again.';
-    }
-  }
+  // /// Remove user data from Users Collection
+  // Future<void> removeUserRecord(String userId) async {
+  //   try {
+  //     await _db.collection("Users").doc(userId).delete();
+  //   } on FirebaseException catch (e) {
+  //     throw MFirebaseException(e.code).message;
+  //   } on FormatException catch (_) {
+  //     throw const MFormatException();
+  //   } on PlatformException catch (e) {
+  //     throw MPlatformException(e.code).message;
+  //   } catch (e) {
+  //     throw 'Something went wrong. Please try again.';
+  //   }
+  // }
 
   /// Function to remove the Vehicles field and update nooflistedads and hasListedAd
   Future<void> removeVehicleFromUser(String vehicleId) async {
@@ -278,6 +306,15 @@ class UserRepository extends GetxController {
             'HasListedAd': vehicles.isNotEmpty, // Update HasListedAd
             'NoOfListedAd': noOfListedAds, // Update NoOfListedAd
           });
+
+          // Update cached data after Firestore transaction
+          Map<String, dynamic> updatedData = {
+            ...userData,
+            'Vehicles': vehicles,
+            'HasListedAd': vehicles.isNotEmpty,
+            'NoOfListedAd': noOfListedAds,
+          };
+          dataCache.updateCachedUserData(updatedData);
         }
       });
     } on FirebaseException catch (e) {

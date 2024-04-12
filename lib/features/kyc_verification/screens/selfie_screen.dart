@@ -243,7 +243,7 @@ class _UserVerificationSelfieScreenState
         await ref.putFile(imageFile); // Pass the File object
 
         // Update the user's KYC selfie path in Firestore
-        await UserRepository().updateUserKYCSelfi(
+        await UserRepository().updateUserKYCSelfie(
             user!.uid, 'Kycselfies/${path.basename(image!.path)}');
         // Navigate to the next screen
         MHelperFunctions.navigateToScreen(

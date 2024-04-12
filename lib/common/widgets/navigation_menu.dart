@@ -40,7 +40,7 @@ class NavigationMenu extends StatelessWidget {
             // Show a message or perform another action if the condition is not met
             MLoaders.errorSnackBar(
                 title: 'Oh snap',
-                message: 'You cannot ljst more than 2 ads.');
+                message: 'You cannot list more than 2 ads.');
           }
         },
         child: const Icon(Icons.add),

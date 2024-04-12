@@ -16,6 +16,7 @@ class DataCache extends GetxController {
     String jsonData = jsonEncode(userData);
     await prefs.setString(_keyCachedData, jsonData);
   }
+
   Future<void> fetchDataAndCache() async {
     try {
       String? userId = _auth.currentUser?.uid;
@@ -31,31 +32,26 @@ class DataCache extends GetxController {
             userSnapshot.data() as Map<String, dynamic>;
         // Cache the current user's data
         await cacheData(userData);
-
-        // Print message indicating successful caching
-        print('User data cached successfully!');
-      } else {
-        print('User data not found in Firestore.');
       }
     } catch (e) {
-      print('Error caching user data: $e');
+      // print(object);
     }
   }
 
   Future<Map<String, dynamic>?> getCachedUserData() async {
-   try {
+    try {
       // Get cached user data from SharedPreferences
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? cachedData = prefs.getString(_keyCachedData);
       if (cachedData != null) {
         // Convert cached data to Map<String, dynamic>
-        Map<String, dynamic> userData = Map<String, dynamic>.from(jsonDecode(cachedData));
+        Map<String, dynamic> userData =
+            Map<String, dynamic>.from(jsonDecode(cachedData));
         return userData;
       } else {
         return null;
       }
     } catch (e) {
-      print('Error getting cached user data: $e');
       return null;
     }
   }
@@ -65,14 +61,9 @@ class DataCache extends GetxController {
     try {
       Map<String, dynamic>? cachedData = await getCachedUserData();
       if (cachedData != null) {
-        print('Cached User Data:');
-        print(cachedData);
-      } else {
-        print('No cached data available.');
-      }
+      } else {}
     } catch (e) {
-      print('Error printing cached data: $e');
+      // print(object);
     }
   }
-
 }

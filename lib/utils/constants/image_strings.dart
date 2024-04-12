@@ -105,11 +105,9 @@ static const String signInPrompt =
       "assets/logos/popular_brand/Volkswagen.png";
 
   // -- Lottie Animations
-  static String success = "assets/animations/successful.json";
-  static String login = "assets/animations/login.json";
+  // static String success = "assets/animations/successful.json";
+  static String login = "assets/animations/loader.gif";
   static String emailSent = "assets/animations/email-sent.json";
-  static String verifySuccess = "assets/animations/verification-success.json";
-  static String emailVerifyScreen = "assets/animations/email-verify-screen.gif";
   static String verificationScreenImage =
       "assets/images/email verifcation.svg";
   static String processing = "assets/animations/processing.json";

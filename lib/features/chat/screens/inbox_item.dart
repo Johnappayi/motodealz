@@ -29,16 +29,15 @@ class InboxItem extends StatelessWidget {
     } else {
       displayId = chatItem.buyerId;
     }
- Future<String> convertProfilePictureUrl(String url) async { // Get the Future<String>
-      final httpsUrl = await MHttpHelper.convertGCSUrlToHttps(
-          url); // Await the Future
+    Future<String> convertProfilePictureUrl(String url) async {
+      // Get the Future<String>
+      final httpsUrl =
+          await MHttpHelper.convertGCSUrlToHttps(url); // Await the Future
       // Use httpsUrl here (e.g., display in an image widget)
       return httpsUrl; // Optionally return the httpsUrl for further use
     }
 
-
-    return
-     FutureBuilder<UserModel?>(
+    return FutureBuilder<UserModel?>(
       future: chatController.fetchUserDetails(displayId),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -52,13 +51,20 @@ class InboxItem extends StatelessWidget {
             title: Text('Error loading display name'),
           );
         } else {
-          final userModel = snapshot.data; 
-          final fullName = userModel != null ? '${userModel.firstname} ${userModel.lastname}' : ''; 
+          final userModel = snapshot.data;
+          final fullName = userModel != null
+              ? '${userModel.firstname} ${userModel.lastname}'
+              : '';
           // Display the ListTile with the fetched display name
           return GestureDetector(
             onTap: () {
               MHelperFunctions.navigateToScreen(
-                  context, ChatScreen(roomId: chatItem.chatRoomId, displayName: fullName,dp: userModel.profilePicture,));
+                  context,
+                  ChatScreen(
+                    roomId: chatItem.chatRoomId,
+                    displayName: fullName,
+                    dp: userModel.profilePicture,
+                  ));
             },
             child: ListTile(
               title: Text(
@@ -72,34 +78,37 @@ class InboxItem extends StatelessWidget {
                   color: darkMode ? MColors.darkGrey : MColors.lightGrey,
                 ),
               ),
-              leading:  FutureBuilder<String>(
-                        future:
-                            convertProfilePictureUrl(userModel!.profilePicture), // Get the Future<String>
-                        builder: (context, snapshot) {
-                          switch (snapshot.connectionState) {
-                            case ConnectionState.waiting:
-                              return const CircularProgressIndicator(); // Show loading indicator
-                            case ConnectionState.done:
-                              if (snapshot.hasError) {
-                                return Text(
-                                    'Error: ${snapshot.error}'); // Handle error
-                              } else {
-                                final httpsUrl = snapshot.data!;
-                                return CircleAvatar(
-                                  radius: 30,
-                                  backgroundImage: NetworkImage(httpsUrl),
-                                );
-                              }
-                            default:
-                              return const CircleAvatar(
-                                radius: 30,
-                                backgroundImage:
-                                    AssetImage(MImages.sampleUser1),
-                              ); // Handle unexpected states (optional)
-                          }
-                        },
-                      ),
-                      
+              leading: FutureBuilder<String>(
+                future: convertProfilePictureUrl(
+                    userModel!.profilePicture), // Get the Future<String>
+                builder: (context, snapshot) {
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.waiting:
+                      return const CircleAvatar(
+                        radius: 30,
+                        backgroundColor: MColors.darkGrey,
+                        backgroundImage: AssetImage(MImages.sampleUser1),
+                      ); // Show loading indicator
+                    case ConnectionState.done:
+                      if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}'); // Handle error
+                      } else {
+                        final httpsUrl = snapshot.data!;
+                        return CircleAvatar(
+                          radius: 30,
+                          backgroundColor: MColors.darkGrey,
+                          backgroundImage: NetworkImage(httpsUrl),
+                        );
+                      }
+                    default:
+                      return const CircleAvatar(
+                        radius: 30,
+                        backgroundColor: MColors.darkGrey,
+                        backgroundImage: AssetImage(MImages.sampleUser1),
+                      ); // Handle unexpected states (optional)
+                  }
+                },
+              ),
               trailing: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [

@@ -69,17 +69,14 @@ class UserRepository extends GetxController {
       // Get current user ID from FirebaseAuth
       String? userId = FirebaseAuth.instance.currentUser?.uid;
       if (userId == null) {
-        print('User is not authenticated.');
         return;
       }
 
       // Check if user data is already cached
       Map<String, dynamic>? cachedUserData =
           await dataCache.getCachedUserData();
-      print(cachedUserData);
       if (cachedUserData != null) {
         // User data is already cached, use it as needed
-        print('Using cached user data: $cachedUserData');
         return;
       }
 
@@ -97,7 +94,6 @@ class UserRepository extends GetxController {
       await DataCache.cacheData(userData);
 
       // Print message indicating successful caching
-      print('User data cached successfully!');
     } on FirebaseException catch (e) {
       throw MFirebaseException(e.code).message;
     } on FormatException catch (_) {
@@ -315,7 +311,6 @@ class UserRepository extends GetxController {
       if (cachedUserData != null) {
         cachedUserData['profilePicture'] = newProfilePictureUrl;
         await cacheData(cachedUserData);
-        print('Profile picture updated in cache.');
       }
     } catch (e) {
       throw 'Failed to update profile picture: $e';

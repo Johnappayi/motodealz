@@ -9,6 +9,7 @@ import 'package:motodealz/features/chat/model/chat_room.dart';
 import 'package:motodealz/features/chat/model/message_model.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
+import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
 import 'package:motodealz/utils/http/http_client.dart';
@@ -100,7 +101,11 @@ class ChatScreenState extends State<ChatScreen> {
                               if (snapshot.connectionState ==
                                   ConnectionState.waiting) {
                                 // Return a placeholder or loading indicator while fetching the image
-                                return const CircularProgressIndicator(); // Or any other loading indicator
+                                 return const CircleAvatar(
+                                  radius: 30,
+                                  backgroundColor: MColors.darkGrey,
+                                  backgroundImage: AssetImage(MImages.sampleUser1),
+                                );// Or any other loading indicator
                               } else if (snapshot.hasError) {
                                 // Handle error if image fetching fails
                                 return const Icon(Icons.error);
@@ -108,6 +113,7 @@ class ChatScreenState extends State<ChatScreen> {
                                 // Use the fetched image URL
                                 return CircleAvatar(
                                   radius: 30,
+                                  backgroundColor: MColors.darkGrey,
                                   backgroundImage: NetworkImage(snapshot.data!),
                                 );
                               }

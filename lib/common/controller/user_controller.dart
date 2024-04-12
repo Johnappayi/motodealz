@@ -19,7 +19,6 @@ class UserController extends GetxController {
     try {
       await userRepository.fetchAndCacheCurrentUserDetails();
     } catch (e) {
-      print('Error fetching and caching user record: $e');
       user.value = UserModel.empty();
     }
   }

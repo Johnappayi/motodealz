@@ -43,12 +43,10 @@ class ProfileScreen extends StatelessWidget {
             return Text('Error: ${snapshot.error}');
           } else {
             final userData = snapshot.data;
-            final _auth = FirebaseAuth.instance;
-            final userId = _auth.currentUser!.uid;
-            print(userData);
+            final auth = FirebaseAuth.instance;
+            final userId = auth.currentUser!.uid;
             if (userData != null) {
-              final UserModel user = UserModel.fromJson(userData,userId);
-              print(user);
+              final UserModel user = UserModel.fromJson(userData, userId);
               return _buildAuthenticatedProfile(user, context);
             }
           }
@@ -73,7 +71,6 @@ class ProfileScreen extends StatelessWidget {
       }
     }
 
-    print(user.firstname);
 
     Future<String> convertProfilePictureUrl() async {
       final profilePictureUrl = user.profilePicture; // Get the Future<String>
@@ -107,7 +104,11 @@ class ProfileScreen extends StatelessWidget {
                         builder: (context, snapshot) {
                           switch (snapshot.connectionState) {
                             case ConnectionState.waiting:
-                              return const CircularProgressIndicator(); // Show loading indicator
+                              return const CircleAvatar(
+                                radius: 73,
+                                backgroundImage:
+                                    AssetImage(MImages.sampleUser1),
+                              ); // Show loading indicator
                             case ConnectionState.done:
                               if (snapshot.hasError) {
                                 return Text(
@@ -116,6 +117,7 @@ class ProfileScreen extends StatelessWidget {
                                 final httpsUrl = snapshot.data!;
                                 return CircleAvatar(
                                   radius: 73,
+                                  backgroundColor: MColors.darkGrey,
                                   backgroundImage: NetworkImage(httpsUrl),
                                 );
                               }
@@ -343,10 +345,8 @@ class ProfileScreen extends StatelessWidget {
                                 ],
                               ),
                               const SizedBox(height: MSizes.defaultSpace),
-                              Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () async {
+                              GestureDetector(
+                                 onTap: () async {
                                       final authController = Get.find<
                                           AuthenticationRepository>(); // Get the authController instance
                                       authController.sendPasswordResetEmail(user
@@ -355,7 +355,9 @@ class ProfileScreen extends StatelessWidget {
                                       Get.to(() =>
                                           ChangePassword(email: user.email));
                                     },
-                                    child: Row(
+                                child: Row(
+                                  children: [
+                                    Row(
                                       children: [
                                         SvgPicture.asset(
                                           MImages.changePasswordIcon,
@@ -370,13 +372,13 @@ class ProfileScreen extends StatelessWidget {
                                         ),
                                       ],
                                     ),
-                                  ),
-                                  const Spacer(),
-                                  SvgPicture.asset(
-                                    MImages.arrowRIcon,
-                                    colorFilter: MSvgStyle.svgStyle(darkMode),
-                                  ),
-                                ],
+                                    const Spacer(),
+                                    SvgPicture.asset(
+                                      MImages.arrowRIcon,
+                                      colorFilter: MSvgStyle.svgStyle(darkMode),
+                                    ),
+                                  ],
+                                ),
                               ),
                               // const SizedBox(height: MSizes.defaultSpace),
                               // Row(

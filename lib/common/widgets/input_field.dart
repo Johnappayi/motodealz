@@ -14,8 +14,9 @@ class InputField extends StatelessWidget {
     this.validator,
     this.isEnabled,
     this.controller,
+     this.maxline,
   });
-
+  final int? maxline;
   final String hintText;
   final String label;
   final String? Function(String?)? validator;
@@ -35,6 +36,7 @@ class InputField extends StatelessWidget {
           height: MSizes.sm,
         ),
         TextFormField(
+          maxLines: maxline,
           enabled: isEnabled ?? true,
           validator: validator,
           controller: controller,

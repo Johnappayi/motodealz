@@ -58,9 +58,8 @@ class AuthenticationRepository extends GetxController {
       //     : Get.offAll(const CreateAccountScreen());
     }
 
-    //
+    
     // Listen to authentication state changes
-    //
     //   navigateToHome();
     // } else {
     //   // User is signed out

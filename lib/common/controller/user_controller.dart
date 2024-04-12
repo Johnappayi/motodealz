@@ -9,8 +9,6 @@ class UserController extends GetxController {
   Rx<UserModel> user = UserModel.empty().obs;
   final UserRepository userRepository = Get.put(UserRepository());
 
-  UserModel get currentUser => user.value;
-
   @override
   void onInit() {
     super.onInit();
@@ -19,9 +17,9 @@ class UserController extends GetxController {
 
   Future<void> fetchUserRecord() async {
     try {
-      final fetchedUser = await userRepository.fetchUserDetails();
-      user.value = fetchedUser;
+      await userRepository.fetchAndCacheCurrentUserDetails();
     } catch (e) {
+      print('Error fetching and caching user record: $e');
       user.value = UserModel.empty();
     }
   }

@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:motodealz/common/cache_data/data_cache.dart';
 import 'package:motodealz/common/model/user_details.dart';
 import 'package:motodealz/data/repositories/authentication/authentication_repository.dart';
 import 'package:motodealz/utils/exceptions/firebase_exceptions.dart';
@@ -19,6 +20,8 @@ class UserRepository extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
   final FirebaseStorage _storage = FirebaseStorage.instance;
+
+  final DataCache dataCache = Get.put(DataCache());
 
   /// Function to save user data to firestore
   Future<void> saveUserRecord(UserModel user) async {
@@ -56,6 +59,56 @@ class UserRepository extends GetxController {
     } catch (e) {
       throw 'Something went wrong. Please try again.';
     }
+  }
+
+  /// Function to fetch and cache user details
+  Future<void> fetchAndCacheCurrentUserDetails() async {
+    try {
+      // Get current user ID from FirebaseAuth
+      String? userId = FirebaseAuth.instance.currentUser?.uid;
+      if (userId == null) {
+        print('User is not authenticated.');
+        return;
+      }
+
+      // Check if user data is already cached
+      Map<String, dynamic>? cachedUserData =
+          await dataCache.getCachedUserData();
+      print(cachedUserData);
+      if (cachedUserData != null) {
+        // User data is already cached, use it as needed
+        print('Using cached user data: $cachedUserData');
+        return;
+      }
+
+      // Fetch current user's data from Firestore
+      DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(userId)
+          .get();
+
+      // Convert data to a format suitable for caching (e.g., JSON)
+      Map<String, dynamic> userData =
+          userSnapshot.data() as Map<String, dynamic>;
+
+      // Cache the current user's data
+      await DataCache.cacheData(userData);
+
+      // Print message indicating successful caching
+      print('User data cached successfully!');
+    } on FirebaseException catch (e) {
+      throw MFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const MFormatException();
+    } on PlatformException catch (e) {
+      throw MPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again.';
+    }
+  }
+
+  Future<Map<String, dynamic>?> getCachedUserData(String userId) async {
+    return await dataCache.getCachedUserData();
   }
 
   /// Function to update user data in Firestore
@@ -128,6 +181,7 @@ class UserRepository extends GetxController {
       throw 'Something went wrong. Please try again.';
     }
   }
+
   Future<void> updateUserKYCDoc(String userId, List<String> kycPath) async {
     try {
       await _db.collection("Users").doc(userId).update({
@@ -143,7 +197,8 @@ class UserRepository extends GetxController {
       throw 'Something went wrong. Please try again.';
     }
   }
-   Future<void> updateUserKYCSelfi(String userId, String kycPath) async {
+
+  Future<void> updateUserKYCSelfi(String userId, String kycPath) async {
     try {
       await _db.collection("Users").doc(userId).update({
         'KycSelfiePath': kycPath,
@@ -232,11 +287,9 @@ class UserRepository extends GetxController {
     }
   }
 
-  Future<void> uploadUserImage(
-      File imageFile, String imagePath) async {
+  Future<void> uploadUserImage(File imageFile, String imagePath) async {
     try {
       await _storage.ref().child(imagePath).putFile(imageFile);
-
     } catch (e) {
       throw 'Failed to upload image: $e';
     }

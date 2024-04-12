@@ -76,19 +76,35 @@ class UserModel {
     if (document.exists) {
       final data = document.data()!;
       return UserModel(
-        id: document.id,
-        firstname: data['FirstName'] ?? '',
-        lastname: data['LastName'] ?? '',
-        email: data['Email'] ?? '',
-        profilePicture: data['ProfilePicture'] ?? 'Profilepictures/userHolder.png',
-        isPremium: data['IsPremium'] ?? false,
-        isVerified: data['IsVerified'] ?? false,
-        hasListedAd: data['HasListedAd'] ?? false,
-        noOfListedAd: data['NoOfListedAd'] ?? 0,
-        vehicles:List<String>.from(data['Vehicles'] ?? [])
-      );
+          id: document.id,
+          firstname: data['FirstName'] ?? '',
+          lastname: data['LastName'] ?? '',
+          email: data['Email'] ?? '',
+          profilePicture:
+              data['ProfilePicture'] ?? 'Profilepictures/userHolder.png',
+          isPremium: data['IsPremium'] ?? false,
+          isVerified: data['IsVerified'] ?? false,
+          hasListedAd: data['HasListedAd'] ?? false,
+          noOfListedAd: data['NoOfListedAd'] ?? 0,
+          vehicles: List<String>.from(data['Vehicles'] ?? []));
     } else {
       return UserModel.empty();
     }
+  }
+
+  static UserModel fromJson(Map<String, dynamic> userData, String userId) {
+    return UserModel(
+      id: userId,
+      firstname: userData['FirstName'] ?? '',
+      lastname: userData['LastName'] ?? '',
+      email: userData['Email'] ?? '',
+      profilePicture:
+          userData['ProfilePicture'] ?? 'Profilepictures/userHolder.png',
+      isPremium: userData['IsPremium'] ?? false,
+      isVerified: userData['IsVerified'] ?? false,
+      hasListedAd: userData['HasListedAd'] ?? false,
+      noOfListedAd: userData['NoOfListedAd'] ?? 0,
+      vehicles: List<String>.from(userData['Vehicles'] ?? []),
+    );
   }
 }

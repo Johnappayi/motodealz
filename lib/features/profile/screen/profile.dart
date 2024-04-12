@@ -1,8 +1,8 @@
-// ignore_for_file: use_build_context_synchronously
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:motodealz/common/cache_data/data_cache.dart';
 import 'package:motodealz/common/controller/vehicle_controller.dart';
 import 'package:motodealz/common/model/user_details.dart';
 import 'package:motodealz/common/model/vehicle_model.dart';
@@ -30,22 +30,30 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authController = Get.put(AuthenticationRepository());
-    final userRepository = Get.put(UserRepository());
     final isUserAuthenticated = authController.isUserAuthenticated();
+    final DataCache dataCache = Get.put(DataCache());
 
     if (isUserAuthenticated) {
-      return FutureBuilder<UserModel>(
-        future: userRepository.fetchUserDetails(),
+      return FutureBuilder<Map<String, dynamic>?>(
+        future: dataCache.getCachedUserData(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CustomIndicator(); // Show loading indicator while fetching data
+            return const CustomIndicator();
           } else if (snapshot.hasError) {
-            return Text(
-                'Error: ${snapshot.error}'); // Show error message if fetching data fails
+            return Text('Error: ${snapshot.error}');
           } else {
-            return _buildAuthenticatedProfile(snapshot.data,
-                context); // Pass fetched user data to the profile widget
+            final userData = snapshot.data;
+            final _auth = FirebaseAuth.instance;
+            final userId = _auth.currentUser!.uid;
+            print(userData);
+            if (userData != null) {
+              final UserModel user = UserModel.fromJson(userData,userId);
+              print(user);
+              return _buildAuthenticatedProfile(user, context);
+            }
           }
+          // Default return if none of the conditions are met
+          return const SizedBox(); // Or any other suitable widget
         },
       );
     } else {
@@ -53,7 +61,7 @@ class ProfileScreen extends StatelessWidget {
     }
   }
 
-  Widget _buildAuthenticatedProfile(UserModel? user, BuildContext context) {
+  Widget _buildAuthenticatedProfile(UserModel user, BuildContext context) {
     final darkMode = MHelperFunctions.isDarkMode(context);
     final vehicleController = Get.put(VehicleController());
     // Function to fetch vehicles by owner ID
@@ -65,8 +73,10 @@ class ProfileScreen extends StatelessWidget {
       }
     }
 
+    print(user.firstname);
+
     Future<String> convertProfilePictureUrl() async {
-      final profilePictureUrl = user!.profilePicture; // Get the Future<String>
+      final profilePictureUrl = user.profilePicture; // Get the Future<String>
       final httpsUrl = await MHttpHelper.convertGCSUrlToHttps(
           profilePictureUrl); // Await the Future
       // Use httpsUrl here (e.g., display in an image widget)
@@ -162,9 +172,10 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: MSizes.nm),
                   Text(
-                    user!.fullName,
+                    user.fullName,
                     style: MFonts.fontBH2,
                   ),
+
                   const SizedBox(height: MSizes.sm),
                   if (user.isPremium) ...[
                     Row(
@@ -185,6 +196,7 @@ class ProfileScreen extends StatelessWidget {
                       ],
                     ),
                   ],
+
                   if (!(user.isVerified)) ...[
                     const SizedBox(height: MSizes.defaultSpace),
                     GestureDetector(
@@ -233,6 +245,7 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: MSizes.defaultSpace),
                   ],
+
                   // Retrieve vehicles and build ListedAdFrame3 widgets
                   FutureBuilder<List<Vehicle>>(
                     future: fetchVehicles(user.id),

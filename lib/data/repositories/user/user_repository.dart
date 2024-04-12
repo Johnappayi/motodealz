@@ -272,5 +272,26 @@ class UserRepository extends GetxController {
       throw 'Image upload failed: $e';
     }
   }
-  
+    Future<String?> fetchProfilePicture(String userId) async {
+    try {
+      final DocumentSnapshot snapshot =
+          await _db.collection("Users").doc(userId).get();
+      if (snapshot.exists) {
+        final data = snapshot.data() as Map<String, dynamic>;
+        String? imagePath = data['ProfilePicture'] as String?;
+        if (imagePath != null && imagePath.isNotEmpty) {
+          // Get the download URL using Storage reference
+          final ref = _storage.ref(imagePath);
+          final downloadUrl = await ref.getDownloadURL();
+          return downloadUrl;
+        } else {
+          return null; // No profile picture available
+        }
+      } else {
+        return null; // User not found
+      }
+    } catch (e) {
+      throw 'Failed to fetch profile picture: $e';
+    }
+  }
 }

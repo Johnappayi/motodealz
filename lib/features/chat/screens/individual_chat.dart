@@ -11,12 +11,17 @@ import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
+import 'package:motodealz/utils/http/http_client.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen(
-      {super.key, required this.roomId, required this.displayName});
+      {super.key,
+      required this.roomId,
+      required this.displayName,
+      required this.dp});
   final String roomId;
   final String? displayName;
+  final String dp;
 
   @override
   ChatScreenState createState() => ChatScreenState();
@@ -27,6 +32,14 @@ class ChatScreenState extends State<ChatScreen> {
   final TextEditingController _messageController = TextEditingController();
   // Define a ScrollController
   final ScrollController _scrollController = ScrollController();
+
+  Future<String> convertProfilePictureUrl(String url) async {
+    // Get the Future<String>
+    final httpsUrl =
+        await MHttpHelper.convertGCSUrlToHttps(url); // Await the Future
+    // Use httpsUrl here (e.g., display in an image widget)
+    return httpsUrl; // Optionally return the httpsUrl for further use
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,10 +94,26 @@ class ChatScreenState extends State<ChatScreen> {
                           ),
                         ),
                         const Spacer(),
-                        const SizedBox(
-                          width: 35,
-                          height: 70,
-                        ),
+                        FutureBuilder<String>(
+                            future: convertProfilePictureUrl(widget.dp),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                // Return a placeholder or loading indicator while fetching the image
+                                return const CircularProgressIndicator(); // Or any other loading indicator
+                              } else if (snapshot.hasError) {
+                                // Handle error if image fetching fails
+                                return const Icon(Icons.error);
+                              } else {
+                                // Use the fetched image URL
+                                return CircleAvatar(
+                                  radius: 30,
+                                  backgroundImage: NetworkImage(snapshot.data!),
+                                );
+                              }
+                            },
+                          ),
+                        
                       ],
                     ),
                   ),
@@ -114,7 +143,8 @@ class ChatScreenState extends State<ChatScreen> {
                             );
                           }
                           // Reverse the order of messages
-                          List<Message> messages = snapshot.data!.reversed.toList();
+                          List<Message> messages =
+                              snapshot.data!.reversed.toList();
                           // Scroll to the end of the list after loading the messages
                           WidgetsBinding.instance.addPostFrameCallback((_) {
                             _scrollController.animateTo(
@@ -133,12 +163,14 @@ class ChatScreenState extends State<ChatScreen> {
                               if (message.senderId == user?.uid) {
                                 return OwnMessageCard(
                                   message: message.text,
-                                  time: message.timestamp, // Assuming timestamp is a DateTime object
+                                  time: message
+                                      .timestamp, // Assuming timestamp is a DateTime object
                                 );
                               } else {
                                 return ReplyCard(
                                   message: message.text,
-                                  time: message.timestamp, // Assuming timestamp is a DateTime object
+                                  time: message
+                                      .timestamp, // Assuming timestamp is a DateTime object
                                 );
                               }
                             },
@@ -149,7 +181,7 @@ class ChatScreenState extends State<ChatScreen> {
                   ),
                   //container input
                   Align(
-                    alignment: Alignment.bottomCenter ,
+                    alignment: Alignment.bottomCenter,
                     child: Container(
                       decoration: BoxDecoration(
                         color: darkMode

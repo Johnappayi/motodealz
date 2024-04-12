@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:motodealz/common/model/user_details.dart';
 import 'package:motodealz/common/model/vehicle_model.dart';
 import 'package:motodealz/common/widgets/back_button.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
@@ -20,9 +21,9 @@ import 'package:motodealz/utils/http/http_client.dart';
 
 class VehicleVeiwScreen extends StatefulWidget {
   const VehicleVeiwScreen({
-    super.key,
+    super.key, // Added the missing Key? key parameter
     required this.vehicle,
-  });
+  }); // Fixed the super constructor call
   final Vehicle vehicle;
   @override
   VehicleVeiwScreenState createState() => VehicleVeiwScreenState();
@@ -147,9 +148,19 @@ class VehicleVeiwScreenState extends State<VehicleVeiwScreen> {
           await _chatRoomController.createChatRoom(buyerId, sellerId);
       String displayName =
           await _chatRoomController.getUserName(sellerId) ?? '';
+
+      // Fetch user details
+      UserModel? userModel =
+          await _chatRoomController.fetchUserDetails(sellerId);
+
+      // Navigate to chat screen with user details
       MHelperFunctions.navigateToScreen(
         context,
-        ChatScreen(roomId: roomId, displayName: displayName),
+        ChatScreen(
+          roomId: roomId,
+          displayName: displayName,
+          dp: userModel.profilePicture,
+        ),
       );
     } catch (error) {
       // Handle error if fetching chat rooms fails

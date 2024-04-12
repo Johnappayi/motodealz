@@ -58,7 +58,7 @@ class InboxItem extends StatelessWidget {
           return GestureDetector(
             onTap: () {
               MHelperFunctions.navigateToScreen(
-                  context, ChatScreen(roomId: chatItem.chatRoomId, displayName: fullName,));
+                  context, ChatScreen(roomId: chatItem.chatRoomId, displayName: fullName,dp: userModel.profilePicture,));
             },
             child: ListTile(
               title: Text(
@@ -109,20 +109,20 @@ class InboxItem extends StatelessWidget {
                       color: darkMode ? MColors.darkGrey : MColors.lightGrey,
                     ),
                   ),
-                  Container(
-                    height: 20,
-                    width: 20,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: MColors.secondary,
-                    ),
-                    child: Center(
-                      child: Text(
-                        chatItem.unreadCount.toString(),
-                        style: MFonts.fontCB4,
-                      ),
-                    ),
-                  ),
+                  // Container(
+                  //   height: 20,
+                  //   width: 20,
+                  //   decoration: const BoxDecoration(
+                  //     shape: BoxShape.circle,
+                  //     color: MColors.secondary,
+                  //   ),
+                  //   child: Center(
+                  //     child: Text(
+                  //       chatItem.unreadCount.toString(),
+                  //       style: MFonts.fontCB4,
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),

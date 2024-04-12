@@ -272,4 +272,5 @@ class UserRepository extends GetxController {
       throw 'Image upload failed: $e';
     }
   }
+  
 }

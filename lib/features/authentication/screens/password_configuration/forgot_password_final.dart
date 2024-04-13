@@ -54,12 +54,10 @@ class ForgotPasswordLastScreen extends StatelessWidget {
                 onPressed: () => Get.offAll(() => const LoginScreen()),
               ),
               const SizedBox(height: MSizes.nm),
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                TextButton(
-                    onPressed: () => ForgotPasswordController.instance
-                        .resendPasswordResetEmail(email),
-                    child: const Text("Resend Email")),
-              ])
+              TextButton(
+                  onPressed: () => ForgotPasswordController.instance
+                      .resendPasswordResetEmail(email),
+                  child: const Text("Resend Email"))
             ],
           ),
         ),

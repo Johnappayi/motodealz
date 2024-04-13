@@ -5,7 +5,6 @@ import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
 
-
 class MAppBar extends StatelessWidget {
   final VoidCallback onMenuPressed;
 
@@ -27,7 +26,10 @@ class MAppBar extends StatelessWidget {
               colorFilter: MSvgStyle.svgStyle(darkMode),
             ),
           ),
-          Image.asset(darkMode ? MImages.appBarLogoL : MImages.appBarLogoD),
+          Image.asset(
+            darkMode ? MImages.appBarLogoL : MImages.appBarLogoD,
+            width: MHelperFunctions.screenWidth() * 0.31,
+          ),
           SizedBox(
             width: MHelperFunctions.screenWidth() * 0.1,
           ),

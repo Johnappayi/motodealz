@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:motodealz/common/model/vehicle_model.dart';
 
 /// Model class representing user data.
 class UserModel {
@@ -12,7 +11,7 @@ class UserModel {
   bool isPremium;
   int noOfListedAd;
   bool isVerified;
-  List<Vehicle>? vehicles;
+  List<String>? vehicles;
 
   UserModel({
     this.noOfListedAd = 0,
@@ -38,7 +37,6 @@ class UserModel {
     List<String> nameParts = fullName.split(" ");
     String firstName = nameParts[0];
     String lastName = nameParts.length > 1 ? nameParts[1] : "";
-
     String newUsername = "$firstName $lastName";
     return newUsername;
   }
@@ -68,7 +66,7 @@ class UserModel {
       'IsVerified': isVerified,
       'HasListedAd': hasListedAd,
       'NoOfListedAd': noOfListedAd,
-      'Vehicles': vehicles?.map((vehicle) => vehicle.toJson()).toList(),
+      'Vehicles': vehicles,
     };
   }
 
@@ -78,21 +76,35 @@ class UserModel {
     if (document.exists) {
       final data = document.data()!;
       return UserModel(
-        id: document.id,
-        firstname: data['FirstName'] ?? '',
-        lastname: data['LastName'] ?? '',
-        email: data['Email'] ?? '',
-        profilePicture: data['ProfilePicture'] ?? 'Profilepictures/userHolder.png',
-        isPremium: data['IsPremium'] ?? false,
-        isVerified: data['IsVerified'] ?? false,
-        hasListedAd: data['HasListedAd'] ?? false,
-        noOfListedAd: data['NoOfListedAd'] ?? 0,
-        vehicles: (data['Vehicles'] as List<dynamic>?)
-            ?.map((vehicle) => Vehicle.fromJson(vehicle))
-            .toList(),
-      );
+          id: document.id,
+          firstname: data['FirstName'] ?? '',
+          lastname: data['LastName'] ?? '',
+          email: data['Email'] ?? '',
+          profilePicture:
+              data['ProfilePicture'] ?? 'Profilepictures/userHolder.png',
+          isPremium: data['IsPremium'] ?? false,
+          isVerified: data['IsVerified'] ?? false,
+          hasListedAd: data['HasListedAd'] ?? false,
+          noOfListedAd: data['NoOfListedAd'] ?? 0,
+          vehicles: List<String>.from(data['Vehicles'] ?? []));
     } else {
       return UserModel.empty();
     }
+  }
+
+  static UserModel fromJson(Map<String, dynamic> userData, String userId) {
+    return UserModel(
+      id: userId,
+      firstname: userData['FirstName'] ?? '',
+      lastname: userData['LastName'] ?? '',
+      email: userData['Email'] ?? '',
+      profilePicture:
+          userData['ProfilePicture'] ?? 'Profilepictures/userHolder.png',
+      isPremium: userData['IsPremium'] ?? false,
+      isVerified: userData['IsVerified'] ?? false,
+      hasListedAd: userData['HasListedAd'] ?? false,
+      noOfListedAd: userData['NoOfListedAd'] ?? 0,
+      vehicles: List<String>.from(userData['Vehicles'] ?? []),
+    );
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:motodealz/common/cache_data/data_cache.dart';
 import 'package:motodealz/common/widgets/navigation_menu.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:motodealz/features/authentication/screens/signup/email_verification_screen.dart';
@@ -13,6 +14,8 @@ import 'package:motodealz/utils/exceptions/platform_exceptions.dart';
 
 class AuthenticationRepository extends GetxController {
   static AuthenticationRepository get instance => Get.find();
+
+  final DataCache dataCache = Get.put(DataCache());
 
   // Variables
   final deviceStorage = GetStorage();
@@ -29,9 +32,11 @@ class AuthenticationRepository extends GetxController {
     FlutterNativeSplash.remove();
 
     // test individual screens here
-    // Get.offAll(() => const ReportIssuePage()); 
+    // Get.offAll(() => const EmailVerificationScreen());
     // comment this
     initialCheckAuthentication();
+    dataCache.fetchDataAndCache();
+    dataCache.printCachedData();
   }
 
   // Function to check initial authentication status
@@ -53,9 +58,8 @@ class AuthenticationRepository extends GetxController {
       //     : Get.offAll(const CreateAccountScreen());
     }
 
-    //
+    
     // Listen to authentication state changes
-    //
     //   navigateToHome();
     // } else {
     //   // User is signed out

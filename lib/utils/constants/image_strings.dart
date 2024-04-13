@@ -15,12 +15,12 @@ class MImages {
   // static const String facebook = "assets/logos/facebook-icon.png";
 
   // -- Category Icons
-  static const String sedanIcon = "assets/icons/sedan.svg";
-  static const String suvIcon = "assets/icons/SUV.svg";
-  static const String coupeIcon = "assets/icons/coupe.svg";
-  static const String hatchbackIcon = "assets/icons/hatchback.svg";
-  static const String muvIcon = "assets/icons/MUV.svg";
-  static const String pickupIcon = "assets/icons/pick up.svg";
+  static const String sedanIcon = "assets/icons/coupe.png";
+  static const String suvIcon = "assets/icons/estate.png";
+  static const String coupeIcon = "assets/icons/convertible.png";
+  static const String hatchbackIcon = "assets/icons/hatchback.png";
+  static const String muvIcon = "assets/icons/mpv.png";
+  static const String pickupIcon = "assets/icons/pickup.png";
 
   // -- Navigation Bar Icons
   static const String homeIcon = "assets/icons/home filled.svg";
@@ -105,12 +105,11 @@ static const String signInPrompt =
       "assets/logos/popular_brand/Volkswagen.png";
 
   // -- Lottie Animations
-  static String success = "assets/animations/successful.json";
+  // static String success = "assets/animations/successful.json";
+  static String login = "assets/animations/loader.gif";
   static String emailSent = "assets/animations/email-sent.json";
-  static String verifySuccess = "assets/animations/verification-success.json";
-  static String emailVerifyScreen = "assets/animations/email-verify-screen.gif";
   static String verificationScreenImage =
-      "assets/animations/icons8-man-window-paper-plane-100.png";
+      "assets/images/email verifcation.svg";
   static String processing = "assets/animations/processing.json";
 
   // static const String adidasLogo = "assets/icons/brands/adidas-logo.png";

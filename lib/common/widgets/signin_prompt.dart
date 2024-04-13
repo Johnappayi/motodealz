@@ -46,10 +46,17 @@ class SignUpPromptScreen extends StatelessWidget {
                 child: SvgPicture.asset(MImages.signInPrompt),
               ),
               const SizedBox(height: MSizes.spaceBtwSections),
-              LargeButtonNS(
+              const SizedBox(height: MSizes.spaceBtwSections),
+              const Text(
+                "Continue to Login",
+                style: MFonts.fontCH2,
+              ),
+              const SizedBox(height: MSizes.nm),
+              SmallSecButton(
                 onPressed: () => Get.offAll(() => const LoginScreen()),
                 child: const Text(
                   "Login now",
+                  style: MFonts.fontCH2,
                 ),
               ),
             ],

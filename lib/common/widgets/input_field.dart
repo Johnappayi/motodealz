@@ -14,8 +14,9 @@ class InputField extends StatelessWidget {
     this.validator,
     this.isEnabled,
     this.controller,
+     this.maxline,
   });
-
+  final int? maxline;
   final String hintText;
   final String label;
   final String? Function(String?)? validator;
@@ -35,6 +36,7 @@ class InputField extends StatelessWidget {
           height: MSizes.sm,
         ),
         TextFormField(
+          maxLines: maxline,
           enabled: isEnabled ?? true,
           validator: validator,
           controller: controller,
@@ -42,7 +44,7 @@ class InputField extends StatelessWidget {
             hintText: hintText,
             contentPadding: const EdgeInsets.symmetric(
               horizontal: MSizes.lg,
-              vertical: MSizes.nm,
+              vertical: MSizes.md,
             ), // Adjust the content padding as needed
             errorStyle:
                 const TextStyle(height: 0), // Hide the error message inline
@@ -151,10 +153,12 @@ class InputFieldWithIcon extends StatelessWidget {
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(
               horizontal: MSizes.lg,
-              vertical: MSizes.nm,
+              vertical: MSizes.md,
             ), // Ad
             enabled: true,
             hintText: hintText,
+            errorStyle:
+                const TextStyle(height: 0), 
             suffixIcon: suffixIcon != null
                 ? GestureDetector(
                     onTap: onSuffixIconPressed,
@@ -223,7 +227,7 @@ class InputFieldWithDropdown extends StatelessWidget {
             hintText: hintText,
             contentPadding: const EdgeInsets.symmetric(
               horizontal: MSizes.lg,
-              vertical: MSizes.nm,
+              vertical: MSizes.md,
             ),
           ),
           value: dropdownValue,

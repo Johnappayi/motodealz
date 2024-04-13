@@ -29,7 +29,7 @@ class LoginController extends GetxController {
   Future<void> emailAndPasswordSignIn() async {
     try {
       // Start Loading
-      MFullScreenLoader.openLoadingDialog('Logging you in...', MImages.success);
+      MFullScreenLoader.openLoadingDialog('Hold on we are fetching your details...', MImages.login);
 
       //Check Internet Connectivity
       final isConnected = await NetworkManager.instance.isConnected();
@@ -62,7 +62,9 @@ class LoginController extends GetxController {
       //Redirect
       AuthenticationRepository.instance.initialCheckAuthentication();
     } catch (e) {
+      MFullScreenLoader.stopLoading();
       MLoaders.errorSnackBar(title: 'Oh Snap', message: e.toString());
+       // Remove Loader
     }
   }
 
@@ -70,7 +72,7 @@ class LoginController extends GetxController {
   Future<void> googleSignIn() async {
     try {
       // Start Loading
-      MFullScreenLoader.openLoadingDialog('Logging you in...', MImages.success);
+      MFullScreenLoader.openLoadingDialog('Logging you in...', MImages.login);
 
       //Check Internet Connectivity
       final isConnected = await NetworkManager.instance.isConnected();

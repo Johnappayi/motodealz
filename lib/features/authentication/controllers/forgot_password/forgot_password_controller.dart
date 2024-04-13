@@ -61,7 +61,7 @@ class ForgotPasswordController extends GetxController {
     try {
       //Start Loading
       MFullScreenLoader.openLoadingDialog(
-          'Processing your request.....', MImages.processing);
+          'Processing your request', MImages.processing);
 
       // Check Internet Connectivity
       final isConnected = await NetworkManager.instance.isConnected();

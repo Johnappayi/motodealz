@@ -14,7 +14,8 @@ import 'package:motodealz/utils/helpers/helper_functions.dart';
 
 class VehicleListingInfoScreen extends StatefulWidget {
   final Vehicle? vehicle; // Pass the vehicle object to the screen
-  const VehicleListingInfoScreen({super.key, this.vehicle});
+   final String rcImagePath;
+  const VehicleListingInfoScreen({super.key, this.vehicle, required this.rcImagePath});
 
   @override
   VehicleListingInfoScreenState createState() =>
@@ -253,7 +254,7 @@ class VehicleListingInfoScreenState extends State<VehicleListingInfoScreen> {
                             MHelperFunctions.navigateToScreen(
                               context,
                               VehicleImageSelectScreen(
-                                vehicle: vehicle,
+                                vehicle: vehicle, rcImagePath: widget.rcImagePath ,
                               ),
                             );
                           }

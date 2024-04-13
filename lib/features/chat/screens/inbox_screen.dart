@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:motodealz/common/styles/text_style.dart';
 import 'package:motodealz/common/widgets/signin_prompt.dart';
 import 'package:motodealz/data/repositories/authentication/authentication_repository.dart';
+import 'package:motodealz/data/repositories/user/user_repository.dart';
 import 'package:motodealz/features/chat/controller/chat_room_controller.dart';
 import 'package:motodealz/features/chat/model/chat_room.dart';
 import 'package:motodealz/features/chat/screens/inbox_item.dart';
@@ -26,7 +27,7 @@ class InboxScreenState extends State<InboxScreen>
   final PageController _pageController = PageController(initialPage: 0);
   final ChatRoomController _chatRoomController = Get.put(ChatRoomController());
   final authController = Get.put(AuthenticationRepository());
-
+  final userController = Get.put(UserRepository());
   @override
   bool get wantKeepAlive => true;
 
@@ -78,9 +79,29 @@ class InboxScreenState extends State<InboxScreen>
                         width: 3.0,
                       ),
                     ),
-                    child: const CircleAvatar(
-                      radius: 32,
-                      backgroundImage: AssetImage(MImages.sampleUser1),
+                    child: FutureBuilder<String?>(
+                      initialData: MImages.sampleUser1,
+                      future: userController.fetchProfilePicture(user!.uid),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          // Return a placeholder or loading indicator while fetching the image
+                          return const CircleAvatar(
+                            radius: 30,
+                            backgroundImage: AssetImage(MImages.sampleUser1),
+                          ); // Or any other loading indicator
+                        } else if (snapshot.hasError) {
+                          // Handle error if image fetching fails
+                          return const Icon(Icons.error);
+                        } else {
+                          // Use the fetched image URL
+                          return CircleAvatar(
+                            radius: 30,
+                            backgroundColor: MColors.darkGrey,
+                            backgroundImage: NetworkImage(snapshot.data!),
+                          );
+                        }
+                      }
                     ),
                   )
                 ],
@@ -120,7 +141,7 @@ class InboxScreenState extends State<InboxScreen>
                 },
                 children: [
                   _buildChatList(
-                      _chatRoomController.getAllChatRooms(user!.uid)),
+                      _chatRoomController.getAllChatRooms(user.uid)),
                   _buildChatList(
                       _chatRoomController.getBuyingChatRooms(user.uid)),
                   _buildChatList(
@@ -146,7 +167,7 @@ class InboxScreenState extends State<InboxScreen>
               child: SizedBox(),
             );
           } else if (snapshot.hasError) {
-            return  Center(
+            return Center(
               child: Text('Error: ${snapshot.error}'),
             );
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {

@@ -69,7 +69,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           .height, // Set minimum height
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(MSizes.lg),
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: MSizes.lg),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -79,7 +80,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               const Text(
                                 "Browse Categories",
                                 style: MFonts.fontBH1,
-                              ), // Example Text Widget 1
+                              ),
+                              const SizedBox(
+                                  height: MSizes.md), // Example Text Widget 1
                               Container(
                                 padding: const EdgeInsets.all(MSizes.md),
                                 decoration: BoxDecoration(
@@ -109,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           },
                                         ),
                                         const SizedBox(
-                                          height: MSizes.nm,
+                                          height: MSizes.md,
                                         ),
                                         CarCategoryItem(
                                           darkMode: darkMode,
@@ -144,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           },
                                         ),
                                         const SizedBox(
-                                          height: MSizes.nm,
+                                          height: MSizes.md,
                                         ),
                                         CarCategoryItem(
                                           darkMode: darkMode,
@@ -179,7 +182,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           },
                                         ),
                                         const SizedBox(
-                                          height: MSizes.nm,
+                                          height: MSizes.md,
                                         ),
                                         CarCategoryItem(
                                           darkMode: darkMode,

@@ -1,20 +1,28 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:motodealz/common/cache_data/data_cache.dart';
+import 'package:motodealz/common/controller/vehicle_controller.dart';
 import 'package:motodealz/common/model/user_details.dart';
+import 'package:motodealz/common/model/vehicle_model.dart';
 import 'package:motodealz/common/styles/svg_styles.dart';
 import 'package:motodealz/common/widgets/buttons.dart';
 import 'package:motodealz/common/widgets/custom_indicator.dart';
-import 'package:motodealz/common/widgets/listed_ad_frame3.dart'; // Corrected import statement
+import 'package:motodealz/common/widgets/listed_ad_frame3.dart';
 import 'package:motodealz/common/widgets/signin_prompt.dart';
 import 'package:motodealz/data/repositories/authentication/authentication_repository.dart';
 import 'package:motodealz/data/repositories/user/user_repository.dart';
 import 'package:motodealz/features/kyc_verification/screens/kyc_landing_screen.dart';
+import 'package:motodealz/features/profile/screen/change_password.dart';
+import 'package:motodealz/features/vehicle_listing/edit_listing/screens/vehicle_edit.dart';
 import 'package:motodealz/utils/constants/colors.dart';
 import 'package:motodealz/utils/constants/fonts.dart';
 import 'package:motodealz/utils/constants/image_strings.dart';
 import 'package:motodealz/utils/constants/sizes.dart';
 import 'package:motodealz/utils/helpers/helper_functions.dart';
+import 'package:motodealz/utils/http/http_client.dart';
+import 'package:motodealz/utils/popups/loader.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key}); // Corrected constructor syntax
@@ -22,22 +30,28 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authController = Get.put(AuthenticationRepository());
-    final userRepository = Get.put(UserRepository());
     final isUserAuthenticated = authController.isUserAuthenticated();
+    final DataCache dataCache = Get.put(DataCache());
 
     if (isUserAuthenticated) {
-      return FutureBuilder<UserModel>(
-        future: userRepository.fetchUserDetails(),
+      return FutureBuilder<Map<String, dynamic>?>(
+        future: dataCache.getCachedUserData(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CustomIndicator(); // Show loading indicator while fetching data
+            return const CustomIndicator();
           } else if (snapshot.hasError) {
-            return Text(
-                'Error: ${snapshot.error}'); // Show error message if fetching data fails
+            return Text('Error: ${snapshot.error}');
           } else {
-            return _buildAuthenticatedProfile(snapshot.data,
-                context); // Pass fetched user data to the profile widget
+            final userData = snapshot.data;
+            final auth = FirebaseAuth.instance;
+            final userId = auth.currentUser!.uid;
+            if (userData != null) {
+              final UserModel user = UserModel.fromJson(userData, userId);
+              return _buildAuthenticatedProfile(user, context);
+            }
           }
+          // Default return if none of the conditions are met
+          return const SizedBox(); // Or any other suitable widget
         },
       );
     } else {
@@ -45,8 +59,27 @@ class ProfileScreen extends StatelessWidget {
     }
   }
 
-  Widget _buildAuthenticatedProfile(UserModel? user, BuildContext context) {
+  Widget _buildAuthenticatedProfile(UserModel user, BuildContext context) {
     final darkMode = MHelperFunctions.isDarkMode(context);
+    final vehicleController = Get.put(VehicleController());
+    // Function to fetch vehicles by owner ID
+    Future<List<Vehicle>> fetchVehicles(String ownerId) async {
+      try {
+        return await vehicleController.fetchVehiclesByOwner(ownerId);
+      } catch (e) {
+        throw Exception("Error fetching vehicles: $e");
+      }
+    }
+
+
+    Future<String> convertProfilePictureUrl() async {
+      final profilePictureUrl = user.profilePicture; // Get the Future<String>
+      final httpsUrl = await MHttpHelper.convertGCSUrlToHttps(
+          profilePictureUrl); // Await the Future
+      // Use httpsUrl here (e.g., display in an image widget)
+      return httpsUrl; // Optionally return the httpsUrl for further use
+    }
+
     return SafeArea(
       child: SingleChildScrollView(
         child: Padding(
@@ -65,15 +98,60 @@ class ProfileScreen extends StatelessWidget {
                 children: [
                   Stack(
                     children: [
-                      const CircleAvatar(
-                        radius: 73,
-                        backgroundImage: AssetImage(MImages.sampleUser1),
+                      FutureBuilder<String>(
+                        future:
+                            convertProfilePictureUrl(), // Get the Future<String>
+                        builder: (context, snapshot) {
+                          switch (snapshot.connectionState) {
+                            case ConnectionState.waiting:
+                              return const CircleAvatar(
+                                radius: 73,
+                                backgroundImage:
+                                    AssetImage(MImages.sampleUser1),
+                              ); // Show loading indicator
+                            case ConnectionState.done:
+                              if (snapshot.hasError) {
+                                return Text(
+                                    'Error: ${snapshot.error}'); // Handle error
+                              } else {
+                                final httpsUrl = snapshot.data!;
+                                return CircleAvatar(
+                                  radius: 73,
+                                  backgroundColor: MColors.darkGrey,
+                                  backgroundImage: NetworkImage(httpsUrl),
+                                );
+                              }
+                            default:
+                              return const CircleAvatar(
+                                radius: 73,
+                                backgroundImage:
+                                    AssetImage(MImages.sampleUser1),
+                              ); // Handle unexpected states (optional)
+                          }
+                        },
                       ),
                       Positioned(
                         bottom: 5,
                         right: 5,
                         child: GestureDetector(
-                          onTap: () {},
+                          onTap: () async {
+                            try {
+                              final userRepository = Get.put(UserRepository());
+                              await userRepository
+                                  .uploadImageAndUpdateProfile();
+                              // Show a success message or update UI to display the new profile picture
+                              MLoaders.successSnackBar(
+                                  title: 'Looking good!',
+                                  message:
+                                      'Your profile picture has been successfully uploaded');
+                            } catch (e) {
+                              // Handle error if image upload or profile update fails
+                              MLoaders.errorSnackBar(
+                                  title: 'Oh snap',
+                                  message:
+                                      'Failed to update profile picture: $e');
+                            }
+                          },
                           child: Container(
                             width: 52,
                             height: 52,
@@ -96,13 +174,12 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: MSizes.nm),
                   Text(
-                    user?.fullName.isNotEmpty ?? false
-                        ? user!.fullName
-                        : "Anonymous User",
+                    user.fullName,
                     style: MFonts.fontBH2,
                   ),
+
                   const SizedBox(height: MSizes.sm),
-                  if (user?.isPremium ?? false) ...[
+                  if (user.isPremium) ...[
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -120,9 +197,10 @@ class ProfileScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: MSizes.defaultSpace),
                   ],
-                  if (!(user?.isVerified ?? true)) ...[
+
+                  if (!(user.isVerified)) ...[
+                    const SizedBox(height: MSizes.defaultSpace),
                     GestureDetector(
                       onTap: () => MHelperFunctions.navigateToScreen(
                         context,
@@ -169,45 +247,61 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: MSizes.defaultSpace),
                   ],
-                  if (user?.hasListedAd ?? false) ...[
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          "Your ads",
-                          style: MFonts.fontBH1,
-                        ),
-                        const SizedBox(height: MSizes.md),
-                        GridView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 1,
-                            mainAxisSpacing: MSizes.sm,
-                            childAspectRatio: 378 / 155,
-                          ),
-                          itemCount: user!.noOfListedAd,
-                          itemBuilder: (context, index) {
-                            return ListedAdFrame3(
-                              onPressed: () {
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //     builder: (context) => VehicleEditScreen(
-                                //       vehicle: user.vehicles![index],
-                                //     ),
-                                //   ),
-                                // );
-                              },
-                              vehicle: user.vehicles![index],
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: MSizes.defaultSpace),
-                  ],
+
+                  // Retrieve vehicles and build ListedAdFrame3 widgets
+                  FutureBuilder<List<Vehicle>>(
+                    future: fetchVehicles(user.id),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const CustomIndicator(); // Show loading indicator while fetching data
+                      } else if (snapshot.hasError) {
+                        return Text(
+                            'Error: ${snapshot.error}'); // Show error message if fetching data fails
+                      } else {
+                        final vehicles = snapshot.data ?? [];
+                        if (vehicles.isNotEmpty) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                "Your ads",
+                                style: MFonts.fontBH1,
+                              ),
+                              const SizedBox(height: MSizes.md),
+                              GridView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 1,
+                                  mainAxisSpacing: MSizes.sm,
+                                  childAspectRatio: 378 / 155,
+                                ),
+                                itemCount: vehicles.length,
+                                itemBuilder: (context, index) {
+                                  return ListedAdFrame3(
+                                    onPressed: () {
+                                      MHelperFunctions.navigateToScreen(
+                                          context,
+                                          VehicleEditScreen(
+                                            vehicle: vehicles[index],
+                                          ));
+                                    },
+                                    vehicle: vehicles[index],
+                                  );
+                                },
+                              ),
+                            ],
+                          );
+                        } else {
+                          return const SizedBox(); // Return an empty widget if no vehicles found
+                        }
+                      }
+                    },
+                  ),
+                  const SizedBox(
+                    height: MSizes.spaceBtwItems,
+                  ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -251,55 +345,66 @@ class ProfileScreen extends StatelessWidget {
                                 ],
                               ),
                               const SizedBox(height: MSizes.defaultSpace),
-                              Row(
-                                children: [
-                                  Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                        MImages.changePasswordIcon,
-                                        colorFilter:
-                                            MSvgStyle.svgStyle(darkMode),
-                                      ),
-                                      const SizedBox(
-                                          width: MSizes.spaceBtwItems),
-                                      const Text(
-                                        "Change password",
-                                        style: MFonts.fontCH3,
-                                      ),
-                                    ],
-                                  ),
-                                  const Spacer(),
-                                  SvgPicture.asset(
-                                    MImages.arrowRIcon,
-                                    colorFilter: MSvgStyle.svgStyle(darkMode),
-                                  ),
-                                ],
+                              GestureDetector(
+                                 onTap: () async {
+                                      final authController = Get.find<
+                                          AuthenticationRepository>(); // Get the authController instance
+                                      authController.sendPasswordResetEmail(user
+                                          .email); // Call the sendPasswordResetEmail method
+                                      // Navigate to ChangePassword screen and pass the user's email
+                                      Get.to(() =>
+                                          ChangePassword(email: user.email));
+                                    },
+                                child: Row(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          MImages.changePasswordIcon,
+                                          colorFilter:
+                                              MSvgStyle.svgStyle(darkMode),
+                                        ),
+                                        const SizedBox(
+                                            width: MSizes.spaceBtwItems),
+                                        const Text(
+                                          "Change password",
+                                          style: MFonts.fontCH3,
+                                        ),
+                                      ],
+                                    ),
+                                    const Spacer(),
+                                    SvgPicture.asset(
+                                      MImages.arrowRIcon,
+                                      colorFilter: MSvgStyle.svgStyle(darkMode),
+                                    ),
+                                  ],
+                                ),
                               ),
-                              const SizedBox(height: MSizes.defaultSpace),
-                              Row(
-                                children: [
-                                  Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                        MImages.favouriteIcon,
-                                        colorFilter:
-                                            MSvgStyle.svgStyle(darkMode),
-                                      ),
-                                      const SizedBox(
-                                          width: MSizes.spaceBtwItems),
-                                      const Text(
-                                        "Your favourites",
-                                        style: MFonts.fontCH3,
-                                      ),
-                                    ],
-                                  ),
-                                  const Spacer(),
-                                  SvgPicture.asset(
-                                    MImages.arrowRIcon,
-                                    colorFilter: MSvgStyle.svgStyle(darkMode),
-                                  ),
-                                ],
-                              ),
+                              // const SizedBox(height: MSizes.defaultSpace),
+                              // Row(
+                              //   children: [
+                              //     Row(
+                              //       children: [
+                              //         SvgPicture.asset(
+                              //           MImages.favouriteIcon,
+                              //           colorFilter:
+                              //               MSvgStyle.svgStyle(darkMode),
+                              //         ),
+                              //         const SizedBox(
+                              //             width: MSizes.spaceBtwItems),
+                              //         const Text(
+                              //           "Your favourites",
+                              //           style: MFonts.fontCH3,
+                              //         ),
+                              //       ],
+                              //     ),
+                              //     const Spacer(),
+                              //     SvgPicture.asset(
+                              //       MImages.arrowRIcon,
+                              //       colorFilter: MSvgStyle.svgStyle(darkMode),
+                              //     ),
+                              //   ],
+                              // ),
                             ],
                           ),
                         ),

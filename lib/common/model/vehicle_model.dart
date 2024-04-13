@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Vehicle {
+  String? id;
   String brand;
   String model;
   String category;
@@ -19,7 +22,7 @@ class Vehicle {
   String vinNumber;
 
   Vehicle(
-      {
+      {this.id,
       required this.brand,
       required this.model,
       required this.category,
@@ -40,6 +43,7 @@ class Vehicle {
       required this.vinNumber});
 
   static Vehicle empty() => Vehicle(
+        id: '',
         brand: '',
         model: '',
         category: '',
@@ -86,6 +90,7 @@ class Vehicle {
   // Factory method to create a Vehicle from a JSON map.
   factory Vehicle.fromJson(Map<String, dynamic> json) {
     return Vehicle(
+      id: json['id'],
       brand: json['brand'],
       model: json['model'],
       category: json['category'],
@@ -105,5 +110,35 @@ class Vehicle {
       rcNumber: json['rcNumber'],
       vinNumber: json['vinNumber'],
     );
+  }
+
+  factory Vehicle.fromSnapshot(
+      DocumentSnapshot<Map<String, dynamic>> document) {
+    if (document.exists) {
+      final data = document.data()!;
+      return Vehicle(
+        id: document.id,
+        brand: data['Brand'],
+        model: data['Model'],
+        category: data['Category'],
+        transmission: data['Transmission'],
+        fuelType: data['FuelType'],
+        ownershipCount: data['OwnershipCount'],
+        year: data['Year'],
+        mileage: data['Mileage'],
+        price: data['Price'],
+        isPremium: data['IsPremium'],
+        ownerId: data['OwnerId'],
+        datePosted: data['DatePosted'],
+        location: data['Location'],
+        description: data['Description'],
+        images: List<String>.from(data['images']),
+        title: data['description'],
+        rcNumber: data['rcNumber'],
+        vinNumber: data['vinNumber'],
+      );
+    } else {
+      return Vehicle.empty();
+    }
   }
 }

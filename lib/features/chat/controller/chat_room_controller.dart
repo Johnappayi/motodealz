@@ -1,12 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:motodealz/common/model/user_details.dart';
 import 'package:motodealz/features/chat/model/chat_room.dart';
 import 'package:motodealz/features/chat/model/message_model.dart';
+import 'package:motodealz/utils/exceptions/firebase_exceptions.dart';
+import 'package:motodealz/utils/exceptions/format_exceptions.dart';
+import 'package:motodealz/utils/exceptions/platform_exceptions.dart';
 
 class ChatRoomController extends GetxController {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final CollectionReference usersCollection =
       FirebaseFirestore.instance.collection('Users');
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
 
 
 
@@ -58,6 +64,28 @@ class ChatRoomController extends GetxController {
       // Handle any errors that occur during the process
       // print('Error fetching user names: $e');
       return null;
+    }
+  }
+    /// Function to fetch user details based on user ID
+  Future<UserModel> fetchUserDetails(String userId) async {
+    try {
+      final documentSnapshot = await _db
+          .collection("Users")
+          .doc(userId)
+          .get();
+      if (documentSnapshot.exists) {
+        return UserModel.fromSnapshot(documentSnapshot);
+      } else {
+        return UserModel.empty();
+      }
+    } on FirebaseException catch (e) {
+      throw MFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const MFormatException();
+    } on PlatformException catch (e) {
+      throw MPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again.';
     }
   }
 
